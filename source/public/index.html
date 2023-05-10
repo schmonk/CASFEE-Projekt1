@@ -1,15 +1,39 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <title>Note App</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.min.js" integrity="sha256-/PJBs6QWvXijOFIX04kZpLb6ZtSQckdOIavLWKKOgXU=" crossorigin="anonymous" defer></script>
-  <script src="scripts/index.js" type="module"></script>
 
-  <link rel="stylesheet" href="styles/index.css">
-</head>
-<body>
-<h1>Note App</h1>
+  <head>
+    <meta charset="UTF-8">
+    <title>Note App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.min.js" integrity="sha256-/PJBs6QWvXijOFIX04kZpLb6ZtSQckdOIavLWKKOgXU=" crossorigin="anonymous" defer></script>
+    <script src="scripts/index.js" type="module"></script>
 
-</body>
+    <link rel="stylesheet" href="styles/index.css">
+  </head>
+
+  <body>
+    <header>
+      <h1>Erics Todo App</h1>
+      <button>Toggle Style</button>
+    </header>
+    <div id="sortFilterButtons">
+      <button>By name</button>
+      <button>By due date</button>
+      <button>By created date</button>
+      <button>By importance</button>
+      <button>Filter completed</button>
+    </div>
+    <article>
+      <h2>Example task name</h2>
+      <button>Complete task</button>
+      <p>in 7 days</p>
+      <p>example notes for this task</p>
+      <p>Importance: 4/5</p>
+      <button>Edit</button>
+    </article>
+    <footer>
+      Copyright: &#169; Eric Schärrer
+    </footer>
+
+  </body>
+
 </html>
