@@ -106,6 +106,7 @@ select {
   background-color: var(--bg-color);
   color: var(--primary-color);
   border-radius: 0.4rem;
+  min-height: 2.4rem;
 }
 
 button:hover,
