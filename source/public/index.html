@@ -11,28 +11,100 @@
   </head>
 
   <body>
-    <header>
-      <h1>Erics Todo App</h1>
-      <button>Toggle Style</button>
-    </header>
-    <div id="sortFilterButtons">
-      <button>By name</button>
-      <button>By due date</button>
-      <button>By created date</button>
-      <button>By importance</button>
-      <button>Filter completed</button>
+    <div class="container">
+      <header class="header">
+        <h1>Erics Todo App</h1>
+        <div class="theme">
+          <button type="button">🌞</button>
+        </div>
+      </header>
+      <div class="utility">
+        <div class="create">
+          <button type="button">+ Create task</button>
+        </div>
+        <div class="filterSort">
+          <div class="sort">
+            <div id="sortButton">
+              <select name="sortSelect">
+                <option value="name" selected>Name</option>
+                <option value="dueDate" selected>Due date</option>
+                <option value="creationDate">Creation date</option>
+                <option value="importance">Importance</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter">
+            <button type="button">Filter done</button>
+          </div>
+        </div>
+      </div>
+
+      <article class="task-container">
+        <button>Complete</button>
+        <h2>Example task name</h2>
+        <p>example notes for this task</p>
+        <p>in 7 days</p>
+        <p>Importance: 4/5</p>
+        <button>✎ Edit</button>
+      </article>
+      <article class="task-container">
+        <button>Complete</button>
+        <h2>Example task name</h2>
+        <p>example notes for this task</p>
+        <p>in 7 days</p>
+        <p>Importance: 4/5</p>
+        <button>✎ Edit</button>
+      </article>
+      <article class="task-container">
+        <button>Complete</button>
+        <h2>Example task name</h2>
+        <p>example notes for this task</p>
+        <p>in 7 days</p>
+        <p>Importance: 4/5</p>
+        <button>✎ Edit</button>
+      </article>
+      <article class="task-container">
+        <button>Complete</button>
+        <h2>Example task name</h2>
+        <p>example notes for this task</p>
+        <p>in 7 days</p>
+        <p>Importance: 4/5</p>
+        <button>✎ Edit</button>
+      </article>
+
+      <article class="task-container">
+        <button>Complete</button>
+        <h2>Example task name</h2>
+        <p>example notes for this task</p>
+        <p>in 7 days</p>
+        <p>Importance: 4/5</p>
+        <button>✎ Edit</button>
+      </article>
+
+      <article class="task-container">
+        <button>Complete</button>
+        <h2>Example task name</h2>
+        <p>example notes for this task</p>
+        <p>in 7 days</p>
+        <p>Importance: 4/5</p>
+        <button>✎ Edit</button>
+      </article>
+      <article class="task-container">
+        <button>Complete</button>
+        <h2>Example task name</h2>
+        <p>example notes for this task</p>
+        <p>in 7 days</p>
+        <p>Importance: 4/5</p>
+        <button>✎ Edit</button>
+      </article>
+
+
+
+      <footer>
+        Copyright: &#169; Eric Schärrer
+      </footer>
+
     </div>
-    <article>
-      <h2>Example task name</h2>
-      <button>Complete task</button>
-      <p>in 7 days</p>
-      <p>example notes for this task</p>
-      <p>Importance: 4/5</p>
-      <button>Edit</button>
-    </article>
-    <footer>
-      Copyright: &#169; Eric Schärrer
-    </footer>
 
   </body>
 

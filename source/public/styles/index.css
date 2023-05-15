@@ -69,8 +69,42 @@ h6 {
   isolation: isolate;
 }
 
-button {
+button,
+select {
   padding: 0.4rem 1rem;
   border: 1px solid hsl(0, 0%, 75%);
   border-radius: 0.4rem;
+}
+
+.container {
+  display: grid;
+  grid-template-rows: 1fr 1fr 10fr 1fr;
+  padding: 2rem;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.utility {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filterSort {
+  display: flex;
+  gap: 1rem;
+}
+
+.task-container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  height: 4rem;
+  justify-content: space-between;
+  border: 1px solid rgb(187, 187, 187);
+  border-radius: 0.6rem;
+  padding: 2rem 1rem;
 }
