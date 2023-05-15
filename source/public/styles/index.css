@@ -156,3 +156,7 @@ select:hover {
   gap: 1rem;
   align-items: center;
 }
+
+.task-done {
+  opacity: 0.6;
+}
