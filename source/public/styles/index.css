@@ -73,16 +73,44 @@ h6 {
 #__next {
   isolation: isolate;
 }
+:root {
+  --bg-color: hsl(0, 0%, 92%);
+  --primary-color: rgb(28, 28, 28);
+  --outline-color: rgb(194, 194, 194);
+  --on-bg-hover: hsl(0, 0%, 80%);
+  --transition-function: ease-in-out;
+  --transition-duration: 0.4s;
+}
+.dark-theme {
+  transition: all var(--transition-duration) var(--transition-function);
+  --bg-color: rgb(28, 28, 28);
+  --primary-color: rgb(235, 235, 235);
+  --outline-color: rgb(100, 100, 100);
+  --on-bg-hover: hsl(0, 0%, 20%);
+}
 
 body {
   font-family: "Metropolis", sans-serif;
+  transition: all var(--transition-duration) var(--transition-function);
+  background-color: var(--bg-color);
+  color: var(--primary-color);
 }
 
 button,
 select {
+  transition: background-color var(--transition-duration)
+      var(--transition-function),
+    color var(--transition-duration) var(--transition-function);
   padding: 0.4rem 1rem;
-  border: 1px solid hsl(0, 0%, 75%);
+  border: 1px solid var(--outline-color);
+  background-color: var(--bg-color);
+  color: var(--primary-color);
   border-radius: 0.4rem;
+}
+
+button:hover,
+select:hover {
+  background-color: var(--on-bg-hover);
 }
 
 .container {
@@ -118,7 +146,7 @@ select {
   align-items: center;
   height: 4rem;
   justify-content: space-between;
-  border: 1px solid rgb(187, 187, 187);
+  border: 1px solid var(--outline-color);
   border-radius: 0.6rem;
   padding: 2rem 1rem;
 }
