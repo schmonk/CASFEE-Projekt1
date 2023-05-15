@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Metropolis";
+  src: url(/source/public/fonts/Metropolis-Font/Metropolis-Regular.otf);
+}
+
 /* Use reset from https://www.joshwcomeau.com/css/custom-css-reset/ */
 /*
   1. Use a more-intuitive box-sizing model.
@@ -67,6 +72,10 @@ h6 {
 #root,
 #__next {
   isolation: isolate;
+}
+
+body {
+  font-family: "Metropolis", sans-serif;
 }
 
 button,
