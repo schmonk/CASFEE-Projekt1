@@ -78,7 +78,7 @@ select {
 
 .container {
   display: grid;
-  grid-template-rows: 1fr 1fr 10fr 1fr;
+  grid-template-rows: 2fr 2fr 40fr 1fr;
   padding: 2rem;
   height: 100%;
 }
@@ -98,13 +98,24 @@ select {
   gap: 1rem;
 }
 
+.articles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
 .task-container {
   display: flex;
-  gap: 1rem;
   align-items: center;
   height: 4rem;
   justify-content: space-between;
   border: 1px solid rgb(187, 187, 187);
   border-radius: 0.6rem;
   padding: 2rem 1rem;
+}
+
+.task-content {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
