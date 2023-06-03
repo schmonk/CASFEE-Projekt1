@@ -63,6 +63,38 @@
           </div>
         </article>
       </section>
+      <section class="dialog">Create Task</section>
+      <dialog open>
+        <p>Greetings, one and all!</p>
+        <form method="dialog">
+          <div class="taskInput" id="taskTitleInput">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="taskTitle" />
+          </div>
+          <div class="taskInput" id="taskImportanceInput">
+            <label for="importance">Importance</label>
+            <input type="number" name="importance" id="taskImportance" />
+          </div>
+          <div class="taskInput" id="taskDueDateInput">
+            <label for="dueDate">Date due</label>
+            <input type="date" name="dueDate" id="dueDate" />
+          </div>
+          <div class="taskInput" id="taskImportanceInput">
+            <label for="importance">Importance</label>
+            <input type="number" name="importance" id="taskImportance" />
+          </div>
+          <div class="taskInput" id="taskCompletionInput">
+            <label for="completion">Complete</label>
+            <input type="checkbox" name="completion" id="taskCompletion" />
+          </div>
+          <div class="taskInput" id="taskDescriptionInput">
+            <label for="description">Description</label>
+            <input type="text" name="description" id="taskDescription" />
+          </div>
+          <button>Close</button>
+        </form>
+      </dialog>
+
       <footer>Copyright: &#169; Eric Schärrer 2023</footer>
     </div>
     <script src="./scripts/themeToggler.js" defer></script>
