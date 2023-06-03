@@ -1,44 +1,43 @@
 <!DOCTYPE html>
 <html lang="de">
-
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Note App</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.min.js" integrity="sha256-/PJBs6QWvXijOFIX04kZpLb6ZtSQckdOIavLWKKOgXU=" crossorigin="anonymous" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.min.js"
+      integrity="sha256-/PJBs6QWvXijOFIX04kZpLb6ZtSQckdOIavLWKKOgXU="
+      crossorigin="anonymous"
+      defer></script>
     <script src="scripts/index.js" type="module"></script>
 
-    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/index.css" />
   </head>
 
   <body>
     <div class="container">
       <header class="header">
-        <h1>Erics Todo App</h1>
+        <h1>Erics Task App</h1>
         <div class="theme">
-          <button id="theme-button" type="button">☽</button>
+          <button id="themeButton" type="button">☽</button>
         </div>
       </header>
-      <div class="utility">
+      <section class="utility">
         <div class="create">
-          <button type="button">+ Create task</button>
+          <button id="createButton" type="button">+ Create task</button>
         </div>
         <div class="filterSort">
           <div class="sort">
-            <div id="sortButton">
-              <select name="sortSelect">
-                <option value="name" selected>Name</option>
-                <option value="dueDate" selected>Due date</option>
-                <option value="creationDate">Creation date</option>
-                <option value="importance">Importance</option>
-              </select>
-            </div>
+            <button id="sortName" type="button">Name</button>
+            <button id="dueDate" type="button">Date due</button>
+            <button id="creationDate" type="button">Date created</button>
+            <button id="importance" type="button">Importance</button>
           </div>
           <div class="filter">
             <button type="button">Hide completed</button>
           </div>
         </div>
-      </div>
-      <div class="articles-list">
+      </section>
+      <section class="articles-list">
         <article class="task-container">
           <div class="task-content">
             <button>Complete</button>
@@ -63,14 +62,9 @@
             <button>✎ Edit</button>
           </div>
         </article>
-
-      </div>
-      <footer>
-        Copyright: &#169; Eric Schärrer 2023
-      </footer>
-
+      </section>
+      <footer>Copyright: &#169; Eric Schärrer 2023</footer>
     </div>
     <script src="./scripts/themeToggler.js" defer></script>
   </body>
-
 </html>
