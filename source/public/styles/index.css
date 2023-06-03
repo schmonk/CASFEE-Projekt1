@@ -120,6 +120,9 @@ select:hover {
   grid-template-rows: 2fr 2fr 40fr 1fr;
   padding: 2rem;
   height: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .header {
@@ -160,9 +163,10 @@ select:hover {
 }
 
 .task-done {
-  opacity: 0.6;
+  opacity: 0.3;
 }
 
+/* Create and edit dialog */
 #taskDialog {
   background-color: var(--bg-color);
   color: var(--primary-color);
@@ -172,17 +176,21 @@ select:hover {
   margin: 5em auto;
   padding: 1rem 2rem;
 }
-#taskDialog h3 {
+#taskDialog h2 {
   margin-bottom: 1rem;
 }
 .taskInput {
   padding: 0.4rem 0rem;
+}
+.taskInput input {
+  width: 100%;
 }
 dialog::backdrop {
   background: hsla(0, 0%, 25%, 0.9);
 }
 
 #taskDialogButtons {
+  margin-top: 1rem;
   display: flex;
   flex-direction: row;
   justify-content: end;
