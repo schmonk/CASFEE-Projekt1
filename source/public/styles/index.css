@@ -1,5 +1,5 @@
 @font-face {
-  font-family: "Metropolis";
+  font-family: 'Metropolis';
   src: url(/source/public/fonts/Metropolis-Font/Metropolis-Regular.otf);
 }
 
@@ -90,7 +90,7 @@ h6 {
 }
 
 body {
-  font-family: "Metropolis", sans-serif;
+  font-family: 'Metropolis', sans-serif;
   transition: all var(--transition-duration) var(--transition-function);
   background-color: var(--bg-color);
   color: var(--primary-color);
@@ -160,4 +160,18 @@ select:hover {
 
 .task-done {
   opacity: 0.6;
+}
+
+#taskDialog {
+  width: 20em;
+  border: 1px solid var(--outline-color);
+  border-radius: 0.6rem;
+  margin: 5em auto;
+  padding: 2rem 1rem;
+}
+.taskInput {
+  padding: 1rem;
+}
+dialog::backdrop {
+  background: hsl(201 50% 40% /0.5);
 }
