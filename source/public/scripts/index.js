@@ -6,7 +6,7 @@ const cancelButton = taskDialog.querySelector('#cancelButton');
 
 // "Show the dialog" button opens the <dialog> modally
 createButton.addEventListener('click', () => {
-  taskDialog.show();
+  taskDialog.showModal();
   console.log('show dialog');
 });
 
