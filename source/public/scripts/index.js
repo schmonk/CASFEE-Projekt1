@@ -1,8 +1,10 @@
+'use strict';
+
 console.log('Hello World');
-const createButton = document.querySelector('#createButton');
+const createButton = document.querySelector('#createTaskButton');
 const taskDialog = document.querySelector('#taskDialog');
-const confirmButton = taskDialog.querySelector('#confirmButton');
-const cancelButton = taskDialog.querySelector('#cancelButton');
+const confirmButton = taskDialog.querySelector('#createDialogButton');
+// const cancelButton = taskDialog.querySelector('#cancelButton');
 
 // "Show the dialog" button opens the <dialog> modally
 createButton.addEventListener('click', () => {
@@ -14,5 +16,5 @@ createButton.addEventListener('click', () => {
 confirmButton.addEventListener('click', (e) => {
   e.preventDefault();
   console.log('close dialog');
-  taskDialog.close(); // Have to send the select box value here.
+  taskDialog.close();
 });
