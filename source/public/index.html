@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
     <meta charset="UTF-8" />
     <title>Task App</title>
     <script
@@ -11,32 +10,32 @@
     <link rel="icon" href="/visual/checkDot.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles/index.css" />
     <script src="scripts/index.js" type="module"></script>
+    <script src="scripts/taskManager.js" type="module"></script>
     <script src="./scripts/themeToggler.js" defer></script>
   </head>
 
   <body>
     <div class="container">
       <header class="header">
-        <h1>Task App</h1>
+        <div class="leftGroup">
+          <h1>Task App</h1>
+          <div class="create">
+            <button id="createTaskButton" class="btn btn-primary" type="button">+ Create task</button>
+          </div>
+        </div>
         <div class="theme">
           <button id="themeButton" type="button">☽</button>
         </div>
       </header>
       <!-- A utility header with sorting and filtering buttons -->
       <section class="utility">
-        <div class="create">
-          <button id="createTaskButton" type="button">+ Create task</button>
-        </div>
         <div class="filterSort">
           <div class="sort">
-            <button id="sortName" type="button">Name</button>
+            <button type="button">Hide completed</button>
+            <button id="sortName" class="btn" type="button">Name</button>
             <button id="dueDate" type="button">Date due</button>
             <button id="creationDate" type="button">Date created</button>
             <button id="importance" type="button">Importance</button>
-          </div>
-          <div class="filter">
-            <button type="button">Hide completed</button>
-          </div>
         </div>
       </section>
       <!-- The Task list. Each Task is in an article -->
@@ -95,7 +94,7 @@
             <button id="cancelButton" value="cancel" formmethod="dialog">
               Cancel
             </button>
-            <button id="createDialogButton" value="default">Create</button>
+            <button id="createDialogButton" class="btn btn-primary" value="default">Create</button>
           </div>
         </form>
       </dialog>
