@@ -5,9 +5,10 @@ const cancelButton = document.querySelector('#cancelButton');
 const taskList = document.querySelector('.task-list');
 function createTask() {
   // console.log('create a task');
-  const newP = document.createElement('p');
-  newP.textContent = 'this is a test';
-  taskList.appendChild(newP);
+  const newTask = document.createElement('article');
+  // newTask.innerHTML =
+  newTask.textContent = 'this is a test';
+  taskList.appendChild(newTask);
 }
 // "Show the dialog" button opens the <dialog> modally
 createTaskButton.addEventListener('click', () => {
