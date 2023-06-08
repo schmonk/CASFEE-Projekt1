@@ -91,7 +91,7 @@ select:hover {
   gap: 1rem;
 }
 
-.articles-list {
+.task-list {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;

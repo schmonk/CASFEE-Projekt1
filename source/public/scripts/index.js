@@ -2,8 +2,13 @@ const createTaskButton = document.querySelector('#createTaskButton');
 const taskDialog = document.querySelector('#taskDialog');
 const confirmButton = taskDialog.querySelector('#createDialogButton');
 const cancelButton = document.querySelector('#cancelButton');
-// const cancelButton = taskDialog.querySelector('#cancelButton');
-
+const taskList = document.querySelector('.task-list');
+function createTask() {
+  // console.log('create a task');
+  const newP = document.createElement('p');
+  newP.textContent = 'this is a test';
+  taskList.appendChild(newP);
+}
 // "Show the dialog" button opens the <dialog> modally
 createTaskButton.addEventListener('click', () => {
   taskDialog.showModal();
@@ -13,7 +18,7 @@ createTaskButton.addEventListener('click', () => {
 // and close the dialog with the `close()` method, which triggers the "close" event.
 confirmButton.addEventListener('click', (e) => {
   e.preventDefault();
-  console.log('close dialog');
+  createTask();
   taskDialog.close();
 });
 
@@ -21,6 +26,6 @@ confirmButton.addEventListener('click', (e) => {
 // and close the dialog with the `close()` method, which triggers the "close" event.
 cancelButton.addEventListener('click', (e) => {
   e.preventDefault();
-  console.log('close dialog');
+  // console.log('close dialog');
   taskDialog.close();
 });
