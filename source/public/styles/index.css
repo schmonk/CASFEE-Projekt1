@@ -8,8 +8,8 @@
 :root {
   --bg-color: hsl(0, 0%, 92%);
   --primary-text-color: rgb(28, 28, 28);
-  --primary-color: hsl(202, 100%, 61%);
-  --on-primary-hover: hsl(202, 100%, 51%);
+  --primary-color: hsl(202, 100%, 71%);
+  --on-primary-hover: hsl(202, 100%, 61%);
   --outline-color: rgb(194, 194, 194);
   --on-bg-hover: hsl(0, 0%, 80%);
   --transition-function: ease-in-out;
@@ -20,8 +20,8 @@
   --bg-color: rgb(28, 28, 28);
   --primary-text-color: rgb(235, 235, 235);
   --outline-color: rgb(100, 100, 100);
-  --primary-color: hsl(202, 100%, 31%);
-  --on-primary-hover: hsl(202, 100%, 41%);
+  --primary-color: hsl(202, 100%, 25%);
+  --on-primary-hover: hsl(202, 100%, 35%);
   --on-bg-hover: hsl(0, 0%, 20%);
 }
 
@@ -59,10 +59,12 @@ select:hover {
   max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
+  gap: 1rem;
 }
 
 .btn-primary {
   background-color: var(--primary-color);
+  border: none;
 }
 .btn-primary:hover {
   background-color: var(--on-primary-hover);
