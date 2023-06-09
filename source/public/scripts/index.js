@@ -24,19 +24,19 @@ function createTask() {
   taskList.insertAdjacentHTML(
     'beforeend',
     `<article class="task-container">
-  <div class="task-content">
     <button>Complete</button>
-    <h3>${title}</h3>
-    <p>${description}</p>
+    <div class="task-content">
+      <h3>${title}</h3>
+      <p>${description}</p>
+    </div>
     <p>Due ${dueDate}</p>
     <p>Importance: ${importance}</p>
-  </div>
-  <div class="task-edit">
-    <button>✎ Edit</button>
-  </div>
-  <div class="btn task-delete">
-  <button>Delete</button>
-</div>
+    <div class="task-edit">
+      <button>✎ Edit</button>
+    </div>
+    <div class="btn task-delete">
+      <button>Delete</button>
+    </div>
 </article>`,
   );
 }
