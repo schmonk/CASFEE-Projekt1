@@ -11,13 +11,13 @@
   --primary-color: hsl(202, 100%, 71%);
   --on-primary-hover: hsl(202, 100%, 61%);
   --outline-color: rgb(194, 194, 194);
-  --on-bg-hover: hsl(0, 0%, 80%);
+  --on-bg-hover: hsl(0, 0%, 86%);
   --transition-function: ease-in-out;
   --transition-duration: 0.2s;
 }
 .dark-theme {
   transition: all var(--transition-duration) var(--transition-function);
-  --bg-color: rgb(28, 28, 28);
+  --bg-color: hsl(0, 0%, 11%);
   --primary-text-color: rgb(235, 235, 235);
   --outline-color: rgb(100, 100, 100);
   --primary-color: hsl(202, 100%, 25%);
@@ -47,10 +47,17 @@ input {
 }
 
 button:hover,
-select:hover {
+select:hover,
+input:hover {
   background-color: var(--on-bg-hover);
 }
 
+button:focus,
+select:focus,
+input:focus {
+  border-color: var(--primary-color);
+}
+   
 .container {
   display: grid;
   grid-template-rows: 4fr 2fr 40fr 1fr;
@@ -100,7 +107,7 @@ select:hover {
 .task-container {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  /* grid-template-rows: repeat(2, 1fr); */
   min-width: 4rem;
   justify-content: center;
   align-items: center;
@@ -132,7 +139,7 @@ select:hover {
   padding: 1rem 2rem;
 }
 .task-description {
-  grid-column: 2 span 2;
+  grid-column: 2 ;
 }
 #taskDialog h2 {
   margin-bottom: 1rem;
