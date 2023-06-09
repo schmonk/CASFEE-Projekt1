@@ -3,24 +3,34 @@ const taskDialog = document.querySelector('#taskDialog');
 const confirmButton = taskDialog.querySelector('#createDialogButton');
 const cancelButton = document.querySelector('#cancelButton');
 const taskList = document.querySelector('.task-list');
+// const deleteButton = document.querySelector('')
+const taskTitle = document.querySelector('#taskTitle');
+const taskImportance = document.querySelector('#taskImportance');
+const taskDueDate = document.querySelector('#taskDueDate');
+const taskCompletion = document.querySelector('#taskCompletion');
+const taskDescription = document.querySelector('#taskDescription');
+
 function createTask() {
-  // console.log('create a task');
-  // const newTask = document.createElement('article');
-  // newTask.innerHTML =
-  // newTask.textContent = 'this is a test';
+  const title = (taskTitle.value !== '') ? taskTitle.value : 'My Task Title';
+  const dueDate = (taskDueDate.value !== null) ? taskDueDate.value : 'Today';
+  const description = (taskDescription.value !== null) ? taskDescription.value : '';
+  const importance = (taskImportance.value !== null) ? taskImportance.value : '';
   taskList.insertAdjacentHTML(
     'beforeend',
     `<article class="task-container">
   <div class="task-content">
     <button>Complete</button>
-    <h3>Example task name</h3>
-    <p>example notes for this task</p>
-    <p>in 7 days</p>
-    <p>Importance: 4/5</p>
+    <h3>${title}</h3>
+    <p>${description}</p>
+    <p>Due ${dueDate}</p>
+    <p>Importance: ${importance}</p>
   </div>
   <div class="task-edit">
     <button>✎ Edit</button>
   </div>
+  <div class="btn task-delete">
+  <button>Delete</button>
+</div>
 </article>`,
   );
 }
