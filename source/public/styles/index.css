@@ -1,7 +1,7 @@
 @import url('reset.css');
 @font-face {
   font-family: 'Metropolis';
-  src: url(/CASFEE-Projekt1/source/public/fonts/Metropolis-Font/Metropolis-Regular.otf);
+  src: url(../fonts/Metropolis-Font/Metropolis-Regular.otf);
 }
 
 
@@ -57,7 +57,7 @@ select:focus,
 input:focus {
   border-color: var(--primary-color);
 }
-   
+
 .container {
   display: grid;
   grid-template-rows: 4fr 2fr 40fr 1fr;
