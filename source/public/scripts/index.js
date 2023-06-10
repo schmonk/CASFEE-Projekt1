@@ -107,6 +107,7 @@ document.addEventListener('click', (event) => {
 createTaskButton.addEventListener('click', () => {
   taskDialog.querySelector('h2').textContent = 'Create a task';
   taskDialog.querySelector('#createDialogButton').textContent = 'Create';
+  taskDialog.querySelector('#taskImportance').value = 3;
   taskDialog.showModal();
 });
 
