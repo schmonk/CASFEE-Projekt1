@@ -94,7 +94,10 @@ input:focus {
 }
 
 .filterSort {
-  display: flex;
+  width: 100%;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
   gap: 1rem;
 }
 
@@ -114,7 +117,7 @@ input:focus {
   border: 1px solid var(--outline-color);
   border-radius: 0.6rem;
   padding: 1rem;
-  gap: 0.6rem;
+  gap: 1rem;
 }
 
 .task-content {
