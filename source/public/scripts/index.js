@@ -64,7 +64,9 @@ function createTask() {
   const title = (taskTitle.value !== '') ? taskTitle.value : 'My Task Title';
   const dueDate = (taskDueDate.value !== '') ? taskDueDate.value : 'today';
   const description = (taskDescription.value !== '') ? taskDescription.value : 'No description';
-  const importance = (taskImportance.value !== '') ? taskImportance.value : '3';
+  let importance = (taskImportance.value !== '') ? taskImportance.value : '3';
+  importance = importance < 0 ? 0 : importance;
+  importance = importance > 5 ? 5 : importance;
   taskList.insertAdjacentHTML(
     'beforeend',
     `<article class="task-container">
