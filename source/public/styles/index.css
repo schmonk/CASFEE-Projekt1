@@ -161,3 +161,7 @@ dialog::backdrop {
   justify-content: end;
   gap: 0.4rem;
 } 
+
+.completed {
+  opacity: 0.4;
+}

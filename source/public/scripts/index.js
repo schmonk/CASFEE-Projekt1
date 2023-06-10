@@ -21,11 +21,20 @@ function addATask() {
   taskStore.addTask(myNewTask);
 }
 
+function completeTask(event) {
+  if (event.target.classList.contains('task-complete')) {
+    console.log('toggle completion');
+    event.preventDefault();
+    const element = event.target.parentElement;
+    element.classList.toggle('completed');
+  }
+}
+
 function deleteTask(event) {
   if (event.target.classList.contains('task-delete')) {
     console.log('delete maybe?');
     event.preventDefault();
-    const element = event.target.parentElement.parentElement;
+    const element = event.target.parentElement;
     element.remove();
   }
 }
@@ -50,19 +59,15 @@ function createTask() {
   taskList.insertAdjacentHTML(
     'beforeend',
     `<article class="task-container">
-      <button>Complete</button>
+      <button class="btn task-complete" >Complete</button>
       <div class="task-content">
         <h3>${title}</h3>
         <p>${description}</p>
       </div>
       <p>Due ${dueDate}</p>
       <p>Importance: ${importance}</p>
-      <div >
         <button class="btn task-edit">✎ Edit</button>
-      </div>
-      <div>
         <button class="btn task-delete">Delete</button>
-      </div>
     </article>`,
   );
 }
@@ -72,6 +77,13 @@ document.addEventListener('click', (event) => {
   if (event.target.classList.contains('task-delete')) {
     console.log(`delete ${event.target} now`);
     deleteTask(event);
+  }
+});
+
+document.addEventListener('click', (event) => {
+  // console.log(`classList: ${event.target.classList}`);
+  if (event.target.classList.contains('task-complete')) {
+    completeTask(event);
   }
 });
 
