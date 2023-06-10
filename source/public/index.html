@@ -33,38 +33,23 @@
         <div class="filterSort">
           <div class="sort">
             <button type="button">Hide completed</button>
-            <button id="sortName" class="btn" type="button">Name</button>
-            <button id="dueDate" type="button">Date due</button>
-            <button id="creationDate" type="button">Date created</button>
-            <button id="importance" type="button">Importance</button>
+            <button id="sortName" class="btn" type="button">Name ↑</button>
+            <button id="dueDate" type="button">Date due ↑</button>
+            <button id="creationDate" type="button">Date created ↑</button>
+            <button id="importance" type="button">Importance ↑</button>
         </div>
       </section>
       <!-- The Task list. Each Task is in an article -->
       <section class="task-list">
-<!--         <article class="task-container">
-            <button>Complete</button>
-            <div class="task-content">
-              <h3>Example task name</h3>
-              <p class="task-description">example notes for this task</p>
-            </div>
-            <p>in 7 days</p>
-            <p>Importance: 4/5</p>       
-            <div class="btn task-delete">
-              <button>Delete</button>
-            </div>
-          <div class="btn task-edit">
-            <button>✎ Edit</button>
-          </div>
-        </article> -->
       </section>
 
       <!-- Dialog to create and edit a task -->
       <dialog id="taskDialog">
-        <h2>Create and edit a task</h2>
+        <h2>Create a task</h2>
         <form>
           <div class="taskInput" id="taskTitleInput">
             <label for="title">Title</label>
-            <input type="text" name="title" id="taskTitle" placeholder="My Task" value="My Task"/>
+            <input type="text" name="title" id="taskTitle" placeholder="My Task"/>
           </div>
           <div class="taskInput" id="taskImportanceInput">
             <label for="importance">Importance</label>

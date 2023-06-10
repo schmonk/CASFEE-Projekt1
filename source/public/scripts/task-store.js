@@ -7,4 +7,26 @@ const tasks = [
   },
 ];
 
-console.log(tasks.length);
+function addTask(task) {
+  // console.log(`task store adds this task: ${task.title}`);
+  tasks.push(task);
+}
+
+function findTask(taskId) {
+  console.log(taskId);
+  return tasks.find(/* test */);
+}
+
+function deleteTask(taskId) {
+  console.log(taskId);
+  const targetIndex = findTask(taskId).id;
+  tasks.splice(targetIndex, 1);
+}
+
+function listTasks() {
+  // console.log('listing tasks here..');
+  return tasks;
+}
+export default {
+  tasks, listTasks, addTask, findTask, deleteTask,
+};
