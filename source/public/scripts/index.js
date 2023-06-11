@@ -44,11 +44,18 @@ function updateTask() {
     description,
     importance,
   };
+  const element = taskList.querySelector(`#${id}`);
+  element.querySelector('.task-title').textContent = title;
+  element.querySelector('.task-description').textContent = description;
+  element.querySelector('.task-importance').textContent = importance;
+  element.querySelector('.task-due-date').textContent = dueDate;
+  element.querySelector('.task-created-date').textContent = dueDate;
+
   localStorage.setItem(`${id}`, JSON.stringify(newTask));
 }
 
 function createId() {
-  return Date.now().toString();
+  return `t${Date.now().toString()}`;
 }
 
 function createTask() {
