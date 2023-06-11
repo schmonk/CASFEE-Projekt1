@@ -2,7 +2,7 @@
 
 const createTaskButton = document.querySelector('#createTaskButton');
 const taskDialog = document.querySelector('#taskDialog');
-const confirmButton = taskDialog.querySelector('#createDialogButton');
+// const saveButton = taskDialog.querySelector('#saveDialogButton');
 const cancelButton = document.querySelector('#cancelButton');
 const deleteButton = document.querySelector('.task-delete');
 const taskList = document.querySelector('.task-list');
@@ -14,13 +14,36 @@ const taskDescription = document.querySelector('#taskDescription');
 function editTask(event) {
   const element = event.target.parentElement.parentElement; // the task container
   const retrievedTask = localStorage.getItem(element.id.toString());
+  console.log(`edit this id: ${element.id.toString()}`);
   const parsedTask = JSON.parse(retrievedTask);
   taskTitle.value = parsedTask.title;
   taskImportance.value = parsedTask.importance;
   taskDescription.value = parsedTask.description;
-  taskDialog.querySelector('h2').textContent = 'Edit this task';
-  taskDialog.querySelector('#createDialogButton').textContent = 'Update';
+  taskDialog.querySelector('h2').textContent = `Edit "${taskTitle.value}"`;
+  taskDialog.querySelector('#saveDialogButton').textContent = 'Update';
+  taskDialog.querySelector('#saveDialogButton').classList.add('task-update');
   taskDialog.showModal();
+}
+
+function updateTask(event) {
+  const element = event.target.parentElement.parentElement; // the task container
+  const id = element.id.toString();
+  console.log(`update this is: ${element.id.toString()}`);
+  const title = (taskTitle.value !== '') ? taskTitle.value : 'My Task Title';
+  const dueDate = (taskDueDate.value !== '') ? taskDueDate.value : 'today';
+  const description = (taskDescription.value !== '') ? taskDescription.value : 'No description';
+  let importance = (taskImportance.value !== '') ? taskImportance.value : '3';
+  importance = importance < 0 ? 0 : importance;
+  importance = importance > 5 ? 5 : importance;
+  const newTask = {
+    id,
+    title,
+    dueDate,
+    description,
+    importance,
+  };
+  localStorage.setItem(`${id}`, JSON.stringify(newTask));
+  // alert(`update this id: ${id}`);
 }
 
 function completeTask(event) {
@@ -91,13 +114,19 @@ function createTask() {
   localStorage.setItem(`${id}`, JSON.stringify(newTask));
 }
 
-function updateTask() {
-
-}
-
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('task-delete')) {
     deleteTask(event);
+  }
+});
+
+document.addEventListener('click', (event) => {
+  if (event.target.classList.contains('task-update')) {
+    // alert(`update task`);
+    updateTask(event);
+    taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
+    taskDialog.close();
+    clearDialog();
   }
 });
 
@@ -113,19 +142,32 @@ document.addEventListener('click', (event) => {
   }
 });
 
+document.addEventListener('click', (event) => {
+  event.preventDefault();
+  if (event.target.classList.contains('task-create') && !event.target.classList.contains('task-update')) {
+    // alert(`create task`);
+    createTask(event);
+    taskDialog.close();
+    clearDialog();
+  }
+});
+
 createTaskButton.addEventListener('click', () => {
   taskDialog.querySelector('h2').textContent = 'Create a task';
-  taskDialog.querySelector('#createDialogButton').textContent = 'Create';
+  taskDialog.querySelector('#saveDialogButton').textContent = 'Create';
   taskDialog.querySelector('#taskImportance').value = 3;
   taskDialog.showModal();
 });
 
-confirmButton.addEventListener('click', (e) => {
-  e.preventDefault();
-  createTask();
+/* saveButton.addEventListener('click', (e) => {
+  if (!e.target.classList.contains('task-update')) {
+    createTask(e);
+  } else if (e.target.classList.contains('task-update')) {
+    updateTask(e);
+  }
   taskDialog.close();
   clearDialog();
-});
+}); */
 
 cancelButton.addEventListener('click', (e) => {
   e.preventDefault();
