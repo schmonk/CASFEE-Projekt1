@@ -1,19 +1,28 @@
+const tasks = [];
+
 function renderTasks() {
   // render;
 }
 
-function createTask() {
-  // create;
+function addTask() {
+  console.log('add to array');
+  tasks.push();
+  return tasks.length;
 }
 
 function updateTask() {
+  console.log('update array');
   // update;
 }
 
-function deleteTask() {
+function removeTask() {
   // delete;
 }
-createTask();
+addTask();
 updateTask();
-deleteTask();
+removeTask();
 renderTasks();
+
+export default {
+  addTask, updateTask, removeTask, renderTasks,
+};

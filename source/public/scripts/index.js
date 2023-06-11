@@ -1,4 +1,5 @@
 // import { tasks } from './tasks.json'; // gives disallowed MIME type error
+// import taskManager from './taskManager';
 
 const createTaskButton = document.querySelector('#createTaskButton');
 const taskDialog = document.querySelector('#taskDialog');
@@ -46,7 +47,6 @@ function updateTask() {
   element.querySelector('.task-importance').textContent = importance;
   element.querySelector('.task-due-date').textContent = `Due ${dueDate}`;
   element.querySelector('.task-created-date').textContent = `Created ${dueDate}`;
-
   localStorage.setItem(`${id}`, JSON.stringify(newTask));
 }
 
@@ -161,7 +161,6 @@ cancelButton.addEventListener('click', (e) => {
 function renderTask(key) {
   const retrievedTask = localStorage.getItem(key.toString());
   const parsedTask = JSON.parse(retrievedTask);
-  
   taskList.insertAdjacentHTML(
     'beforeend',
     `<article id="${parsedTask.id}" class="task-container">
@@ -178,13 +177,12 @@ function renderTask(key) {
       <button class="btn task-edit">Edit</button>
       </div>
       </article>`,
-  ); 
+  );
 }
 
-function logEachKey() {
+function loopExistingLocalStorageKeys() {
   for (let i = 0; i < localStorage.length; i += 1) {
     const myKey = localStorage.key(i);
-    // console.log(myKey);
     if (myKey.toString().at(0) === 'z') {
       renderTask((myKey));
     }
@@ -192,5 +190,5 @@ function logEachKey() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  logEachKey();
+  loopExistingLocalStorageKeys();
 });
