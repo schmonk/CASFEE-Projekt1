@@ -10,11 +10,14 @@ const taskTitle = document.querySelector('#taskTitle');
 const taskImportance = document.querySelector('#taskImportance');
 const taskDueDate = document.querySelector('#taskDueDate');
 const taskDescription = document.querySelector('#taskDescription');
+let currentEditId = '';
 
-function editTask(event) {
+function openEditDialog(event) {
   const element = event.target.parentElement.parentElement; // the task container
   const retrievedTask = localStorage.getItem(element.id.toString());
-  console.log(`edit this id: ${element.id.toString()}`);
+  // console.log(`edit this id: ${element.id.toString()}`);
+  currentEditId = element.id.toString();
+  console.log(`currentEditId is: ${currentEditId}`);
   const parsedTask = JSON.parse(retrievedTask);
   taskTitle.value = parsedTask.title;
   taskImportance.value = parsedTask.importance;
@@ -22,19 +25,18 @@ function editTask(event) {
   taskDialog.querySelector('h2').textContent = `Edit "${taskTitle.value}"`;
   taskDialog.querySelector('#saveDialogButton').textContent = 'Update';
   taskDialog.querySelector('#saveDialogButton').classList.add('task-update');
+  taskDialog.querySelector('#saveDialogButton').classList.remove('task-create');
   taskDialog.showModal();
 }
-
-function updateTask(event) {
-  const element = event.target.parentElement.parentElement; // the task container
-  const id = element.id.toString();
-  console.log(`update this is: ${element.id.toString()}`);
+function updateTask() {
+  console.log(`update id: ${currentEditId}`);
   const title = (taskTitle.value !== '') ? taskTitle.value : 'My Task Title';
   const dueDate = (taskDueDate.value !== '') ? taskDueDate.value : 'today';
-  const description = (taskDescription.value !== '') ? taskDescription.value : 'No description';
+  const description = (taskDescription.value !== '') ? taskDescription.value : '';
   let importance = (taskImportance.value !== '') ? taskImportance.value : '3';
   importance = importance < 0 ? 0 : importance;
   importance = importance > 5 ? 5 : importance;
+  const id = currentEditId;
   const newTask = {
     id,
     title,
@@ -43,36 +45,6 @@ function updateTask(event) {
     importance,
   };
   localStorage.setItem(`${id}`, JSON.stringify(newTask));
-  // alert(`update this id: ${id}`);
-}
-
-function completeTask(event) {
-  if (event.target.classList.contains('task-complete')) {
-    event.preventDefault();
-    const element = event.target.parentElement;
-    element.classList.toggle('completed');
-  }
-}
-
-function deleteTask(event) {
-  if (event.target.classList.contains('task-delete')) {
-    event.preventDefault();
-    const element = event.target.parentElement.parentElement;
-    localStorage.removeItem(element.id.toString());
-    element.remove();
-  }
-}
-if (deleteButton) {
-  deleteButton.addEventListener('click', (event) => {
-    deleteTask(event);
-  });
-}
-
-function clearDialog() {
-  taskTitle.value = '';
-  taskDueDate.value = '';
-  taskDescription.value = '';
-  taskImportance.value = '';
 }
 
 function createId() {
@@ -83,7 +55,7 @@ function createTask() {
   const id = createId();
   const title = (taskTitle.value !== '') ? taskTitle.value : 'My Task Title';
   const dueDate = (taskDueDate.value !== '') ? taskDueDate.value : 'today';
-  const description = (taskDescription.value !== '') ? taskDescription.value : 'No description';
+  const description = (taskDescription.value !== '') ? taskDescription.value : '';
   let importance = (taskImportance.value !== '') ? taskImportance.value : '3';
   importance = importance < 0 ? 0 : importance;
   importance = importance > 5 ? 5 : importance;
@@ -114,6 +86,27 @@ function createTask() {
   localStorage.setItem(`${id}`, JSON.stringify(newTask));
 }
 
+function deleteTask(event) {
+  if (event.target.classList.contains('task-delete')) {
+    event.preventDefault();
+    const element = event.target.parentElement.parentElement;
+    localStorage.removeItem(element.id.toString());
+    element.remove();
+  }
+}
+if (deleteButton) {
+  deleteButton.addEventListener('click', (event) => {
+    deleteTask(event);
+  });
+}
+
+function clearDialog() {
+  taskTitle.value = '';
+  taskDueDate.value = '';
+  taskDescription.value = '';
+  taskImportance.value = '';
+}
+
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('task-delete')) {
     deleteTask(event);
@@ -123,29 +116,29 @@ document.addEventListener('click', (event) => {
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('task-update')) {
     // alert(`update task`);
-    updateTask(event);
+    updateTask();
     taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
     taskDialog.close();
     clearDialog();
   }
 });
 
-document.addEventListener('click', (event) => {
+/* document.addEventListener('click', (event) => {
   if (event.target.classList.contains('task-complete')) {
     completeTask(event);
   }
-});
+}); */
 
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('task-edit')) {
-    editTask(event);
+    openEditDialog(event);
   }
 });
 
 document.addEventListener('click', (event) => {
   event.preventDefault();
   if (event.target.classList.contains('task-create') && !event.target.classList.contains('task-update')) {
-    // alert(`create task`);
+    // console.log('create a new task');
     createTask(event);
     taskDialog.close();
     clearDialog();
@@ -156,18 +149,10 @@ createTaskButton.addEventListener('click', () => {
   taskDialog.querySelector('h2').textContent = 'Create a task';
   taskDialog.querySelector('#saveDialogButton').textContent = 'Create';
   taskDialog.querySelector('#taskImportance').value = 3;
+  taskDialog.querySelector('#saveDialogButton').classList.add('task-create');
+  taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
   taskDialog.showModal();
 });
-
-/* saveButton.addEventListener('click', (e) => {
-  if (!e.target.classList.contains('task-update')) {
-    createTask(e);
-  } else if (e.target.classList.contains('task-update')) {
-    updateTask(e);
-  }
-  taskDialog.close();
-  clearDialog();
-}); */
 
 cancelButton.addEventListener('click', (e) => {
   e.preventDefault();
