@@ -2,7 +2,6 @@
 
 const createTaskButton = document.querySelector('#createTaskButton');
 const taskDialog = document.querySelector('#taskDialog');
-// const saveButton = taskDialog.querySelector('#saveDialogButton');
 const cancelButton = document.querySelector('#cancelButton');
 const deleteButton = document.querySelector('.task-delete');
 const taskList = document.querySelector('.task-list');
@@ -15,9 +14,7 @@ let currentEditId = '';
 function openEditDialog(event) {
   const element = event.target.parentElement.parentElement; // the task container
   const retrievedTask = localStorage.getItem(element.id.toString());
-  // console.log(`edit this id: ${element.id.toString()}`);
   currentEditId = element.id.toString();
-  console.log(`currentEditId is: ${currentEditId}`);
   const parsedTask = JSON.parse(retrievedTask);
   taskTitle.value = parsedTask.title;
   taskImportance.value = parsedTask.importance;
@@ -29,7 +26,6 @@ function openEditDialog(event) {
   taskDialog.showModal();
 }
 function updateTask() {
-  console.log(`update id: ${currentEditId}`);
   const title = (taskTitle.value !== '') ? taskTitle.value : 'My Task Title';
   const dueDate = (taskDueDate.value !== '') ? taskDueDate.value : 'today';
   const description = (taskDescription.value !== '') ? taskDescription.value : '';
@@ -48,14 +44,16 @@ function updateTask() {
   element.querySelector('.task-title').textContent = title;
   element.querySelector('.task-description').textContent = description;
   element.querySelector('.task-importance').textContent = importance;
-  element.querySelector('.task-due-date').textContent = dueDate;
-  element.querySelector('.task-created-date').textContent = dueDate;
+  element.querySelector('.task-due-date').textContent = `Due ${dueDate}`;
+  element.querySelector('.task-created-date').textContent = `Created ${dueDate}`;
 
   localStorage.setItem(`${id}`, JSON.stringify(newTask));
 }
 
 function createId() {
-  return `t${Date.now().toString()}`;
+  // the id shouldnt start with a number so we can retrieve it with querySelector in updateTask()
+  // https://stackoverflow.com/questions/20306204/using-queryselector-with-ids-that-are-numbers
+  return `z${Date.now().toString()}`;
 }
 
 function createTask() {
@@ -130,12 +128,6 @@ document.addEventListener('click', (event) => {
   }
 });
 
-/* document.addEventListener('click', (event) => {
-  if (event.target.classList.contains('task-complete')) {
-    completeTask(event);
-  }
-}); */
-
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('task-edit')) {
     openEditDialog(event);
@@ -145,7 +137,6 @@ document.addEventListener('click', (event) => {
 document.addEventListener('click', (event) => {
   event.preventDefault();
   if (event.target.classList.contains('task-create') && !event.target.classList.contains('task-update')) {
-    // console.log('create a new task');
     createTask(event);
     taskDialog.close();
     clearDialog();
@@ -165,4 +156,41 @@ cancelButton.addEventListener('click', (e) => {
   e.preventDefault();
   taskDialog.close();
   clearDialog();
+});
+
+function renderTask(key) {
+  const retrievedTask = localStorage.getItem(key.toString());
+  const parsedTask = JSON.parse(retrievedTask);
+  
+  taskList.insertAdjacentHTML(
+    'beforeend',
+    `<article id="${parsedTask.id}" class="task-container">
+      <button class="btn task-complete" >Complete</button>
+      <div class="task-content">
+      <h3 class="task-title">${parsedTask.title}</h3>
+      <p class="task-description">${parsedTask.description}</p>
+      </div>
+      <p class="task-due-date">Due ${parsedTask.dueDate}</p>
+      <p class="task-created-date" >Created ${parsedTask.dueDate}</p>
+      <p >Importance: <span class="task-importance">${parsedTask.importance}</span></p>
+      <div class="buttongroup">
+      <button class="btn task-delete">Delete</button>
+      <button class="btn task-edit">Edit</button>
+      </div>
+      </article>`,
+  ); 
+}
+
+function logEachKey() {
+  for (let i = 0; i < localStorage.length; i += 1) {
+    const myKey = localStorage.key(i);
+    // console.log(myKey);
+    if (myKey.toString().at(0) === 'z') {
+      renderTask((myKey));
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  logEachKey();
 });
