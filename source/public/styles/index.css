@@ -139,7 +139,7 @@ input:focus {
   border: 1px solid var(--outline-color);
   border-radius: 0.6rem;
   margin: 5em auto;
-  padding: 1rem 2rem;
+  padding: 2rem 2rem;
 }
 .task-description {
   grid-column: 2 ;
@@ -148,7 +148,7 @@ input:focus {
   margin-bottom: 1rem;
 }
 .taskInput {
-  padding: 0.4rem 0rem;
+  padding: 1rem 0rem;
 }
 .taskInput input {
   width: 100%;

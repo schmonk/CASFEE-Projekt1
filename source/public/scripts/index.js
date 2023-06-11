@@ -10,7 +10,8 @@ const taskTitle = document.querySelector('#taskTitle');
 const taskImportance = document.querySelector('#taskImportance');
 const taskDueDate = document.querySelector('#taskDueDate');
 const taskDescription = document.querySelector('#taskDescription');
-let currentEditId = '';
+let currentEditId = ''; // global variable should be avoided, try to find a better way
+const tasks = [];
 
 function openEditDialog(event) {
   const element = event.target.parentElement.parentElement; // the task container
@@ -47,6 +48,7 @@ function updateTask() {
   element.querySelector('.task-importance').textContent = importance;
   element.querySelector('.task-due-date').textContent = `Due ${dueDate}`;
   element.querySelector('.task-created-date').textContent = `Created ${dueDate}`;
+  // tasks.push(newTask);
   localStorage.setItem(`${id}`, JSON.stringify(newTask));
 }
 
@@ -60,6 +62,8 @@ function createTask() {
   const id = createId();
   const title = (taskTitle.value !== '') ? taskTitle.value : 'My Task Title';
   const dueDate = (taskDueDate.value !== '') ? taskDueDate.value : 'today';
+  const tempD = new Date();
+  const creationDate = `${tempD.getUTCDate()}.${tempD.getUTCMonth()}.${tempD.getUTCFullYear()}`;
   const description = (taskDescription.value !== '') ? taskDescription.value : '';
   let importance = (taskImportance.value !== '') ? taskImportance.value : '3';
   importance = importance < 0 ? 0 : importance;
@@ -68,6 +72,7 @@ function createTask() {
     id,
     title,
     dueDate,
+    creationDate,
     description,
     importance,
   };
@@ -80,7 +85,7 @@ function createTask() {
         <p class="task-description">${newTask.description}</p>
       </div>
       <p class="task-due-date">Due ${newTask.dueDate}</p>
-      <p class="task-created-date" >Created ${newTask.dueDate}</p>
+      <p class="task-created-date" >Created ${newTask.creationDate}</p>
       <p >Importance: <span class="task-importance">${newTask.importance}</span></p>
       <div class="buttongroup">
         <button class="btn task-delete">Delete</button>
@@ -88,6 +93,8 @@ function createTask() {
       </div>
     </article>`,
   );
+  tasks.push(newTask);
+  console.log(`tasks ${tasks} and length is: ${tasks.length} and the first element is: ${tasks[0].title}`);
   localStorage.setItem(`${id}`, JSON.stringify(newTask));
 }
 
@@ -96,6 +103,7 @@ function deleteTask(event) {
     event.preventDefault();
     const element = event.target.parentElement.parentElement;
     localStorage.removeItem(element.id.toString());
+    // tasks.find((id === element.id.toString()));
     element.remove();
   }
 }
