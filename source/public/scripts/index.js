@@ -94,17 +94,28 @@ function createTask() {
     </article>`,
   );
   tasks.push(newTask);
-  console.log(`tasks ${tasks} and length is: ${tasks.length} and the first element is: ${tasks[0].title}`);
+  console.log(tasks);
   localStorage.setItem(`${id}`, JSON.stringify(newTask));
+}
+function findObject(arr, property, value) {
+  for (let i = 0; i < arr.length; i += 1) {
+    if (arr[i][property] === value) {
+      return arr[i]; // Found the object, return it
+    }
+  }
+  return null; // Object not found
 }
 
 function deleteTask(event) {
   if (event.target.classList.contains('task-delete')) {
     event.preventDefault();
     const element = event.target.parentElement.parentElement;
+    // console.log((element.id.toString()));
+    const indexToremove = tasks.indexOf(findObject(tasks, 'id', element.id.toString()));
+    tasks.splice(indexToremove, 1);
     localStorage.removeItem(element.id.toString());
-    // tasks.find((id === element.id.toString()));
     element.remove();
+    console.log(tasks);
   }
 }
 if (deleteButton) {
