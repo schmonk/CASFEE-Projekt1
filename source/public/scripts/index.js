@@ -13,6 +13,15 @@ const taskDescription = document.querySelector('#taskDescription');
 let currentEditId = ''; // global variable should be avoided, try to find a better way
 const tasks = [];
 
+function findObject(arr, property, value) {
+  for (let i = 0; i < arr.length; i += 1) {
+    if (arr[i][property] === value) {
+      return arr[i]; // Found the object, return it
+    }
+  }
+  return null; // Object not found
+}
+
 function openEditDialog(event) {
   const element = event.target.parentElement.parentElement; // the task container
   const retrievedTask = localStorage.getItem(element.id.toString());
@@ -49,6 +58,9 @@ function updateTask() {
   element.querySelector('.task-due-date').textContent = `Due ${dueDate}`;
   element.querySelector('.task-created-date').textContent = `Created ${dueDate}`;
   // tasks.push(newTask);
+  console.log(`element: ${element.nodeName}`);
+  const indexToUpdate = tasks.indexOf(findObject(tasks, 'id', element.id.toString()));
+  console.log(`update this ID: ${indexToUpdate}`);
   localStorage.setItem(`${id}`, JSON.stringify(newTask));
 }
 
@@ -97,20 +109,11 @@ function createTask() {
   console.log(tasks);
   localStorage.setItem(`${id}`, JSON.stringify(newTask));
 }
-function findObject(arr, property, value) {
-  for (let i = 0; i < arr.length; i += 1) {
-    if (arr[i][property] === value) {
-      return arr[i]; // Found the object, return it
-    }
-  }
-  return null; // Object not found
-}
 
 function deleteTask(event) {
   if (event.target.classList.contains('task-delete')) {
     event.preventDefault();
     const element = event.target.parentElement.parentElement;
-    // console.log((element.id.toString()));
     const indexToremove = tasks.indexOf(findObject(tasks, 'id', element.id.toString()));
     tasks.splice(indexToremove, 1);
     localStorage.removeItem(element.id.toString());
