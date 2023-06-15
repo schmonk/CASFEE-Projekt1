@@ -8,6 +8,7 @@
   "rules": {
     "no-console": 0,
     "allowTemplateLiterals": true,
-    "import/extensions": { "js": "always"}
+    "import/extensions": { "js": "always"},
+    "comments": 150
   }
 }

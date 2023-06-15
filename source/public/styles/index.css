@@ -177,7 +177,6 @@ dialog::backdrop {
 } 
 
 .completed {
-  /* opacity: 0.4; */
   color: var(--primary-text-disabled-color);
   border-color: var(--primary-text-disabled-color);
 }

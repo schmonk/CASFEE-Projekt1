@@ -15,7 +15,6 @@ themeButton.addEventListener('click', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  // alert('check for style now');
   if (localStorage.getItem('themeState')) {
     if (localStorage.getItem('themeState') === 'dark') {
       toggleTheme();
