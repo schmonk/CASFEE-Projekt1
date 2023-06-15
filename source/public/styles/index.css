@@ -134,7 +134,7 @@ input:focus {
 }
 
 /* Create and edit dialog */
-#taskDialog {
+.taskDialog {
   background-color: var(--bg-color);
   color: var(--primary-text-color);
   width: 36em;
@@ -146,7 +146,7 @@ input:focus {
 .task-description {
   grid-column: 2 ;
 }
-#taskDialog h2 {
+.taskDialog h2 {
   margin-bottom: 1rem;
 }
 .taskInput {

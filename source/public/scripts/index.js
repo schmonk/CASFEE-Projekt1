@@ -1,5 +1,5 @@
 const createTaskButton = document.querySelector('#createTaskButton');
-const taskDialog = document.querySelector('#taskDialog');
+const taskDialog = document.querySelector('.taskDialog');
 const cancelButton = document.querySelector('#cancelButton');
 const deleteButton = document.querySelector('.task-delete');
 const taskList = document.querySelector('.task-list');
@@ -88,9 +88,6 @@ function createCreationDate() {
 
 function createDueDate() {
   const dueDate = new Date(`${taskDueDate.value}`);
-  console.log(`taskDueDate: ${taskDueDate.value}`);
-  console.log(`taskDueDate type: ${typeof taskDueDate.value}`);
-  console.log(`computed Duedate: ${dueDate}`);
   return formatDate(dueDate);
 }
 function createDefaultDueDate() {
@@ -101,13 +98,9 @@ function createDefaultDueDate() {
 }
 
 function formatDate(date) {
-/*   console.log(`the date is: ${date}`);
-  console.log(`the type is: ${typeof date}`); */
-  const dateFormatOptions = { year: 'numeric', month: 'numeric', day: 'numeric' };
+  const dateFormatOptions = { day: 'numeric', month: 'numeric', year: 'numeric'};
   const dateFormat = new Intl.DateTimeFormat('de-DE', dateFormatOptions);
-  const formattedDate = dateFormat.format(date);
-  // console.log(`this worked. formatted date: ${formattedDate}`);
-  return formattedDate;
+  return dateFormat.format(date);
 }
 
 function clamp (value, lower, upper) {
