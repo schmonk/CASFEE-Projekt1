@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/extensions
+import taskManager from './task-manager.js';
+
 const createTaskButton = document.querySelector('#createTaskButton');
 const taskDialog = document.querySelector('.taskDialog');
 const cancelButton = document.querySelector('#cancelButton');
@@ -88,8 +91,7 @@ function updateTask(event) {
   tasks[indexToUpdate] = task;
   console.clear();
   console.table(tasks);
-  // console.log(`update this ID: ${indexToUpdate}`);
-  // localStorage.setItem(`${id}`, JSON.stringify(newTask));
+  console.log(tasks);
 }
 
 function createId() {
@@ -119,6 +121,27 @@ function createDefaultDueDate() {
   return formatDate(date);
 }
 
+function createTaskHTML(task) {
+  return `<article id="${task.id}" class="task-container ${(task.completion) ? 'completed' : ''}">
+  <input type="checkbox" name="completion" class="task-completion" ${(task.completion) ? 'checked' : ''}/>
+    <div class="task-content">
+      <h3 class="task-title">${task.title}</h3>
+      <p class="task-description">${task.description}</p>
+    </div>
+    <p class="task-due-date">Due ${task.dueDate}</p>
+    <p class="task-created-date" >Created ${task.creationDate}</p>
+    <p >Importance: <span class="task-importance">${task.importance}</span></p>
+    <div class="buttongroup">
+      <button class="btn task-delete">Delete</button>
+      <button class="btn task-edit">Edit</button>
+    </div>
+  </article>`;
+}
+
+function addTaskToDOM(task) {
+  taskList.insertAdjacentHTML('beforeend', createTaskHTML(task));
+}
+
 function createTask(e) {
   e.preventDefault();
   const newTask = {
@@ -130,25 +153,7 @@ function createTask(e) {
     importance: taskImportance.value ? clamp(taskImportance.value, 0, 5) : '3',
     completion: taskCompletion.checked,
   };
-
-  taskList.insertAdjacentHTML(
-    'beforeend',
-    `<article id="${newTask.id}" class="task-container ${(newTask.completion) ? 'completed' : ''}">
-    <input type="checkbox" name="completion" class="task-completion" ${(newTask.completion) ? 'checked' : ''}/>
-      <div class="task-content">
-        <h3 class="task-title">${newTask.title}</h3>
-        <p class="task-description">${newTask.description}</p>
-      </div>
-      <p class="task-due-date">Due ${newTask.dueDate}</p>
-      <p class="task-created-date" >Created ${newTask.creationDate}</p>
-      <p >Importance: <span class="task-importance">${newTask.importance}</span></p>
-      <div class="buttongroup">
-        <button class="btn task-delete">Delete</button>
-        <button class="btn task-edit">Edit</button>
-      </div>
-    </article>`,
-  );
-
+  addTaskToDOM(newTask);
   tasks.push(newTask);
   console.clear();
   console.table(tasks);
@@ -256,5 +261,18 @@ document.addEventListener('click', (event) => {
     createTask(event);
     taskDialog.close();
     clearDialog();
+  }
+});
+
+function initializeDefaultTasks () {
+  const loadedDefaultTasks = taskManager.tasksSorted();
+  for (let i = 0; i < loadedDefaultTasks.length; i += 1) {
+    addTaskToDOM(loadedDefaultTasks[i]);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (tasks.length === 0) {
+    initializeDefaultTasks();
   }
 });
