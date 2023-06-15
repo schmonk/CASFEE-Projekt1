@@ -45,8 +45,8 @@ function setupEditDialog(title) {
 }
 
 function openEditDialog(event) {
-  const element = event.target.parentElement.parentElement; // the task container
-  const currentId = element.id.toString();
+  const taskContainer = event.target.parentElement.parentElement; // the task container
+  const currentId = taskContainer.id.toString();
   const existingTask = findObject(tm.tasks, 'id', currentId);
 
   taskTitle.value = existingTask.title;
@@ -60,16 +60,20 @@ function openEditDialog(event) {
   taskDialog.showModal();
 }
 
-function updateElementInList(element, task) {
-  const el = element;
+function updateElementInList(taskContainer, task) {
+  const tc = taskContainer;
   const ta = task;
-  el.querySelector('.task-title').textContent = ta.title;
-  el.querySelector('.task-description').textContent = ta.description;
-  el.querySelector('.task-importance').textContent = ta.importance;
-  el.querySelector('.task-due-date').textContent = `Due ${ta.dueDate}`;
-  el.querySelector('.task-created-date').textContent = `Created ${ta.creationDate}`;
-  el.querySelector('.task-completion').checked = ta.completion;
-  el.classList.toggle('completed');
+  tc.querySelector('.task-title').textContent = ta.title;
+  tc.querySelector('.task-importance').textContent = ta.importance;
+  tc.querySelector('.task-due-date').textContent = `Due ${ta.dueDate}`;
+  tc.querySelector('.task-description').textContent = ta.description;
+  tc.querySelector('.task-created-date').textContent = `Created ${ta.creationDate}`;
+  tc.querySelector('.task-completion').checked = ta.completion;
+  if (ta.completion) {
+    tc.classList.add('completed');
+  } else {
+    tc.classList.remove('completed');
+  }
 }
 
 function updateTask(event) {
@@ -88,7 +92,7 @@ function updateTask(event) {
   const element = taskList.querySelector(`#${existingTask.id}`);
   updateElementInList(element, task);
   const indexToUpdate = tm.tasks.indexOf(findObject(tm.tasks, 'id', taskDialog.id.toString()));
-  tm.tasks[indexToUpdate] = task;
+  tm.updateTask(task, indexToUpdate);
 }
 
 function createId() {

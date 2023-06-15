@@ -24,6 +24,12 @@ function removeTask(indexToremove) {
   console.table(tasks);
 }
 
+function updateTask(taskToUpdate, index) {
+  tasks[index] = taskToUpdate;
+  console.clear();
+  console.table(tasks);
+}
+
 function compareTasks(task1, task2) {
   console.log(`difference: ${task2.creationDate - task1.creationDate}`);
   return task2.creationDate - task1.creationDate;
@@ -57,5 +63,5 @@ function tasksSorted() {
 } */
 
 export default {
-  tasksSorted, compareTasks, defTasks, testFn, defaultTasks, tasks, addTask, removeTask,
+  tasksSorted, compareTasks, defTasks, testFn, defaultTasks, tasks, addTask, removeTask, updateTask,
 };
