@@ -21,7 +21,7 @@ const placeholderTaskTitle = 'Task title';
 const placeholderTaskDescription = 'Task description';
 const sortedUpwardsGlyph = '↑';
 const sortedDownwardGlyph = '↓';
-const tasks = [];
+// const tasks = [];
 
 console.log(`localStorageKey is: ${localStorageKey}, UP ${sortedUpwardsGlyph} and DOWN ${sortedDownwardGlyph} `);
 
@@ -54,12 +54,11 @@ function setupEditDialog(title) {
 function openEditDialog(event) {
   const taskContainer = event.target.parentElement.parentElement; // the task container
   const currentId = taskContainer.id.toString();
-  console.log(`ID: ${currentId}`);
-  console.log(`find object: ${findObject(tm.tasks, 'id', currentId)}`);
+  /*   console.log(`ID: ${currentId}`);
+  console.log(`find object: ${findObject(tm.tasks, 'id', currentId)}`); */
   const existingTask = findObject(tm.tasks, 'id', currentId);
-  console.log(existingTask);
-  console.log(`tasks: ${tm.tasks}, currentId: ${currentId}`);
-
+  /*   console.log(existingTask);
+  console.log(`tasks: ${tm.tasks}, currentId: ${currentId}`); */
   taskTitle.value = existingTask.title;
   taskImportance.value = existingTask.importance;
   taskDescription.value = existingTask.description;
@@ -240,10 +239,13 @@ sortCreationDateButton.addEventListener('click', (e) => {
 filterCompletedButton.addEventListener('click', (e) => {
   e.preventDefault();
   filterCompletedButton.classList.toggle('sorting-active');
-  const completedTasks = findObject(tasks, 'completion', true);
-  for (let i = 0; i < completedTasks.length; i += 1) {
-    console.log('beep');
-    // Do stuff
+  // const completedTasks = findObject(tm.tasks, 'completion', true);
+  // console.log(`completedTasks: ${completedTasks}`);
+  for (let i = 0; i < tm.tasks.length; i += 1) {
+    if (tm.tasks[i].completion === true) {
+      const element = taskList.querySelector(`#${tm.tasks[i].id}`);
+      element.classList.toggle('hidden');
+    }
   }
 });
 
