@@ -13,6 +13,8 @@ const taskDescription = document.querySelector('#taskDescription');
 let currentEditId = ''; // global variable should be avoided, try to find a better way
 const tasks = [];
 
+console.log(tasks);
+
 function findObject(arr, property, value) {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][property] === value) {

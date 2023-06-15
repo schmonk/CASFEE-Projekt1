@@ -148,11 +148,20 @@ input:focus {
   margin-bottom: 1rem;
 }
 .taskInput {
+  display: flex;
+  flex-direction: column;
   padding: 1rem 0rem;
 }
+
 .taskInput input {
   width: 100%;
+  margin-top: 0.4rem;
 }
+
+.taskInput input[type='checkbox'] {
+  width: 2rem;
+}
+
 dialog::backdrop {
   background: hsla(0, 0%, 8%, 0.9);
 }
