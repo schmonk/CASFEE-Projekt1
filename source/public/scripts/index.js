@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/extensions
-import taskManager from './task-manager.js';
+import tm from './task-manager.js';
 
 const createTaskButton = document.querySelector('#createTaskButton');
 const taskDialog = document.querySelector('.taskDialog');
@@ -47,7 +47,7 @@ function setupEditDialog(title) {
 function openEditDialog(event) {
   const element = event.target.parentElement.parentElement; // the task container
   const currentId = element.id.toString();
-  const existingTask = findObject(tasks, 'id', currentId);
+  const existingTask = findObject(tm.tasks, 'id', currentId);
 
   taskTitle.value = existingTask.title;
   taskImportance.value = existingTask.importance;
@@ -74,7 +74,7 @@ function updateElementInList(element, task) {
 
 function updateTask(event) {
   event.preventDefault();
-  const existingTask = findObject(tasks, 'id', taskDialog.id);
+  const existingTask = findObject(tm.tasks, 'id', taskDialog.id);
 
   const task = {
     id: existingTask.id,
@@ -87,11 +87,8 @@ function updateTask(event) {
   };
   const element = taskList.querySelector(`#${existingTask.id}`);
   updateElementInList(element, task);
-  const indexToUpdate = tasks.indexOf(findObject(tasks, 'id', taskDialog.id.toString()));
-  tasks[indexToUpdate] = task;
-  console.clear();
-  console.table(tasks);
-  console.log(tasks);
+  const indexToUpdate = tm.tasks.indexOf(findObject(tm.tasks, 'id', taskDialog.id.toString()));
+  tm.tasks[indexToUpdate] = task;
 }
 
 function createId() {
@@ -154,47 +151,21 @@ function createTask(e) {
     completion: taskCompletion.checked,
   };
   addTaskToDOM(newTask);
-  tasks.push(newTask);
-  console.clear();
-  console.table(tasks);
+  tm.addTask(newTask);
 }
 
 function deleteTask(event) {
   event.preventDefault();
   const element = event.target.parentElement.parentElement;
-  const indexToremove = tasks.indexOf(findObject(tasks, 'id', element.id.toString()));
-  tasks.splice(indexToremove, 1);
+  const indexToremove = tm.tasks.indexOf(findObject(tasks, 'id', element.id.toString()));
+  tm.removeTask(indexToremove);
   element.remove();
-  console.clear();
-  console.table(tasks);
 }
 if (deleteButton) {
   deleteButton.addEventListener('click', (event) => {
     deleteTask(event);
   });
 }
-
-/* function updateCompletion(event) {
-  console.log('bing');
-  console.log(`id to update: ${event.target.parentElement.id}`);
-  const existingTask = findObject(tasks, 'id', event.target.parentElement.id);
-
-  const task = {
-    id: existingTask.id,
-    title: undefined,
-    dueDate: undefined,
-    creationDate: undefined,
-    description: undefined,
-    importance: undefined,
-    completion: undefined,
-  };
-  const element = taskList.querySelector(`#${existingTask.id}`);
-  updateElementInList(element, task);
-  const indexToUpdate = tasks.indexOf(findObject(tasks, 'id', taskDialog.id.toString()));
-  tasks[indexToUpdate] = task;
-  console.clear();
-  console.table(tasks);
-} */
 
 function toggleCompletion(event) {
   const taskContainer = event.target.parentElement;
@@ -264,15 +235,16 @@ document.addEventListener('click', (event) => {
   }
 });
 
-function initializeDefaultTasks () {
-  const loadedDefaultTasks = taskManager.tasksSorted();
+function initializeDefaultTasks() {
+  const loadedDefaultTasks = tm.defaultTasks;
   for (let i = 0; i < loadedDefaultTasks.length; i += 1) {
     addTaskToDOM(loadedDefaultTasks[i]);
+    tm.addTask(loadedDefaultTasks[i]);
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (tasks.length === 0) {
+  if (tm.tasks.length === 0) {
     initializeDefaultTasks();
   }
 });
