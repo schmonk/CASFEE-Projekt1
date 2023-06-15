@@ -213,15 +213,12 @@ cancelButton.addEventListener('click', (e) => {
 });
 
 function renderTaskList(sortedTaskArray) {
-  console.log(`the typeof the array is: ${typeof sortedTaskArray}`);
-  for (let i = 0; i < sortedTaskArray.length; i += 1) {
-    console.log(sortedTaskArray[i]);
-    console.log(`type of the item  is: ${typeof sortedTaskArray[i]}`);
-    addTaskToDOM(createTaskHTML(sortedTaskArray[i]));
-  }
-/*   while (taskList.firstChild) {
+  while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
-  } */
+  }
+  for (let i = 0; i < sortedTaskArray.length; i += 1) {
+    addTaskToDOM(sortedTaskArray[i]);
+  }
 }
 
 sortDueDateButton.addEventListener('click', (e) => {
