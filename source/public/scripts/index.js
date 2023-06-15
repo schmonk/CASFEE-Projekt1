@@ -159,7 +159,7 @@ document.addEventListener('click', (event) => {
 });
 
 document.addEventListener('click', (event) => {
-  event.preventDefault();
+  // event.preventDefault();
   if (event.target.classList.contains('task-create') && !event.target.classList.contains('task-update')) {
     createTask(event);
     taskDialog.close();
