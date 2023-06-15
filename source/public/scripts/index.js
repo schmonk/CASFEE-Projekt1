@@ -17,10 +17,10 @@ const tasks = [];
 
 console.log(`localStorageKey is: ${localStorageKey}`);
 
-function findObject(arr, property, value) {
-  for (let i = 0; i < arr.length; i += 1) {
-    if (arr[i][property] === value) {
-      return arr[i]; // Return object if found
+function findObject(myArray, property, value) {
+  for (let i = 0; i < myArray.length; i += 1) {
+    if (myArray[i][property] === value) {
+      return myArray[i]; // Return object if found
     }
   }
   return null; // Object not found
@@ -47,6 +47,7 @@ function openEditDialog(event) {
   const taskContainer = event.target.parentElement.parentElement; // the task container
   const currentId = taskContainer.id.toString();
   console.log(`ID: ${currentId}`);
+  console.log(`find object: ${findObject(tm.tasks, 'id', currentId)}`);
   const existingTask = findObject(tm.tasks, 'id', currentId);
   console.log(existingTask);
   console.log(`tasks: ${tm.tasks}, currentId: ${currentId}`);

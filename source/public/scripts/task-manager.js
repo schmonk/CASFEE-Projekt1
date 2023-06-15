@@ -11,19 +11,21 @@ const defaultTasks = [
   },
 ];
 
-
 function addTask(taskToAdd) {
   tasks.push(taskToAdd);
+  console.clear();
   console.table(tasks);
 }
 
 function removeTask(indexToremove) {
   tasks.splice(indexToremove, 1);
+  console.clear();
   console.table(tasks);
 }
 
 function updateTask(taskToUpdate, index) {
   tasks[index] = taskToUpdate;
+  console.clear();
   console.table(tasks);
 }
 
