@@ -180,3 +180,7 @@ dialog::backdrop {
   color: var(--primary-text-disabled-color);
   border-color: var(--primary-text-disabled-color);
 }
+
+.hidden {
+  display: none;
+}

@@ -65,9 +65,12 @@ function updateElementInList(element, task) {
   el.querySelector('.task-importance').textContent = ta.importance;
   el.querySelector('.task-due-date').textContent = `Due ${ta.dueDate}`;
   el.querySelector('.task-created-date').textContent = `Created ${ta.creationDate}`;
+  el.querySelector('.task-completion').checked = ta.completion;
+  el.classList.toggle('completed');
 }
 
-function updateTask() {
+function updateTask(event) {
+  event.preventDefault();
   const existingTask = findObject(tasks, 'id', taskDialog.id);
 
   const task = {
@@ -81,8 +84,10 @@ function updateTask() {
   };
   const element = taskList.querySelector(`#${existingTask.id}`);
   updateElementInList(element, task);
-  // const indexToUpdate = tasks.indexOf(findObject(tasks, 'id', taskDialog.id.toString()));
-  // tasks[indexToUpdate] = task;
+  const indexToUpdate = tasks.indexOf(findObject(tasks, 'id', taskDialog.id.toString()));
+  tasks[indexToUpdate] = task;
+  console.clear();
+  console.table(tasks);
   // console.log(`update this ID: ${indexToUpdate}`);
   // localStorage.setItem(`${id}`, JSON.stringify(newTask));
 }
@@ -129,7 +134,7 @@ function createTask(e) {
   taskList.insertAdjacentHTML(
     'beforeend',
     `<article id="${newTask.id}" class="task-container ${(newTask.completion) ? 'completed' : ''}">
-    <input type="checkbox" name="completion" class="taskCheckbox" ${(newTask.completion) ? 'checked' : ''}/>
+    <input type="checkbox" name="completion" class="task-completion" ${(newTask.completion) ? 'checked' : ''}/>
       <div class="task-content">
         <h3 class="task-title">${newTask.title}</h3>
         <p class="task-description">${newTask.description}</p>
@@ -163,6 +168,41 @@ if (deleteButton) {
     deleteTask(event);
   });
 }
+
+/* function updateCompletion(event) {
+  console.log('bing');
+  console.log(`id to update: ${event.target.parentElement.id}`);
+  const existingTask = findObject(tasks, 'id', event.target.parentElement.id);
+
+  const task = {
+    id: existingTask.id,
+    title: undefined,
+    dueDate: undefined,
+    creationDate: undefined,
+    description: undefined,
+    importance: undefined,
+    completion: undefined,
+  };
+  const element = taskList.querySelector(`#${existingTask.id}`);
+  updateElementInList(element, task);
+  const indexToUpdate = tasks.indexOf(findObject(tasks, 'id', taskDialog.id.toString()));
+  tasks[indexToUpdate] = task;
+  console.clear();
+  console.table(tasks);
+} */
+
+function toggleCompletion(event) {
+  const taskContainer = event.target.parentElement;
+  taskContainer.classList.toggle('completed');
+  // updateCompletion(event);
+}
+
+document.addEventListener('click', (event) => {
+  if (event.target.classList.contains('task-completion')) {
+    // console.log('bong');
+    toggleCompletion(event);
+  }
+});
 
 function clearDialog() {
   taskTitle.value = '';
@@ -198,7 +238,7 @@ document.addEventListener('click', (event) => {
 
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('task-update')) {
-    updateTask();
+    updateTask(event);
     taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
     taskDialog.close();
     clearDialog();
