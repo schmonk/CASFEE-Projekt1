@@ -4,7 +4,6 @@ import tm from './task-manager.js';
 const createTaskButton = document.querySelector('#createTaskButton');
 const taskDialog = document.querySelector('.taskDialog');
 const cancelButton = document.querySelector('#cancelButton');
-const deleteButton = document.querySelector('.task-delete');
 const taskList = document.querySelector('.task-list');
 const taskTitle = document.querySelector('#taskTitle');
 const taskImportance = document.querySelector('#taskImportance');
@@ -47,6 +46,7 @@ function setupEditDialog(title) {
 function openEditDialog(event) {
   const taskContainer = event.target.parentElement.parentElement; // the task container
   const currentId = taskContainer.id.toString();
+  console.log(`ID: ${currentId}`);
   const existingTask = findObject(tm.tasks, 'id', currentId);
   console.log(existingTask);
   console.log(`tasks: ${tm.tasks}, currentId: ${currentId}`);

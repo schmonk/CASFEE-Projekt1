@@ -1,3 +1,4 @@
+const tasks = [];
 const defaultTasks = [
   {
     id: 'z01', title: 'Go for a run', dueDate: '22.6.2023', creationDate: '15.6.2023', description: 'Description', importance: 1, completion: false,
@@ -10,7 +11,6 @@ const defaultTasks = [
   },
 ];
 
-const tasks = [];
 
 function addTask(taskToAdd) {
   tasks.push(taskToAdd);
