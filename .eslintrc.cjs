@@ -9,6 +9,5 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    'comments': 150
   },
 };

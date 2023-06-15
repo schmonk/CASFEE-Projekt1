@@ -3,8 +3,10 @@
   const parsedTask = JSON.parse(retrievedTask);
   taskList.insertAdjacentHTML(
     'beforeend',
-    `<article id="${parsedTask.id}" class="task-container ${(parsedTask.completion) ? 'completed' : ''}">
-      <input type="checkbox" name="completion" class="taskCheckbox" ${(parsedTask.completion) ? 'checked' : ''}/>
+    `<article id="${parsedTask.id}" class="task-container
+     ${(parsedTask.completion) ? 'completed' : ''}">
+      <input type="checkbox" name="completion" class="taskCheckbox"
+       ${(parsedTask.completion) ? 'checked' : ''}/>
       <div class="task-content">
       <h3 class="task-title">${parsedTask.title}</h3>
       <p class="task-description">${parsedTask.description}</p>
@@ -29,10 +31,8 @@ function loopExistingLocalStorageKeys() {
   }
 }
 
-
 document.addEventListener('DOMContentLoaded', () => {
   // loopExistingLocalStorageKeys();
 });
-
 
 */
