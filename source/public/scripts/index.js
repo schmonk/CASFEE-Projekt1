@@ -10,12 +10,16 @@ const taskImportance = document.querySelector('#taskImportance');
 const taskDueDate = document.querySelector('#taskDueDate');
 const taskDescription = document.querySelector('#taskDescription');
 const taskCompletion = document.querySelector('#taskCompletion');
+const sortDueDateButton = document.querySelector('#sortDueDate');
 const localStorageKey = 'myTasks';
 const placeholderTaskTitle = 'Task title';
 const placeholderTaskDescription = 'Task description';
+const sortedUpwardsGlyph = '↑';
+const sortedDownwardGlyph = '↓';
 const tasks = [];
 
 console.log(`localStorageKey is: ${localStorageKey}`);
+console.log(`UP ${sortedUpwardsGlyph} and DOWN ${sortedDownwardGlyph}`);
 
 function findObject(myArray, property, value) {
   for (let i = 0; i < myArray.length; i += 1) {
@@ -131,10 +135,14 @@ function createTaskHTML(task) {
     <p class="task-created-date" >Created ${task.creationDate}</p>
     <p >Importance: <span class="task-importance">${task.importance}</span></p>
     <div class="buttongroup">
-      <button class="btn task-delete">Delete</button>
-      <button class="btn task-edit">Edit</button>
+    <button class="btn task-delete">Delete</button>
+    <button class="btn task-edit">Edit</button>
     </div>
-  </article>`;
+    </article>`;
+}
+function addTaskToDOM(task) {
+  console.log(task);
+  taskList.insertAdjacentHTML('beforeend', createTaskHTML(task));
 }
 
 function deleteTask(event) {
@@ -143,10 +151,6 @@ function deleteTask(event) {
   const indexToremove = tm.tasks.indexOf(findObject(tasks, 'id', element.id.toString()));
   tm.removeTask(indexToremove);
   element.remove();
-}
-
-function addTaskToDOM(task) {
-  taskList.insertAdjacentHTML('beforeend', createTaskHTML(task));
 }
 
 function createTask(e) {
@@ -206,6 +210,26 @@ cancelButton.addEventListener('click', (e) => {
   e.preventDefault();
   taskDialog.close();
   clearDialog();
+});
+
+function renderTaskList(sortedTaskArray) {
+  console.log(`the typeof the array is: ${typeof sortedTaskArray}`);
+  for (let i = 0; i < sortedTaskArray.length; i += 1) {
+    console.log(sortedTaskArray[i]);
+    console.log(`type of the item  is: ${typeof sortedTaskArray[i]}`);
+    addTaskToDOM(createTaskHTML(sortedTaskArray[i]));
+  }
+/*   while (taskList.firstChild) {
+    taskList.removeChild(taskList.firstChild);
+  } */
+}
+
+sortDueDateButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  const sortedArray = tm.tasksSorted();
+  sortDueDateButton.classList.toggle('sorting-active');
+  console.log(`sortedArray is: ${sortedArray}`);
+  renderTaskList(sortedArray);
 });
 
 document.addEventListener('click', (event) => {
