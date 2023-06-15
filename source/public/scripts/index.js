@@ -17,7 +17,7 @@ const sortImportanceButton = document.querySelector('#sortImportance');
 const filterCompletedButton = document.querySelector('#filterCompleted');
 
 const localStorageKey = 'myTasks';
-const placeholderTaskTitle = 'Task title';
+const placeholderTaskTitle = 'My task';
 const placeholderTaskDescription = 'Task description';
 const sortedUpwardsGlyph = '↑';
 const sortedDownwardGlyph = '↓';
@@ -238,7 +238,7 @@ sortCreationDateButton.addEventListener('click', (e) => {
 
 filterCompletedButton.addEventListener('click', (e) => {
   e.preventDefault();
-  filterCompletedButton.classList.toggle('sorting-active');
+  filterCompletedButton.classList.toggle('filtering-active');
   // const completedTasks = findObject(tm.tasks, 'completion', true);
   // console.log(`completedTasks: ${completedTasks}`);
   for (let i = 0; i < tm.tasks.length; i += 1) {

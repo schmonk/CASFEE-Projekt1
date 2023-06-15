@@ -81,9 +81,14 @@ input:focus {
   background-color: var(--on-primary-hover);
 }
 
-.sorting-active {
+.sorting-active,
+.filtering-active {
   border: 1px solid var(--primary-color);
   background-color: var(--on-primary-highlight-background)
+}
+
+.sorting-active::after {
+  content: '↑';
 }
 
 .sorting-active:hover {
