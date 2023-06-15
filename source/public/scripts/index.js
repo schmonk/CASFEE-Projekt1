@@ -11,6 +11,11 @@ const taskDueDate = document.querySelector('#taskDueDate');
 const taskDescription = document.querySelector('#taskDescription');
 const taskCompletion = document.querySelector('#taskCompletion');
 const sortDueDateButton = document.querySelector('#sortDueDate');
+const sortNameButton = document.querySelector('#sortName');
+const sortCreationDateButton = document.querySelector('#sortCreationDate');
+const sortImportanceButton = document.querySelector('#sortImportance');
+const filterCompletedButton = document.querySelector('#filterCompleted');
+
 const localStorageKey = 'myTasks';
 const placeholderTaskTitle = 'Task title';
 const placeholderTaskDescription = 'Task description';
@@ -18,8 +23,7 @@ const sortedUpwardsGlyph = '↑';
 const sortedDownwardGlyph = '↓';
 const tasks = [];
 
-console.log(`localStorageKey is: ${localStorageKey}`);
-console.log(`UP ${sortedUpwardsGlyph} and DOWN ${sortedDownwardGlyph}`);
+console.log(`localStorageKey is: ${localStorageKey}, UP ${sortedUpwardsGlyph} and DOWN ${sortedDownwardGlyph} `);
 
 function findObject(myArray, property, value) {
   for (let i = 0; i < myArray.length; i += 1) {
@@ -141,14 +145,13 @@ function createTaskHTML(task) {
     </article>`;
 }
 function addTaskToDOM(task) {
-  console.log(task);
   taskList.insertAdjacentHTML('beforeend', createTaskHTML(task));
 }
 
 function deleteTask(event) {
   event.preventDefault();
   const element = event.target.parentElement.parentElement;
-  const indexToremove = tm.tasks.indexOf(findObject(tasks, 'id', element.id.toString()));
+  const indexToremove = tm.tasks.indexOf(findObject(tm.tasks, 'id', element.id.toString()));
   tm.removeTask(indexToremove);
   element.remove();
 }
@@ -225,8 +228,35 @@ sortDueDateButton.addEventListener('click', (e) => {
   e.preventDefault();
   const sortedArray = tm.tasksSorted();
   sortDueDateButton.classList.toggle('sorting-active');
-  console.log(`sortedArray is: ${sortedArray}`);
   renderTaskList(sortedArray);
+});
+
+sortCreationDateButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  sortCreationDateButton.classList.toggle('sorting-active');
+  // console.log('ping');
+});
+
+filterCompletedButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  filterCompletedButton.classList.toggle('sorting-active');
+  const completedTasks = findObject(tasks, 'completion', true);
+  for (let i = 0; i < completedTasks.length; i += 1) {
+    console.log('beep');
+    // Do stuff
+  }
+});
+
+sortImportanceButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  sortImportanceButton.classList.toggle('sorting-active');
+  console.log('ping');
+});
+
+sortNameButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  sortNameButton.classList.toggle('sorting-active');
+  console.log('ping');
 });
 
 document.addEventListener('click', (event) => {

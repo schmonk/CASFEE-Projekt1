@@ -31,11 +31,9 @@ function updateTask(taskToUpdate, index) {
 
 function compareTasks(task1, task2) {
   if (task1.dueDate < task2.dueDate) {
-    // console.log('task 1 smaller');
     return -1;
   }
   if (task1.dueDate > task2.dueDate) {
-    // console.log('task 1 bigger');
     return 1;
   }
   return 0;
@@ -46,24 +44,8 @@ function defTasks() {
 }
 
 function tasksSorted() {
-  console.log(`sorted tasks: ${tasks.sort(compareTasks)}`);
   return tasks.sort(compareTasks);
 }
-
-/* function findSong(id) {
-  return defaultTasks.find((song) => parseInt(id, 10) === parseInt(song.id, 10));
-} */
-
-/* function rateSong(songId, delta) {
-  console.log('sorting songs for you');
-  const song = findSong(songId);
-
-  if (song) {
-    song.rating += delta;
-    return true;
-  }
-  return false;
-} */
 
 export default {
   tasksSorted, compareTasks, defTasks, defaultTasks, tasks, addTask, removeTask, updateTask,

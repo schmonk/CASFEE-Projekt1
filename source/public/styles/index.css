@@ -11,7 +11,7 @@
   --primary-text-disabled-color: rgb(192, 192, 192);
   --primary-color: hsl(202, 100%, 71%);
   --on-primary-hover: hsl(202, 100%, 61%);
-  --on-primary-highlight-background: hsl(202, 100%, 84%);
+  --on-primary-highlight-background: hsl(0, 0%, 68%);
   --outline-color: rgb(194, 194, 194);
   --on-bg-hover: hsl(0, 0%, 86%);
   --transition-function: ease-in-out;
@@ -25,7 +25,7 @@
   --outline-color: rgb(100, 100, 100);
   --primary-color: hsl(202, 100%, 25%);
   --on-primary-hover: hsl(202, 100%, 35%);
-  --on-primary-highlight-background: hsl(202, 33%, 33%);
+  --on-primary-highlight-background: hsl(0, 0%, 37%);
   --on-bg-hover: hsl(0, 0%, 20%);
 }
 
@@ -83,8 +83,15 @@ input:focus {
 
 .sorting-active {
   border: 1px solid var(--primary-color);
-  background-color: var(--on-primary-highlight-background);
-  font-weight: 900;
+  background-color: var(--on-primary-highlight-background)
+}
+
+.sorting-active:hover {
+  background-color: color-mix(
+    in hsl longer hue,
+    var(--on-bg-hover),
+    var(--on-primary-highlight-background)
+  );
 }
 
 .header {
