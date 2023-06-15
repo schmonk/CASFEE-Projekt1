@@ -8,6 +8,7 @@
 :root {
   --bg-color: hsl(0, 0%, 92%);
   --primary-text-color: rgb(28, 28, 28);
+  --primary-text-disabled-color: rgb(192, 192, 192);
   --primary-color: hsl(202, 100%, 71%);
   --on-primary-hover: hsl(202, 100%, 61%);
   --outline-color: rgb(194, 194, 194);
@@ -19,6 +20,7 @@
   transition: all var(--transition-duration) var(--transition-function);
   --bg-color: hsl(0, 0%, 11%);
   --primary-text-color: rgb(235, 235, 235);
+  --primary-text-disabled-color: rgb(48, 48, 48);
   --outline-color: rgb(100, 100, 100);
   --primary-color: hsl(202, 100%, 25%);
   --on-primary-hover: hsl(202, 100%, 35%);
@@ -158,7 +160,7 @@ input:focus {
   margin-top: 0.4rem;
 }
 
-.taskInput input[type='checkbox'] {
+input[type='checkbox'] {
   width: 2rem;
 }
 
@@ -175,5 +177,7 @@ dialog::backdrop {
 } 
 
 .completed {
-  opacity: 0.4;
+  /* opacity: 0.4; */
+  color: var(--primary-text-disabled-color);
+  border-color: var(--primary-text-disabled-color);
 }

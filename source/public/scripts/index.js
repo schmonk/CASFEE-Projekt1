@@ -1,6 +1,3 @@
-// import { tasks } from './tasks.json'; // gives disallowed MIME type error
-// import taskManager from './taskManager';
-
 const createTaskButton = document.querySelector('#createTaskButton');
 const taskDialog = document.querySelector('#taskDialog');
 const cancelButton = document.querySelector('#cancelButton');
@@ -10,10 +7,10 @@ const taskTitle = document.querySelector('#taskTitle');
 const taskImportance = document.querySelector('#taskImportance');
 const taskDueDate = document.querySelector('#taskDueDate');
 const taskDescription = document.querySelector('#taskDescription');
-let currentEditId = ''; // global variable should be avoided, try to find a better way
+const localStorageKey = 'myTasks';
 const tasks = [];
 
-console.log(tasks);
+console.log(localStorageKey);
 
 function findObject(arr, property, value) {
   for (let i = 0; i < arr.length; i += 1) {
@@ -26,12 +23,14 @@ function findObject(arr, property, value) {
 
 function openEditDialog(event) {
   const element = event.target.parentElement.parentElement; // the task container
+  const currentId = element.id.toString();
   const retrievedTask = localStorage.getItem(element.id.toString());
-  currentEditId = element.id.toString();
+  // currentEditId = element.id.toString();
   const parsedTask = JSON.parse(retrievedTask);
   taskTitle.value = parsedTask.title;
   taskImportance.value = parsedTask.importance;
   taskDescription.value = parsedTask.description;
+  taskDialog.classList.add(`${currentId}`);
   taskDialog.querySelector('h2').textContent = `Edit "${taskTitle.value}"`;
   taskDialog.querySelector('#saveDialogButton').textContent = 'Update';
   taskDialog.querySelector('#saveDialogButton').classList.add('task-update');
@@ -45,7 +44,7 @@ function updateTask() {
   let importance = (taskImportance.value !== '') ? taskImportance.value : '3';
   importance = importance < 0 ? 0 : importance;
   importance = importance > 5 ? 5 : importance;
-  const id = currentEditId;
+  const id = taskDialog.classList;
   const newTask = {
     id,
     title,
@@ -59,8 +58,6 @@ function updateTask() {
   element.querySelector('.task-importance').textContent = importance;
   element.querySelector('.task-due-date').textContent = `Due ${dueDate}`;
   element.querySelector('.task-created-date').textContent = `Created ${dueDate}`;
-  // tasks.push(newTask);
-  console.log(`element: ${element.nodeName}`);
   const indexToUpdate = tasks.indexOf(findObject(tasks, 'id', element.id.toString()));
   console.log(`update this ID: ${indexToUpdate}`);
   localStorage.setItem(`${id}`, JSON.stringify(newTask));
@@ -93,7 +90,7 @@ function createTask() {
   taskList.insertAdjacentHTML(
     'beforeend',
     `<article id="${newTask.id}" class="task-container">
-      <button class="btn task-complete" >Complete</button>
+    <input type="checkbox" name="completion" class="taskCheckbox" />
       <div class="task-content">
         <h3 class="task-title">${newTask.title}</h3>
         <p class="task-description">${newTask.description}</p>
@@ -144,7 +141,6 @@ document.addEventListener('click', (event) => {
 
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('task-update')) {
-    // alert(`update task`);
     updateTask();
     taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
     taskDialog.close();
@@ -188,7 +184,7 @@ function renderTask(key) {
   taskList.insertAdjacentHTML(
     'beforeend',
     `<article id="${parsedTask.id}" class="task-container">
-      <button class="btn task-complete" >Complete</button>
+      <input type="checkbox" name="completion" class="taskCheckbox" />
       <div class="task-content">
       <h3 class="task-title">${parsedTask.title}</h3>
       <p class="task-description">${parsedTask.description}</p>
