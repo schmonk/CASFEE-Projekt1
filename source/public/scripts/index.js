@@ -9,6 +9,8 @@ const taskDueDate = document.querySelector('#taskDueDate');
 const taskDescription = document.querySelector('#taskDescription');
 const taskCompletion = document.querySelector('#taskCompletion');
 const localStorageKey = 'myTasks';
+const placeholderTaskTitle = 'Task title';
+const placeholderTaskDescription = 'Task description';
 const tasks = [];
 
 console.log(`localStorageKey is: ${localStorageKey}`);
@@ -120,13 +122,10 @@ function clamp (value, lower, upper) {
 function createTask(e) {
   e.preventDefault();
   const id = createId();
-  const title = (taskTitle.value !== '') ? taskTitle.value : 'Title';
-  const description = (taskDescription.value !== '') ? taskDescription.value : 'Description';
+  const title = (taskTitle.value !== '') ? taskTitle.value : placeholderTaskTitle;
+  const description = (taskDescription.value !== '') ? taskDescription.value : placeholderTaskDescription;
   const completion = taskCompletion.checked;
   const creationDate = createCreationDate();
-  // const formattedDueDate = createDueDate();
-  /* formatDate(taskDueDate.value); */
-  // console.log(formattedDueDate);
   const dueDate = (taskDueDate.value !== '') ? taskDueDate.value : createDefaultDueDate();
   let importance = (taskImportance.value !== '') ? clamp(taskImportance.value, 0, 5) : '3';
   const newTask = {
