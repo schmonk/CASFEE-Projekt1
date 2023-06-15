@@ -75,23 +75,21 @@ function updateTask() {
 }
 
 function createId() {
-  // the id shouldnt start with a number so we can retrieve it with querySelector in updateTask()
-  // https://stackoverflow.com/questions/20306204/using-queryselector-with-ids-that-are-numbers
   return `${Date.now().toString()}`;
 }
 
 function createCreationDate() {
   const today = Date.now();
-  const todayFormatted = formatDate(today);
-  return todayFormatted;
+  return formatDate(today);
 }
 
 function createDueDate() {
   const dueDate = new Date(`${taskDueDate.value}`);
   return formatDate(dueDate);
 }
+
 function createDefaultDueDate() {
-  const days = 7;
+  const days = 7; // how far in the future is the default due date?
   let date = new Date();
   date.setDate(date.getDate() + days);
   return formatDate(date);
@@ -115,12 +113,13 @@ function clamp (value, lower, upper) {
 function createTask(e) {
   e.preventDefault();
   const id = createId();
-  const title = (taskTitle.value !== '') ? taskTitle.value : placeholderTaskTitle;
-  const description = (taskDescription.value !== '') ? taskDescription.value : placeholderTaskDescription;
+  const title = taskTitle.value ? taskTitle.value : placeholderTaskTitle;
+  const description = taskTitle.value ? taskDescription.value : placeholderTaskDescription;
   const completion = taskCompletion.checked;
   const creationDate = createCreationDate();
   const dueDate = (taskDueDate.value !== '') ? taskDueDate.value : createDefaultDueDate();
   let importance = (taskImportance.value !== '') ? clamp(taskImportance.value, 0, 5) : '3';
+
   const newTask = {
     id,
     title,
@@ -130,6 +129,7 @@ function createTask(e) {
     importance,
     completion,
   };
+
   taskList.insertAdjacentHTML(
     'beforeend',
     `<article id="${newTask.id}" class="task-container ${(newTask.completion) ? 'completed' : ''}">
