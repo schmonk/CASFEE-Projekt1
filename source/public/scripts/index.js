@@ -112,22 +112,15 @@ function clamp (value, lower, upper) {
 
 function createTask(e) {
   e.preventDefault();
-  const id = createId();
-  const title = taskTitle.value ? taskTitle.value : placeholderTaskTitle;
-  const description = taskTitle.value ? taskDescription.value : placeholderTaskDescription;
-  const completion = taskCompletion.checked;
-  const creationDate = createCreationDate();
-  const dueDate = (taskDueDate.value !== '') ? taskDueDate.value : createDefaultDueDate();
-  let importance = (taskImportance.value !== '') ? clamp(taskImportance.value, 0, 5) : '3';
 
   const newTask = {
-    id,
-    title,
-    dueDate,
-    creationDate,
-    description,
-    importance,
-    completion,
+    id: createId(),
+    title: taskTitle.value ? taskTitle.value : placeholderTaskTitle,
+    dueDate: taskDueDate.value ? taskDueDate.value : createDefaultDueDate(),
+    creationDate: createCreationDate(),
+    description: taskDescription.value ? taskDescription.value : placeholderTaskDescription,
+    importance: taskImportance.value ? clamp(taskImportance.value, 0, 5): '3',
+    completion: taskCompletion.checked,
   };
 
   taskList.insertAdjacentHTML(
