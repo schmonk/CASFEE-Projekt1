@@ -48,6 +48,8 @@ function openEditDialog(event) {
   const taskContainer = event.target.parentElement.parentElement; // the task container
   const currentId = taskContainer.id.toString();
   const existingTask = findObject(tm.tasks, 'id', currentId);
+  console.log(existingTask);
+  console.log(`tasks: ${tm.tasks}, currentId: ${currentId}`);
 
   taskTitle.value = existingTask.title;
   taskImportance.value = existingTask.importance;
@@ -174,12 +176,17 @@ if (deleteButton) {
 function toggleCompletion(event) {
   const taskContainer = event.target.parentElement;
   taskContainer.classList.toggle('completed');
-  // updateCompletion(event);
+  const currentId = taskContainer.id.toString();
+  const existingTask = findObject(tm.tasks, 'id', currentId);
+  existingTask.completion = !existingTask.completion;
+  const indexToUpdate = tm.tasks.indexOf(findObject(tm.tasks, 'id', currentId));
+  tm.updateTask(existingTask, indexToUpdate);
+  console.log('bang');
 }
 
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('task-completion')) {
-    // console.log('bong');
+    console.log('bong');
     toggleCompletion(event);
   }
 });
