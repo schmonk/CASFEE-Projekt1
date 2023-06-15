@@ -112,11 +112,6 @@ function createCreationDate() {
   return formatDate(today);
 }
 
-/* function createDueDate() {
-  const dueDate = new Date(`${taskDueDate.value}`);
-  return formatDate(dueDate);
-} */
-
 function createDefaultDueDate() {
   const days = 7; // how many days in the future is the default due date?
   const date = new Date();
@@ -141,12 +136,21 @@ function createTaskHTML(task) {
   </article>`;
 }
 
+function deleteTask(event) {
+  event.preventDefault();
+  const element = event.target.parentElement.parentElement;
+  const indexToremove = tm.tasks.indexOf(findObject(tasks, 'id', element.id.toString()));
+  tm.removeTask(indexToremove);
+  element.remove();
+}
+
 function addTaskToDOM(task) {
   taskList.insertAdjacentHTML('beforeend', createTaskHTML(task));
 }
 
 function createTask(e) {
   e.preventDefault();
+
   const newTask = {
     id: createId(),
     title: taskTitle.value ? taskTitle.value : placeholderTaskTitle,
@@ -156,21 +160,9 @@ function createTask(e) {
     importance: taskImportance.value ? clamp(taskImportance.value, 0, 5) : '3',
     completion: taskCompletion.checked,
   };
+
   addTaskToDOM(newTask);
   tm.addTask(newTask);
-}
-
-function deleteTask(event) {
-  event.preventDefault();
-  const element = event.target.parentElement.parentElement;
-  const indexToremove = tm.tasks.indexOf(findObject(tasks, 'id', element.id.toString()));
-  tm.removeTask(indexToremove);
-  element.remove();
-}
-if (deleteButton) {
-  deleteButton.addEventListener('click', (event) => {
-    deleteTask(event);
-  });
 }
 
 function toggleCompletion(event) {
@@ -181,12 +173,10 @@ function toggleCompletion(event) {
   existingTask.completion = !existingTask.completion;
   const indexToUpdate = tm.tasks.indexOf(findObject(tm.tasks, 'id', currentId));
   tm.updateTask(existingTask, indexToUpdate);
-  console.log('bang');
 }
 
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('task-completion')) {
-    console.log('bong');
     toggleCompletion(event);
   }
 });
