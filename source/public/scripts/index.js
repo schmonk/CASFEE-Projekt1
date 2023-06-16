@@ -129,7 +129,6 @@ function insertImportanceStars(amount) {
   for (let i = 0; i < amount; i += 1) {
     stars += '★';
   }
-  console.log(stars);
   return stars;
 }
 
@@ -212,6 +211,20 @@ function renderTaskList(sortedTaskArray) {
   }
 }
 
+function filterCompletedTasks() {
+  filterCompletedButton.classList.toggle('filtering-active');
+  for (let i = 0; i < tm.tasks.length; i += 1) {
+    if (tm.tasks[i].completion === true) {
+      const element = taskList.querySelector(`#${tm.tasks[i].id}`);
+      if (!element.classList.contains('hidden') && filterCompletedButton.classList.contains('filtering-active')) {
+        element.classList.add('hidden');
+      } else {
+        element.classList.remove('hidden');
+      }
+    }
+  }
+}
+
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('task-completion')) {
     toggleCompletion(event);
@@ -239,32 +252,21 @@ sortDueDateButton.addEventListener('click', (e) => {
 sortCreationDateButton.addEventListener('click', (e) => {
   e.preventDefault();
   sortCreationDateButton.classList.toggle('sorting-active');
-  // console.log('ping');
 });
 
 filterCompletedButton.addEventListener('click', (e) => {
   e.preventDefault();
-  filterCompletedButton.classList.toggle('filtering-active');
-  // const completedTasks = findObject(tm.tasks, 'completion', true);
-  // console.log(`completedTasks: ${completedTasks}`);
-  for (let i = 0; i < tm.tasks.length; i += 1) {
-    if (tm.tasks[i].completion === true) {
-      const element = taskList.querySelector(`#${tm.tasks[i].id}`);
-      element.classList.toggle('hidden');
-    }
-  }
+  filterCompletedTasks();
 });
 
 sortImportanceButton.addEventListener('click', (e) => {
   e.preventDefault();
   sortImportanceButton.classList.toggle('sorting-active');
-  console.log('ping');
 });
 
 sortNameButton.addEventListener('click', (e) => {
   e.preventDefault();
   sortNameButton.classList.toggle('sorting-active');
-  console.log('ping');
 });
 
 document.addEventListener('click', (event) => {
