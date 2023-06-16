@@ -11,7 +11,7 @@
   --primary-text-disabled-color: rgb(192, 192, 192);
   --primary-color: hsl(202, 100%, 71%);
   --on-primary-hover: hsl(202, 100%, 61%);
-  --on-primary-highlight-background: hsl(0, 0%, 68%);
+  --on-primary-highlight-background: hsl(0, 0%, 72%);
   --outline-color: rgb(194, 194, 194);
   --on-bg-hover: hsl(0, 0%, 86%);
   --transition-function: ease-in-out;
@@ -19,13 +19,13 @@
 }
 .dark-theme {
   transition: all var(--transition-duration) var(--transition-function);
-  --bg-color: hsl(0, 0%, 11%);
+  --bg-color: hsl(0, 0%, 14%);
   --primary-text-color: rgb(235, 235, 235);
   --primary-text-disabled-color: rgb(48, 48, 48);
   --outline-color: rgb(100, 100, 100);
   --primary-color: hsl(202, 100%, 25%);
   --on-primary-hover: hsl(202, 100%, 35%);
-  --on-primary-highlight-background: hsl(0, 0%, 37%);
+  --on-primary-highlight-background: hsl(0, 0%, 30%);
   --on-bg-hover: hsl(0, 0%, 20%);
 }
 
