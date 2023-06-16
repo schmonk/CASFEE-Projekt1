@@ -19,11 +19,8 @@ const filterCompletedButton = document.querySelector('#filterCompleted');
 const localStorageKey = 'myTasks';
 const placeholderTaskTitle = 'My task';
 const placeholderTaskDescription = 'Task description';
-const sortedUpwardsGlyph = '↑';
-const sortedDownwardGlyph = '↓';
-// const tasks = [];
 
-console.log(`localStorageKey is: ${localStorageKey}, UP ${sortedUpwardsGlyph} and DOWN ${sortedDownwardGlyph} `);
+console.log(`localStorageKey is: ${localStorageKey},`);
 
 function findObject(myArray, property, value) {
   for (let i = 0; i < myArray.length; i += 1) {
@@ -239,14 +236,29 @@ function filterCompletedTasks() {
 function switchOffSortingButtons(turnOn) {
   const sortingButtons = document.querySelector('.filterSort-container').children;
   for (let i = 0; i < sortingButtons.length; i += 1) {
-    if (sortingButtons[i] === turnOn) {
-      console.log(`this is ${turnOn}, keep it running`);
-    } else {
+    if (sortingButtons[i] !== turnOn) {
       sortingButtons[i].classList.remove('sorting-active');
       sortingButtons[i].classList.remove('ascending');
       sortingButtons[i].classList.remove('descending');
     }
   }
+}
+
+function sortTasks(ascendingState) {
+  const sortedArray = tm.tasksSorted('dueDate', ascendingState);
+  renderTaskList(sortedArray);
+}
+
+function styleSortingButton(button) {
+  button.classList.add('sorting-active');
+  if (button.classList.contains('ascending')) {
+    button.classList.remove('ascending');
+    button.classList.add('descending');
+    return 0;
+  }
+  button.classList.remove('descending');
+  button.classList.add('ascending');
+  return 1;
 }
 
 document.addEventListener('click', (event) => {
@@ -272,45 +284,30 @@ filterCompletedButton.addEventListener('click', (e) => {
 });
 sortDueDateButton.addEventListener('click', (e) => {
   e.preventDefault();
-  // console.log(`duedate is: ${tm.tasks.dueDate}`);
   switchOffSortingButtons(sortDueDateButton);
-  sortDueDateButton.classList.add('sorting-active');
-  if (sortDueDateButton.classList.contains('ascending')) {
-    // switch to descending
-    sortDueDateButton.classList.remove('ascending');
-    sortDueDateButton.classList.add('descending');
-    const sortedArray = tm.tasksSorted('dueDate', false);
-    renderTaskList(sortedArray);
-  } else {
-    sortDueDateButton.classList.remove('descending');
-    sortDueDateButton.classList.add('ascending');
-    const sortedArray = tm.tasksSorted('dueDate', true);
-    renderTaskList(sortedArray);
-  }
+  const ascendingTrue = styleSortingButton(sortDueDateButton);
+  sortTasks(ascendingTrue);
 });
 
 sortCreationDateButton.addEventListener('click', (e) => {
   e.preventDefault();
   switchOffSortingButtons(sortCreationDateButton);
-  sortCreationDateButton.classList.add('sorting-active');
-  const sortedArray = tm.tasksSorted('creationDate', true);
-  renderTaskList(sortedArray);
+  const ascendingTrue = styleSortingButton(sortCreationDateButton);
+  sortTasks(ascendingTrue);
 });
 
 sortImportanceButton.addEventListener('click', (e) => {
   e.preventDefault();
-  sortImportanceButton.classList.add('sorting-active');
-  const sortedArray = tm.tasksSorted('importance', true);
   switchOffSortingButtons(sortImportanceButton);
-  renderTaskList(sortedArray);
+  const ascendingTrue = styleSortingButton(sortImportanceButton);
+  sortTasks(ascendingTrue);
 });
 
 sortNameButton.addEventListener('click', (e) => {
   e.preventDefault();
-  sortNameButton.classList.add('sorting-active');
-  const sortedArray = tm.tasksSorted('title', true);
   switchOffSortingButtons(sortNameButton);
-  renderTaskList(sortedArray);
+  const ascendingTrue = styleSortingButton(sortNameButton);
+  sortTasks(ascendingTrue);
 });
 
 document.addEventListener('click', (event) => {
