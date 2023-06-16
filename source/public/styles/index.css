@@ -10,8 +10,9 @@
   --primary-text-color: rgb(28, 28, 28);
   --primary-text-disabled-color: rgb(192, 192, 192);
   --primary-color: hsl(202, 100%, 71%);
-  --on-primary-hover: hsl(202, 100%, 61%);
-  --on-primary-highlight-background: hsl(0, 0%, 72%);
+  --primary-hover: hsl(202, 100%, 61%);
+  --on-bg-selected: hsl(0, 0%, 80%);
+  --on-bg-selected-hover: hsl(0, 0%, 74%);
   --outline-color: rgb(194, 194, 194);
   --on-bg-hover: hsl(0, 0%, 86%);
   --transition-function: ease-in-out;
@@ -24,8 +25,9 @@
   --primary-text-disabled-color: rgb(48, 48, 48);
   --outline-color: rgb(100, 100, 100);
   --primary-color: hsl(202, 100%, 25%);
-  --on-primary-hover: hsl(202, 100%, 35%);
-  --on-primary-highlight-background: hsl(0, 0%, 30%);
+  --primary-hover: hsl(202, 100%, 35%);
+  --on-bg-selected: hsl(0, 0%, 26%);
+  --on-bg-selected-hover: hsl(0, 0%, 32%);
   --on-bg-hover: hsl(0, 0%, 20%);
 }
 
@@ -56,12 +58,6 @@ input:hover {
   background-color: var(--on-bg-hover);
 }
 
-button:focus,
-select:focus,
-input:focus {
-  border-color: var(--primary-color);
-}
-
 .container {
   display: grid;
   grid-template-rows: 4fr 2fr 40fr 1fr;
@@ -78,13 +74,17 @@ input:focus {
   border: none;
 }
 .btn-primary:hover {
-  background-color: var(--on-primary-hover);
+  background-color: var(--primary-hover);
 }
 
 .sorting-active,
 .filtering-active {
-  border: 1px solid var(--primary-color);
-  background-color: var(--on-primary-highlight-background)
+  border: 1px solid var(--outline-color);
+  background-color: var(--on-bg-selected)
+}
+.sorting-active:hover,
+.filtering-active:hover {
+  background-color: var(--on-bg-selected-hover)
 }
 
 .ascending::after {
@@ -99,7 +99,7 @@ input:focus {
   background-color: color-mix(
     in hsl longer hue,
     var(--on-bg-hover),
-    var(--on-primary-highlight-background)
+    var(--on-bg-selected)
   );
 }
 
