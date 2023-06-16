@@ -213,12 +213,23 @@ function renderTaskList(sortedTaskArray) {
 
 function filterCompletedTasks() {
   filterCompletedButton.classList.toggle('filtering-active');
-  for (let i = 0; i < tm.tasks.length; i += 1) {
-    if (tm.tasks[i].completion === true) {
-      const element = taskList.querySelector(`#${tm.tasks[i].id}`);
-      if (!element.classList.contains('hidden') && filterCompletedButton.classList.contains('filtering-active')) {
-        element.classList.add('hidden');
-      } else {
+  if (filterCompletedButton.classList.contains('filtering-active')) {
+    filterCompletedButton.textContent = 'Show completed';
+    for (let i = 0; i < tm.tasks.length; i += 1) {
+      if (tm.tasks[i].completion === true) {
+        const element = taskList.querySelector(`#${tm.tasks[i].id}`);
+        if (!element.classList.contains('hidden')) {
+          element.classList.add('hidden');
+        } else {
+          element.classList.remove('hidden');
+        }
+      }
+    }
+  } else {
+    filterCompletedButton.textContent = 'Hide completed';
+    for (let i = 0; i < tm.tasks.length; i += 1) {
+      if (tm.tasks[i].completion === true) {
+        const element = taskList.querySelector(`#${tm.tasks[i].id}`);
         element.classList.remove('hidden');
       }
     }
