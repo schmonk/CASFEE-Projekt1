@@ -7,7 +7,13 @@ const defaultTasks = [
     id: 'z02', title: 'Bring hamster to yoga class', dueDate: '11.2.2021', creationDate: '1.1.2021', description: 'Bring yoga mat', importance: 5, completion: false,
   },
   {
-    id: 'z03', title: 'Create default tasks', dueDate: '29.8.2022', creationDate: '15.6.2022', description: 'With some permutations', importance: 2, completion: true,
+    id: 'z03', title: 'Create default tasks', dueDate: '29.8.2024', creationDate: '11.6.2011', description: 'With some permutations', importance: 2, completion: true,
+  },
+  {
+    id: 'z04', title: 'A few things things', dueDate: '29.8.2026', creationDate: '8.6.1980', description: 'Stuff', importance: 3, completion: true,
+  },
+  {
+    id: 'z05', title: 'Ze World domination', dueDate: '1.2.1990', creationDate: '15.6.2022', description: 'The squirrels might help you', importance: 4, completion: false,
   },
 ];
 

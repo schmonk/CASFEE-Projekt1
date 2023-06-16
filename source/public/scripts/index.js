@@ -248,8 +248,8 @@ function switchOffSortingButtons(turnOn) {
   }
 }
 
-function sortTasks(ascendingState) {
-  const sortedArray = tm.tasksSorted('dueDate', ascendingState);
+function sortTasks(property, ascendingState) {
+  const sortedArray = tm.tasksSorted(`${property}`, ascendingState);
   renderTaskList(sortedArray);
 }
 
@@ -290,28 +290,28 @@ sortDueDateButton.addEventListener('click', (e) => {
   e.preventDefault();
   switchOffSortingButtons(sortDueDateButton);
   const ascendingTrue = styleSortingButton(sortDueDateButton);
-  sortTasks(ascendingTrue);
+  sortTasks('dueDate', ascendingTrue);
 });
 
 sortCreationDateButton.addEventListener('click', (e) => {
   e.preventDefault();
   switchOffSortingButtons(sortCreationDateButton);
   const ascendingTrue = styleSortingButton(sortCreationDateButton);
-  sortTasks(ascendingTrue);
+  sortTasks('creationDate', ascendingTrue);
 });
 
 sortImportanceButton.addEventListener('click', (e) => {
   e.preventDefault();
   switchOffSortingButtons(sortImportanceButton);
   const ascendingTrue = styleSortingButton(sortImportanceButton);
-  sortTasks(ascendingTrue);
+  sortTasks('importance', ascendingTrue);
 });
 
 sortNameButton.addEventListener('click', (e) => {
   e.preventDefault();
   switchOffSortingButtons(sortNameButton);
   const ascendingTrue = styleSortingButton(sortNameButton);
-  sortTasks(ascendingTrue);
+  sortTasks('title', ascendingTrue);
 });
 
 document.addEventListener('click', (event) => {
