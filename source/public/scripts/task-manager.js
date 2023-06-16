@@ -11,32 +11,24 @@ const defaultTasks = [
   },
 ];
 
+function clearAndLog() {
+  console.clear();
+  console.table(tasks);
+}
+
 function addTask(taskToAdd) {
   tasks.push(taskToAdd);
-  // console.clear();
-  console.table(tasks);
+  clearAndLog();
 }
 
 function removeTask(indexToremove) {
   tasks.splice(indexToremove, 1);
-  // console.clear();
-  console.table(tasks);
+  clearAndLog();
 }
 
 function updateTask(taskToUpdate, index) {
   tasks[index] = taskToUpdate;
-  // console.clear();
-  console.table(tasks);
-}
-
-function compareTasks(task1, task2) {
-  if (task1.dueDate < task2.dueDate) {
-    return -1;
-  }
-  if (task1.dueDate > task2.dueDate) {
-    return 1;
-  }
-  return 0;
+  clearAndLog();
 }
 
 function sortByKey(array, key) {
@@ -53,23 +45,21 @@ function sortByKey(array, key) {
   });
 }
 
-function defTasks() {
+function returnDefaultTasks() {
   return defaultTasks;
 }
 
 function tasksSorted(key) {
-  // console.log(`sort by: ${key}`);
   return sortByKey(tasks, key);
 }
 
 export default {
   tasksSorted,
-  compareTasks,
-  defTasks,
-  defaultTasks,
-  tasks,
+  returnDefaultTasks,
   addTask,
   removeTask,
   updateTask,
   sortByKey,
+  defaultTasks,
+  tasks,
 };

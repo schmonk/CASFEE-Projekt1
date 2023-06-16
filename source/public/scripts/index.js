@@ -236,6 +236,17 @@ function filterCompletedTasks() {
   }
 }
 
+function switchOffSortingButtons(turnOn) {
+  const sortingButtons = document.querySelector('.filterSort-container').children;
+  for (let i = 0; i < sortingButtons.length; i += 1) {
+    if (sortingButtons[i] === turnOn) {
+      console.log(`this is ${turnOn}, keep it running`);
+    } else {
+      sortingButtons[i].classList.remove('sorting-active');
+    }
+  }
+}
+
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('task-completion')) {
     toggleCompletion(event);
@@ -253,11 +264,16 @@ cancelButton.addEventListener('click', (e) => {
   clearDialog();
 });
 
+filterCompletedButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  filterCompletedTasks();
+});
 sortDueDateButton.addEventListener('click', (e) => {
   e.preventDefault();
-  console.log(`duedate is: ${tm.tasks.dueDate}`);
-  const sortedArray = tm.tasksSorted('dueDate');
+  // console.log(`duedate is: ${tm.tasks.dueDate}`);
   sortDueDateButton.classList.toggle('sorting-active');
+  const sortedArray = tm.tasksSorted('dueDate');
+  switchOffSortingButtons(sortDueDateButton);
   renderTaskList(sortedArray);
 });
 
@@ -265,20 +281,15 @@ sortCreationDateButton.addEventListener('click', (e) => {
   e.preventDefault();
   sortCreationDateButton.classList.toggle('sorting-active');
   const sortedArray = tm.tasksSorted('creationDate');
-  sortDueDateButton.classList.toggle('sorting-active');
+  switchOffSortingButtons(sortCreationDateButton);
   renderTaskList(sortedArray);
-});
-
-filterCompletedButton.addEventListener('click', (e) => {
-  e.preventDefault();
-  filterCompletedTasks();
 });
 
 sortImportanceButton.addEventListener('click', (e) => {
   e.preventDefault();
   sortImportanceButton.classList.toggle('sorting-active');
   const sortedArray = tm.tasksSorted('importance');
-  sortDueDateButton.classList.toggle('sorting-active');
+  switchOffSortingButtons(sortImportanceButton);
   renderTaskList(sortedArray);
 });
 
@@ -286,7 +297,7 @@ sortNameButton.addEventListener('click', (e) => {
   e.preventDefault();
   sortNameButton.classList.toggle('sorting-active');
   const sortedArray = tm.tasksSorted('title');
-  sortDueDateButton.classList.toggle('sorting-active');
+  switchOffSortingButtons(sortNameButton);
   renderTaskList(sortedArray);
 });
 

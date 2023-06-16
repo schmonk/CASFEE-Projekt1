@@ -115,7 +115,7 @@ input:focus {
   justify-content: space-between;
 }
 
-.filterSort {
+.filterSort-container {
   width: 100%;
   padding: 1rem;
   display: grid;
