@@ -39,14 +39,37 @@ function compareTasks(task1, task2) {
   return 0;
 }
 
+function sortByKey(array, key) {
+  return array.sort((a, b) => {
+    const x = a[key];
+    const y = b[key];
+    if (x < y) {
+      return -1;
+    }
+    if (x > y) {
+      return 1;
+    }
+    return 0;
+  });
+}
+
 function defTasks() {
   return defaultTasks;
 }
 
-function tasksSorted() {
-  return tasks.sort(compareTasks);
+function tasksSorted(key) {
+  // console.log(`sort by: ${key}`);
+  return sortByKey(tasks, key);
 }
 
 export default {
-  tasksSorted, compareTasks, defTasks, defaultTasks, tasks, addTask, removeTask, updateTask,
+  tasksSorted,
+  compareTasks,
+  defTasks,
+  defaultTasks,
+  tasks,
+  addTask,
+  removeTask,
+  updateTask,
+  sortByKey,
 };

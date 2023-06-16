@@ -255,7 +255,8 @@ cancelButton.addEventListener('click', (e) => {
 
 sortDueDateButton.addEventListener('click', (e) => {
   e.preventDefault();
-  const sortedArray = tm.tasksSorted();
+  console.log(`duedate is: ${tm.tasks.dueDate}`);
+  const sortedArray = tm.tasksSorted('dueDate');
   sortDueDateButton.classList.toggle('sorting-active');
   renderTaskList(sortedArray);
 });
@@ -263,6 +264,9 @@ sortDueDateButton.addEventListener('click', (e) => {
 sortCreationDateButton.addEventListener('click', (e) => {
   e.preventDefault();
   sortCreationDateButton.classList.toggle('sorting-active');
+  const sortedArray = tm.tasksSorted('creationDate');
+  sortDueDateButton.classList.toggle('sorting-active');
+  renderTaskList(sortedArray);
 });
 
 filterCompletedButton.addEventListener('click', (e) => {
@@ -273,11 +277,17 @@ filterCompletedButton.addEventListener('click', (e) => {
 sortImportanceButton.addEventListener('click', (e) => {
   e.preventDefault();
   sortImportanceButton.classList.toggle('sorting-active');
+  const sortedArray = tm.tasksSorted('importance');
+  sortDueDateButton.classList.toggle('sorting-active');
+  renderTaskList(sortedArray);
 });
 
 sortNameButton.addEventListener('click', (e) => {
   e.preventDefault();
   sortNameButton.classList.toggle('sorting-active');
+  const sortedArray = tm.tasksSorted('title');
+  sortDueDateButton.classList.toggle('sorting-active');
+  renderTaskList(sortedArray);
 });
 
 document.addEventListener('click', (event) => {
