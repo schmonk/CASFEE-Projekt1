@@ -31,15 +31,16 @@ function updateTask(taskToUpdate, index) {
   clearAndLog();
 }
 
-function sortByKey(array, key) {
+function sortByKey(array, key, isAscending) {
   return array.sort((a, b) => {
     const x = a[key];
     const y = b[key];
+    const sortingDirection = isAscending ? 1 : -1;
     if (x < y) {
-      return -1;
+      return -1 * sortingDirection;
     }
     if (x > y) {
-      return 1;
+      return 1 * sortingDirection;
     }
     return 0;
   });
@@ -49,8 +50,8 @@ function returnDefaultTasks() {
   return defaultTasks;
 }
 
-function tasksSorted(key) {
-  return sortByKey(tasks, key);
+function tasksSorted(key, isAscending) {
+  return sortByKey(tasks, key, isAscending);
 }
 
 export default {

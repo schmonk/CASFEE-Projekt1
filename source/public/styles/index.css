@@ -87,8 +87,12 @@ input:focus {
   background-color: var(--on-primary-highlight-background)
 }
 
-.sorting-active::after {
+.ascending::after {
   content: '↑';
+}
+
+.descending::after {
+  content: '↓';
 }
 
 .sorting-active:hover {
