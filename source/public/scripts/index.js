@@ -130,7 +130,11 @@ function insertImportanceStars(amount) {
 }
 
 function createTaskHTML(task) {
-  return `<article id="${task.id}" class="task-container ${(task.completion) ? 'completed' : ''}">
+  let hiddenString = 'completed';
+  if (filterCompletedButton.classList.contains('filtering-active')) {
+    hiddenString = 'completed hidden';
+  }
+  return `<article id="${task.id}" class="task-container ${(task.completion) ? hiddenString : ''}">
   <input type="checkbox" name="completion" class="task-completion" ${(task.completion) ? 'checked' : ''}/>
     <div class="task-content">
       <h3 class="task-title">${task.title}</h3>
