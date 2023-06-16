@@ -54,11 +54,7 @@ function setupEditDialog(title) {
 function openEditDialog(event) {
   const taskContainer = event.target.parentElement.parentElement; // the task container
   const currentId = taskContainer.id.toString();
-  /*   console.log(`ID: ${currentId}`);
-  console.log(`find object: ${findObject(tm.tasks, 'id', currentId)}`); */
   const existingTask = findObject(tm.tasks, 'id', currentId);
-  /*   console.log(existingTask);
-  console.log(`tasks: ${tm.tasks}, currentId: ${currentId}`); */
   taskTitle.value = existingTask.title;
   taskImportance.value = existingTask.importance;
   taskDescription.value = existingTask.description;
@@ -99,6 +95,7 @@ function updateTask(event) {
     importance: taskImportance.value ? clamp(taskImportance.value, 0, 5) : existingTask.importance,
     completion: taskCompletion.checked,
   };
+
   const element = taskList.querySelector(`#${existingTask.id}`);
   updateElementInList(element, task);
   const indexToUpdate = tm.tasks.indexOf(findObject(tm.tasks, 'id', taskDialog.id.toString()));
@@ -127,6 +124,15 @@ function createDefaultDueDate() {
   return formatDate(date);
 }
 
+function insertImportanceStars(amount) {
+  let stars = '';
+  for (let i = 0; i < amount; i += 1) {
+    stars += '★';
+  }
+  console.log(stars);
+  return stars;
+}
+
 function createTaskHTML(task) {
   return `<article id="${task.id}" class="task-container ${(task.completion) ? 'completed' : ''}">
   <input type="checkbox" name="completion" class="task-completion" ${(task.completion) ? 'checked' : ''}/>
@@ -136,7 +142,7 @@ function createTaskHTML(task) {
     </div>
     <p class="task-due-date">Due ${task.dueDate}</p>
     <p class="task-created-date" >Created ${task.creationDate}</p>
-    <p >Importance: <span class="task-importance">${task.importance}</span></p>
+    <p ><span class="task-importance">${insertImportanceStars(task.importance)}</span></p>
     <div class="buttongroup">
     <button class="btn task-delete">Delete</button>
     <button class="btn task-edit">Edit</button>
@@ -182,12 +188,6 @@ function toggleCompletion(event) {
   tm.updateTask(existingTask, indexToUpdate);
 }
 
-document.addEventListener('click', (event) => {
-  if (event.target.classList.contains('task-completion')) {
-    toggleCompletion(event);
-  }
-});
-
 function clearDialog() {
   taskTitle.value = '';
   taskDueDate.value = '';
@@ -203,6 +203,21 @@ function setupCreationDialog() {
   taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
 }
 
+function renderTaskList(sortedTaskArray) {
+  while (taskList.firstChild) {
+    taskList.removeChild(taskList.firstChild);
+  }
+  for (let i = 0; i < sortedTaskArray.length; i += 1) {
+    addTaskToDOM(sortedTaskArray[i]);
+  }
+}
+
+document.addEventListener('click', (event) => {
+  if (event.target.classList.contains('task-completion')) {
+    toggleCompletion(event);
+  }
+});
+
 createTaskButton.addEventListener('click', () => {
   setupCreationDialog();
   taskDialog.showModal();
@@ -213,15 +228,6 @@ cancelButton.addEventListener('click', (e) => {
   taskDialog.close();
   clearDialog();
 });
-
-function renderTaskList(sortedTaskArray) {
-  while (taskList.firstChild) {
-    taskList.removeChild(taskList.firstChild);
-  }
-  for (let i = 0; i < sortedTaskArray.length; i += 1) {
-    addTaskToDOM(sortedTaskArray[i]);
-  }
-}
 
 sortDueDateButton.addEventListener('click', (e) => {
   e.preventDefault();
