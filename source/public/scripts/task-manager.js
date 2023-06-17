@@ -18,8 +18,8 @@ const defaultTasks = [
 ];
 
 function clearAndLog() {
-  console.clear();
-  console.table(tasks);
+/*   console.clear();
+  console.table(tasks); */
 }
 
 function addTask(taskToAdd) {

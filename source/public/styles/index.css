@@ -8,9 +8,10 @@
 :root {
   --bg-color: hsl(0, 0%, 92%);
   --primary-text-color: rgb(28, 28, 28);
-  --primary-text-disabled-color: rgb(192, 192, 192);
+  --primary-text-disabled-color: hsl(0, 0%, 75%);
   --primary-color: hsl(202, 100%, 71%);
   --primary-hover: hsl(202, 100%, 61%);
+  --on-bg-container:hsl(0, 0%, 94%); 
   --on-bg-selected: hsl(0, 0%, 80%);
   --on-bg-selected-hover: hsl(0, 0%, 74%);
   --outline-color: rgb(194, 194, 194);
@@ -22,10 +23,11 @@
   transition: all var(--transition-duration) var(--transition-function);
   --bg-color: hsl(0, 0%, 14%);
   --primary-text-color: rgb(235, 235, 235);
-  --primary-text-disabled-color: rgb(48, 48, 48);
+  --primary-text-disabled-color: hsl(0, 0%, 24%);
   --outline-color: rgb(100, 100, 100);
   --primary-color: hsl(202, 100%, 25%);
   --primary-hover: hsl(202, 100%, 35%);
+  --on-bg-container:hsl(0, 0%, 18%); 
   --on-bg-selected: hsl(0, 0%, 26%);
   --on-bg-selected-hover: hsl(0, 0%, 32%);
   --on-bg-hover: hsl(0, 0%, 20%);
@@ -137,6 +139,7 @@ input:hover {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   /* grid-template-rows: repeat(2, 1fr); */
+  background-color: var(--on-bg-container);
   min-width: 4rem;
   justify-content: center;
   align-items: center;
