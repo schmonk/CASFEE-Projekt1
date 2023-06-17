@@ -48,7 +48,7 @@ input {
     color var(--transition-duration) var(--transition-function);
   padding: 0.4rem 1rem;
   border: 1px solid var(--outline-color);
-  background-color: var(--bg-color);
+  background-color: transparent;
   color: var(--primary-text-color);
   border-radius: 0.4rem;
   min-height: 2.4rem;
