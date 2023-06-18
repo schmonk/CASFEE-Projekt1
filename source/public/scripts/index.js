@@ -1,4 +1,6 @@
 // eslint-disable-next-line import/extensions
+// import moment from 'moment';
+// eslint-disable-next-line import/extensions
 import tm from './task-manager.js';
 
 const createTaskButton = document.querySelector('#createTaskButton');
@@ -63,7 +65,7 @@ function renderTasks(sortedTaskArray) {
 }
 
 function sortTasks(property = 'creationDate', ascendingState = true) {
-  console.log(`sort by: ${property} and ascending is : ${ascendingState}`);
+  console.log(`sort by: ${property} and ascending is: ${ascendingState}`);
   const sortedArray = tm.tasksSorted(`${property}`, ascendingState);
   renderTasks(sortedArray);
 }
@@ -141,6 +143,7 @@ function formatDate(date) {
 function createCreationDate() {
   const today = Date.now();
   // console.log(`creation date is today: ${formatDate(today)}`);
+  // console.log(moment().endOf('day').fromNow());
   return formatDate(today);
 }
 
@@ -229,6 +232,7 @@ function filterCompletedTasks() {
 
 function toggleSortingButtons(keepOnClass) {
   const sortingButtons = document.querySelectorAll('.sort-button');
+  let sortingDirection = 0;
   for (let i = 0; i < sortingButtons.length; i += 1) {
     if (!sortingButtons[i].classList.contains(keepOnClass)) {
       sortingButtons[i].classList.remove('sorting-active');
@@ -239,28 +243,43 @@ function toggleSortingButtons(keepOnClass) {
       if (sortingButtons[i].classList.contains('ascending')) {
         sortingButtons[i].classList.remove('ascending');
         sortingButtons[i].classList.add('descending');
+        sortingDirection = 1;
       } else {
         sortingButtons[i].classList.remove('descending');
         sortingButtons[i].classList.add('ascending');
+        sortingDirection = 0;
       }
+    }
+  }
+  return sortingDirection;
+}
+
+function toggleSortingDirection(keepOnClass, ascendingState) {
+  const sortingButtons = document.querySelectorAll('.sort-button');
+  for (let i = 0; i < sortingButtons.length; i += 1) {
+    if (sortingButtons[i].classList.contains('sorting-active') && ascendingState) {
+      sortingButtons[i].classList.remove('ascending');
+      sortingButtons[i].classList.add('descending');
+    } else if (sortingButtons[i].classList.contains('sorting-active') && !ascendingState) {
+      sortingButtons[i].classList.remove('descending');
+      sortingButtons[i].classList.add('ascending');
     }
   }
 }
 
-function sortingDirection(keepOnClass) {
+/* function sortingDirection(keepOnClass) {
   const sortingButtons = document.querySelectorAll('.sort-button');
   let activeSortingButton = sortingButtons[0];
   for (let i = 0; i < sortingButtons.length; i += 1) {
     if (sortingButtons[i].classList.contains(keepOnClass)) {
       activeSortingButton = sortingButtons[i];
-      return activeSortingButton;
     }
   }
   if (activeSortingButton.classList.contains('ascending')) {
     return 0;
   }
   return 1;
-}
+} */
 
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('task-completion')) {
@@ -286,29 +305,25 @@ filterCompletedButton.addEventListener('click', (e) => {
 
 sortDueDateButton.addEventListener('click', (e) => {
   e.preventDefault();
-  toggleSortingButtons('dueDate');
-  const ascendingTrue = sortingDirection('dueDate');
+  const ascendingTrue = toggleSortingButtons('dueDate');
   sortTasks('dueDate', ascendingTrue);
 });
 
 sortCreationDateButton.addEventListener('click', (e) => {
   e.preventDefault();
-  toggleSortingButtons('creationDate');
-  const ascendingTrue = sortingDirection('creationDate');
+  const ascendingTrue = toggleSortingButtons('creationDate');
   sortTasks('creationDate', ascendingTrue);
 });
 
 sortImportanceButton.addEventListener('click', (e) => {
   e.preventDefault();
-  toggleSortingButtons('importance');
-  const ascendingTrue = sortingDirection('importance');
+  const ascendingTrue = toggleSortingButtons('importance');
   sortTasks('importance', ascendingTrue);
 });
 
 sortNameButton.addEventListener('click', (e) => {
   e.preventDefault();
-  toggleSortingButtons('title');
-  const ascendingTrue = sortingDirection('title');
+  const ascendingTrue = toggleSortingButtons('title');
   sortTasks('title', ascendingTrue);
 });
 
@@ -348,6 +363,7 @@ function initializeTasks(fromStorage) {
   });
   const retrievedSorting = tm.getFromStorage('mySorting');
   toggleSortingButtons(retrievedSorting.mySortingType);
+  toggleSortingDirection(retrievedSorting.mySortingType, retrievedSorting.myAscendingState);
   sortTasks(retrievedSorting.mySortingType, retrievedSorting.myAscendingState);
 }
 
