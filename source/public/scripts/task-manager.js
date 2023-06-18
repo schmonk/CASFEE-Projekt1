@@ -21,22 +21,21 @@ const defaultTasks = [
 ];
 
 function getFromStorage() {
-  return storageManager.retrieveData();
+  return storageManager.retrieveTasks();
 }
 function addTask(taskToAdd) {
-  // console.log(taskToAdd);
   tasks.push(taskToAdd);
-  storageManager.storeData(tasks);
+  storageManager.storeTasks(tasks);
 }
 
 function removeTask(indexToremove) {
   tasks.splice(indexToremove, 1);
-  storageManager.storeData(tasks);
+  storageManager.storeTasks(tasks);
 }
 
 function updateTask(taskToUpdate, index) {
   tasks[index] = taskToUpdate;
-  storageManager.storeData(tasks);
+  storageManager.storeTasks(tasks);
 }
 
 function sortByKey(array, key, isAscending) {
@@ -55,10 +54,12 @@ function sortByKey(array, key, isAscending) {
 }
 
 function tasksSorted(key = 'creationDate', isAscending = true) {
+  storageManager.storeSorting(key, isAscending);
   return sortByKey(tasks, key, isAscending);
 }
 
 function defaultTasksSorted(key = 'creationDate', isAscending = true) {
+  storageManager.storeSorting(key, isAscending);
   return sortByKey(defaultTasks, key, isAscending);
 }
 

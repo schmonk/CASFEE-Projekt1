@@ -1,22 +1,28 @@
 const localStorageTasksKey = 'myTasks';
+const localStorageSortingKey = 'mySorting';
 
-/* function clearAndLog(myTasks) {
-  console.clear();
-  console.table(myTasks);
-} */
+function storeSorting(sortingType, ascendingState) {
+  const mySorting = {
+    mySortingType: sortingType,
+    myAscendingState: ascendingState,
+  };
+  const parsedSorting = JSON.stringify(mySorting);
+  localStorage.setItem(localStorageSortingKey, parsedSorting);
+}
 
-function storeData(tasks) {
+function storeTasks(tasks) {
   const parsedTasks = JSON.stringify(tasks);
   localStorage.setItem(localStorageTasksKey, parsedTasks);
 }
 
-function retrieveData() {
+function retrieveTasks() {
   const retrievedTasks = localStorage.getItem(localStorageTasksKey.toString());
   const parsedTasks = JSON.parse(retrievedTasks);
   return parsedTasks;
 }
 
 export default {
-  storeData,
-  retrieveData,
+  storeTasks,
+  retrieveTasks,
+  storeSorting,
 };

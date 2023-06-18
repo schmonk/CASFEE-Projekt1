@@ -334,9 +334,9 @@ function initializeTasks(fromStorage) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (tm.getFromStorage().length === 0) {
-    initializeTasks(false);
+  if (tm.getFromStorage() === null || tm.getFromStorage().length === 0) {
+    initializeTasks(false); // no stored tasks; initialize default tasks
   } else {
-    initializeTasks(true);
+    initializeTasks(true); // there are stored tasks
   }
 });
