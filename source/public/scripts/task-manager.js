@@ -20,10 +20,11 @@ const defaultTasks = [
   },
 ];
 
-function checkStorage() {
+function getFromStorage() {
   return storageManager.retrieveData();
 }
 function addTask(taskToAdd) {
+  // console.log(taskToAdd);
   tasks.push(taskToAdd);
   storageManager.storeData(tasks);
 }
@@ -57,12 +58,15 @@ function tasksSorted(key = 'creationDate', isAscending = true) {
   return sortByKey(tasks, key, isAscending);
 }
 
+function defaultTasksSorted(key = 'creationDate', isAscending = true) {
+  return sortByKey(defaultTasks, key, isAscending);
+}
+
 export default {
-  checkStorage,
+  getFromStorage,
   tasksSorted,
   addTask,
   removeTask,
   updateTask,
-  defaultTasks,
-  tasks,
+  defaultTasksSorted,
 };

@@ -51,7 +51,7 @@ function createTaskHTML(task) {
 function addTaskToDOM(task) {
   taskList.insertAdjacentHTML('beforeend', createTaskHTML(task));
 }
-function renderTaskList(sortedTaskArray) {
+function renderTasks(sortedTaskArray) {
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
   }
@@ -62,7 +62,7 @@ function renderTaskList(sortedTaskArray) {
 
 function sortTasks(property = 'creationDate', ascendingState = true) {
   const sortedArray = tm.tasksSorted(`${property}`, ascendingState);
-  renderTaskList(sortedArray);
+  renderTasks(sortedArray);
 }
 
 function findObject(myArray, property, value) {
@@ -325,19 +325,18 @@ document.addEventListener('click', (event) => {
   }
 });
 
-function initializeTasks(taskListInput) {
-  const currentTaskList = taskListInput || tm.defaultTasks;
-  for (let i = 0; i < currentTaskList.length; i += 1) {
-    addTaskToDOM(currentTaskList[i]);
-    tm.addTask(currentTaskList[i]);
-  }
+function initializeTasks(fromStorage) {
+  const initialTaskList = fromStorage ? tm.getFromStorage() : tm.defaultTasksSorted();
+  renderTasks(initialTaskList);
+  initialTaskList.forEach((element) => {
+    tm.addTask(element);
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (tm.checkStorage().length === 0) {
-    initializeTasks();
+  if (tm.getFromStorage().length === 0) {
+    initializeTasks(false);
   } else {
-    initializeTasks(tm.checkStorage());
-    // sortTasks(tm.checkStorage());
+    initializeTasks(true);
   }
 });
