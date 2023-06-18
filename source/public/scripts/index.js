@@ -20,6 +20,51 @@ const filterCompletedButton = document.querySelector('#filterCompleted');
 const placeholderTaskTitle = 'My task';
 const placeholderTaskDescription = 'Task description';
 
+function insertImportanceStars(amount) {
+  let stars = '';
+  for (let i = 0; i < amount; i += 1) {
+    stars += '★';
+  }
+  return stars;
+}
+
+function createTaskHTML(task) {
+  let hiddenString = 'completed';
+  if (filterCompletedButton.classList.contains('filtering-active')) {
+    hiddenString = 'completed hidden';
+  }
+  return `<article id="${task.id}" class="task-container ${(task.completion) ? hiddenString : ''}">
+  <input type="checkbox" name="completion" class="task-completion" ${(task.completion) ? 'checked' : ''}/>
+    <div class="task-content">
+      <h3 class="task-title">${task.title}</h3>
+      <p class="task-description">${task.description}</p>
+    </div>
+    <p class="task-due-date">Due ${task.dueDate}</p>
+    <p class="task-created-date" >Created ${task.creationDate}</p>
+    <p ><span class="task-importance">${insertImportanceStars(task.importance)}</span></p>
+    <div class="buttongroup">
+    <button class="btn task-delete">Delete</button>
+    <button class="btn task-edit">Edit</button>
+    </div>
+    </article>`;
+}
+function addTaskToDOM(task) {
+  taskList.insertAdjacentHTML('beforeend', createTaskHTML(task));
+}
+function renderTaskList(sortedTaskArray) {
+  while (taskList.firstChild) {
+    taskList.removeChild(taskList.firstChild);
+  }
+  for (let i = 0; i < sortedTaskArray.length; i += 1) {
+    addTaskToDOM(sortedTaskArray[i]);
+  }
+}
+
+function sortTasks(property = 'creationDate', ascendingState = true) {
+  const sortedArray = tm.tasksSorted(`${property}`, ascendingState);
+  renderTaskList(sortedArray);
+}
+
 function findObject(myArray, property, value) {
   for (let i = 0; i < myArray.length; i += 1) {
     if (myArray[i][property] === value) {
@@ -61,22 +106,6 @@ function openEditDialog(event) {
   taskDialog.showModal();
 }
 
-function updateElementInList(taskContainer, task) {
-  const tc = taskContainer;
-  const ta = task;
-  tc.querySelector('.task-title').textContent = ta.title;
-  tc.querySelector('.task-importance').textContent = ta.importance;
-  tc.querySelector('.task-due-date').textContent = `Due ${ta.dueDate}`;
-  tc.querySelector('.task-description').textContent = ta.description;
-  tc.querySelector('.task-created-date').textContent = `Created ${ta.creationDate}`;
-  tc.querySelector('.task-completion').checked = ta.completion;
-  if (ta.completion) {
-    tc.classList.add('completed');
-  } else {
-    tc.classList.remove('completed');
-  }
-}
-
 function updateTask(event) {
   event.preventDefault();
   const existingTask = findObject(tm.tasks, 'id', taskDialog.id);
@@ -91,10 +120,11 @@ function updateTask(event) {
     completion: taskCompletion.checked,
   };
 
-  const element = taskList.querySelector(`#${existingTask.id}`);
-  updateElementInList(element, task);
+  /*   const element = taskList.querySelector(`#${existingTask.id}`);
+  updateElementInList(element, task); */
   const indexToUpdate = tm.tasks.indexOf(findObject(tm.tasks, 'id', taskDialog.id.toString()));
   tm.updateTask(task, indexToUpdate);
+  sortTasks();
 }
 
 function createId() {
@@ -117,38 +147,6 @@ function createDefaultDueDate() {
   const date = new Date();
   date.setDate(date.getDate() + days);
   return formatDate(date);
-}
-
-function insertImportanceStars(amount) {
-  let stars = '';
-  for (let i = 0; i < amount; i += 1) {
-    stars += '★';
-  }
-  return stars;
-}
-
-function createTaskHTML(task) {
-  let hiddenString = 'completed';
-  if (filterCompletedButton.classList.contains('filtering-active')) {
-    hiddenString = 'completed hidden';
-  }
-  return `<article id="${task.id}" class="task-container ${(task.completion) ? hiddenString : ''}">
-  <input type="checkbox" name="completion" class="task-completion" ${(task.completion) ? 'checked' : ''}/>
-    <div class="task-content">
-      <h3 class="task-title">${task.title}</h3>
-      <p class="task-description">${task.description}</p>
-    </div>
-    <p class="task-due-date">Due ${task.dueDate}</p>
-    <p class="task-created-date" >Created ${task.creationDate}</p>
-    <p ><span class="task-importance">${insertImportanceStars(task.importance)}</span></p>
-    <div class="buttongroup">
-    <button class="btn task-delete">Delete</button>
-    <button class="btn task-edit">Edit</button>
-    </div>
-    </article>`;
-}
-function addTaskToDOM(task) {
-  taskList.insertAdjacentHTML('beforeend', createTaskHTML(task));
 }
 
 function deleteTask(event) {
@@ -201,15 +199,6 @@ function setupCreationDialog() {
   taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
 }
 
-function renderTaskList(sortedTaskArray) {
-  while (taskList.firstChild) {
-    taskList.removeChild(taskList.firstChild);
-  }
-  for (let i = 0; i < sortedTaskArray.length; i += 1) {
-    addTaskToDOM(sortedTaskArray[i]);
-  }
-}
-
 function filterCompletedTasks() {
   filterCompletedButton.classList.toggle('filtering-active');
   if (filterCompletedButton.classList.contains('filtering-active')) {
@@ -244,11 +233,6 @@ function switchOffSortingButtons(turnOn) {
       sortingButtons[i].classList.remove('descending');
     }
   }
-}
-
-function sortTasks(property, ascendingState) {
-  const sortedArray = tm.tasksSorted(`${property}`, ascendingState);
-  renderTaskList(sortedArray);
 }
 
 function styleSortingButton(button) {
@@ -344,7 +328,6 @@ document.addEventListener('click', (event) => {
 
 function initializeTasks(taskListInput) {
   const currentTaskList = taskListInput || tm.defaultTasks;
-  // const loadedDefaultTasks = tm.defaultTasks;
   for (let i = 0; i < currentTaskList.length; i += 1) {
     addTaskToDOM(currentTaskList[i]);
     tm.addTask(currentTaskList[i]);
@@ -352,21 +335,9 @@ function initializeTasks(taskListInput) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  /* Pseudocode for myself:
-  1. check if there is data in the database
-    a) if true, load and display
-    b) if false
-  2. load default tasks
-    and add them to the db */
-  // debugger;
-  /*   const retrTasks = tm.checkStorage();
-  console.log(retrTasks); */
-  console.log(tm.checkStorage().length);
   if (tm.checkStorage().length === 0) {
-    console.log('load default tasks');
     initializeTasks();
   } else {
-    console.log('load tasks from storage');
     initializeTasks(tm.checkStorage());
   }
 });
