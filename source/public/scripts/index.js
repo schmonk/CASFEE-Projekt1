@@ -94,7 +94,7 @@ function setupEditDialog(title) {
 function openEditDialog(event) {
   const taskContainer = event.target.parentElement.parentElement; // the task container
   const currentId = taskContainer.id.toString();
-  const existingTask = findObject(tm.tasks, 'id', currentId);
+  const existingTask = findObject(tm.tasksSorted(), 'id', currentId);
   taskTitle.value = existingTask.title;
   taskImportance.value = existingTask.importance;
   taskDescription.value = existingTask.description;
@@ -102,13 +102,12 @@ function openEditDialog(event) {
   taskDueDate.value = existingTask.dueDate; // does not work yet
   taskDialog.id = currentId;
   setupEditDialog(existingTask.title);
-
   taskDialog.showModal();
 }
 
 function updateTask(event) {
   event.preventDefault();
-  const existingTask = findObject(tm.tasks, 'id', taskDialog.id);
+  const existingTask = findObject(tm.tasksSorted(), 'id', taskDialog.id);
 
   const task = {
     id: existingTask.id,
@@ -120,9 +119,7 @@ function updateTask(event) {
     completion: taskCompletion.checked,
   };
 
-  /*   const element = taskList.querySelector(`#${existingTask.id}`);
-  updateElementInList(element, task); */
-  const indexToUpdate = tm.tasks.indexOf(findObject(tm.tasks, 'id', taskDialog.id.toString()));
+  const indexToUpdate = tm.tasksSorted().indexOf(findObject(tm.tasksSorted(), 'id', taskDialog.id.toString()));
   tm.updateTask(task, indexToUpdate);
   sortTasks();
 }
@@ -139,6 +136,7 @@ function formatDate(date) {
 
 function createCreationDate() {
   const today = Date.now();
+  // console.log(`creation date is today: ${formatDate(today)}`);
   return formatDate(today);
 }
 
@@ -152,14 +150,16 @@ function createDefaultDueDate() {
 function deleteTask(event) {
   event.preventDefault();
   const element = event.target.parentElement.parentElement;
-  const indexToremove = tm.tasks.indexOf(findObject(tm.tasks, 'id', element.id.toString()));
+  const indexToremove = tm.tasksSorted().indexOf(findObject(tm.tasksSorted(), 'id', element.id.toString()));
   tm.removeTask(indexToremove);
   element.remove();
 }
 
 function createTask(e) {
   e.preventDefault();
-
+  console.log(`due date is: ${taskDueDate}`);
+  console.log(`due date is: ${taskDueDate.value}`);
+  console.log(`due date formatted: ${taskDueDate.value}`);
   const newTask = {
     id: createId(),
     title: taskTitle.value ? taskTitle.value : placeholderTaskTitle,
@@ -169,7 +169,6 @@ function createTask(e) {
     importance: taskImportance.value ? clamp(taskImportance.value, 0, 5) : '3',
     completion: taskCompletion.checked,
   };
-
   addTaskToDOM(newTask);
   tm.addTask(newTask);
 }
@@ -178,9 +177,9 @@ function toggleCompletion(event) {
   const taskContainer = event.target.parentElement;
   taskContainer.classList.toggle('completed');
   const currentId = taskContainer.id.toString();
-  const existingTask = findObject(tm.tasks, 'id', currentId);
+  const existingTask = findObject(tm.tasksSorted(), 'id', currentId);
   existingTask.completion = !existingTask.completion;
-  const indexToUpdate = tm.tasks.indexOf(findObject(tm.tasks, 'id', currentId));
+  const indexToUpdate = tm.tasksSorted().indexOf(findObject(tm.tasksSorted(), 'id', currentId));
   tm.updateTask(existingTask, indexToUpdate);
 }
 
@@ -203,9 +202,9 @@ function filterCompletedTasks() {
   filterCompletedButton.classList.toggle('filtering-active');
   if (filterCompletedButton.classList.contains('filtering-active')) {
     filterCompletedButton.textContent = 'Show completed';
-    for (let i = 0; i < tm.tasks.length; i += 1) {
-      if (tm.tasks[i].completion === true) {
-        const element = taskList.querySelector(`#${tm.tasks[i].id}`);
+    for (let i = 0; i < tm.tasksSorted().length; i += 1) {
+      if (tm.tasksSorted()[i].completion === true) {
+        const element = taskList.querySelector(`#${tm.tasksSorted()[i].id}`);
         if (!element.classList.contains('hidden')) {
           element.classList.add('hidden');
         } else {
@@ -215,9 +214,9 @@ function filterCompletedTasks() {
     }
   } else {
     filterCompletedButton.textContent = 'Hide completed';
-    for (let i = 0; i < tm.tasks.length; i += 1) {
-      if (tm.tasks[i].completion === true) {
-        const element = taskList.querySelector(`#${tm.tasks[i].id}`);
+    for (let i = 0; i < tm.tasksSorted().length; i += 1) {
+      if (tm.tasksSorted()[i].completion === true) {
+        const element = taskList.querySelector(`#${tm.tasksSorted()[i].id}`);
         element.classList.remove('hidden');
       }
     }
@@ -339,5 +338,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeTasks();
   } else {
     initializeTasks(tm.checkStorage());
+    // sortTasks(tm.checkStorage());
   }
 });
