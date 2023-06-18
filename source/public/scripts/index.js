@@ -15,6 +15,7 @@ const sortNameButton = document.querySelector('#sortName');
 const sortCreationDateButton = document.querySelector('#sortCreationDate');
 const sortImportanceButton = document.querySelector('#sortImportance');
 const filterCompletedButton = document.querySelector('#filterCompleted');
+// const defaultSortingButton = sortCreationDateButton;
 
 const placeholderTaskTitle = 'My task';
 const placeholderTaskDescription = 'Task description';
@@ -283,6 +284,7 @@ filterCompletedButton.addEventListener('click', (e) => {
   e.preventDefault();
   filterCompletedTasks();
 });
+
 sortDueDateButton.addEventListener('click', (e) => {
   e.preventDefault();
   switchOffSortingButtons(sortDueDateButton);
@@ -340,16 +342,31 @@ document.addEventListener('click', (event) => {
   }
 });
 
-function initializeDefaultTasks() {
-  const loadedDefaultTasks = tm.defaultTasks;
-  for (let i = 0; i < loadedDefaultTasks.length; i += 1) {
-    addTaskToDOM(loadedDefaultTasks[i]);
-    tm.addTask(loadedDefaultTasks[i]);
+function initializeTasks(taskListInput) {
+  const currentTaskList = taskListInput || tm.defaultTasks;
+  // const loadedDefaultTasks = tm.defaultTasks;
+  for (let i = 0; i < currentTaskList.length; i += 1) {
+    addTaskToDOM(currentTaskList[i]);
+    tm.addTask(currentTaskList[i]);
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (tm.tasks.length === 0) {
-    initializeDefaultTasks();
+  /* Pseudocode for myself:
+  1. check if there is data in the database
+    a) if true, load and display
+    b) if false
+  2. load default tasks
+    and add them to the db */
+  // debugger;
+  /*   const retrTasks = tm.checkStorage();
+  console.log(retrTasks); */
+  console.log(tm.checkStorage().length);
+  if (tm.checkStorage().length === 0) {
+    console.log('load default tasks');
+    initializeTasks();
+  } else {
+    console.log('load tasks from storage');
+    initializeTasks(tm.checkStorage());
   }
 });

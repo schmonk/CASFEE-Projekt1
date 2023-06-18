@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/extensions
-import sm from './storage-manager.js';
+import storageManager from './storage-manager.js';
 
 const tasks = [];
 const defaultTasks = [
@@ -20,25 +20,29 @@ const defaultTasks = [
   },
 ];
 
-sm.storeData(defaultTasks);
-sm.retrieveData();
 function clearAndLog() {
 /*   console.clear();
   console.table(tasks); */
 }
 
+function checkStorage() {
+  return storageManager.retrieveData();
+}
 function addTask(taskToAdd) {
   tasks.push(taskToAdd);
+  storageManager.storeData(tasks);
   clearAndLog();
 }
 
 function removeTask(indexToremove) {
   tasks.splice(indexToremove, 1);
+  storageManager.storeData(tasks);
   clearAndLog();
 }
 
 function updateTask(taskToUpdate, index) {
   tasks[index] = taskToUpdate;
+  storageManager.storeData(tasks);
   clearAndLog();
 }
 
@@ -61,11 +65,12 @@ function returnDefaultTasks() {
   return defaultTasks;
 }
 
-function tasksSorted(key, isAscending) {
+function tasksSorted(key = 'creationDate', isAscending = true) {
   return sortByKey(tasks, key, isAscending);
 }
 
 export default {
+  checkStorage,
   tasksSorted,
   returnDefaultTasks,
   addTask,

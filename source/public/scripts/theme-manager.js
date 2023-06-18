@@ -1,13 +1,14 @@
 const themeButton = document.getElementById('themeButton');
+const localStorageThemeKey = 'myTheme';
 
 function toggleTheme() {
   document.body.classList.toggle('dark-theme');
   if (themeButton.innerText === '☽') {
     themeButton.innerText = '☼';
-    localStorage.setItem('themeState', 'dark');
+    localStorage.setItem(localStorageThemeKey, 'dark');
   } else {
     themeButton.innerText = '☽';
-    localStorage.setItem('themeState', 'light');
+    localStorage.setItem(localStorageThemeKey, 'light');
   }
 }
 themeButton.addEventListener('click', () => {
@@ -15,8 +16,8 @@ themeButton.addEventListener('click', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (localStorage.getItem('themeState')) {
-    if (localStorage.getItem('themeState') === 'dark') {
+  if (localStorage.getItem(localStorageThemeKey)) {
+    if (localStorage.getItem(localStorageThemeKey) === 'dark') {
       toggleTheme();
     }
   }

@@ -45,7 +45,7 @@
         <form>
           <div class="taskInput" id="taskTitleInput">
             <label for="title">Title</label>
-            <input type="text" name="title" id="taskTitle" placeholder="My Task"/>
+            <input type="text" name="title" id="taskTitle" placeholder="Task title" required/>
           </div>
           <div class="taskInput" id="taskImportanceInput">
             <label for="importance">Importance</label>
@@ -67,7 +67,7 @@
             <button id="cancelButton" value="cancel" formmethod="dialog">
               Cancel
             </button>
-            <button id="saveDialogButton" class="btn btn-primary task-create" value="default">Create</button>
+            <button id="saveDialogButton" class="btn btn-primary task-create" value="default" type="submit">Create</button>
           </div>
         </form>
       </dialog>
