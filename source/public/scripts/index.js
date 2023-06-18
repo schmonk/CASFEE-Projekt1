@@ -48,9 +48,11 @@ function createTaskHTML(task) {
     </div>
     </article>`;
 }
+
 function addTaskToDOM(task) {
   taskList.insertAdjacentHTML('beforeend', createTaskHTML(task));
 }
+
 function renderTasks(sortedTaskArray) {
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
@@ -61,6 +63,7 @@ function renderTasks(sortedTaskArray) {
 }
 
 function sortTasks(property = 'creationDate', ascendingState = true) {
+  console.log(`sort by: ${property} and ascending is : ${ascendingState}`);
   const sortedArray = tm.tasksSorted(`${property}`, ascendingState);
   renderTasks(sortedArray);
 }
@@ -99,6 +102,7 @@ function openEditDialog(event) {
   taskImportance.value = existingTask.importance;
   taskDescription.value = existingTask.description;
   taskCompletion.checked = existingTask.completion;
+  // console.log(`existing due date: ${existingTask.dueDate}`);
   taskDueDate.value = existingTask.dueDate; // does not work yet
   taskDialog.id = currentId;
   setupEditDialog(existingTask.title);
@@ -157,9 +161,8 @@ function deleteTask(event) {
 
 function createTask(e) {
   e.preventDefault();
-  console.log(`due date is: ${taskDueDate}`);
-  console.log(`due date is: ${taskDueDate.value}`);
-  console.log(`due date formatted: ${taskDueDate.value}`);
+  /*   console.log(`due date is: ${taskDueDate.value}`);
+  console.log(`due date type: ${typeof taskDueDate.value}`); */
   const newTask = {
     id: createId(),
     title: taskTitle.value ? taskTitle.value : placeholderTaskTitle,
@@ -194,6 +197,7 @@ function setupCreationDialog() {
   taskDialog.querySelector('h2').textContent = 'Create a task';
   taskDialog.querySelector('#saveDialogButton').textContent = 'Create';
   taskDialog.querySelector('#taskImportance').value = 3;
+  taskDialog.querySelector('#taskDueDate').value = '2018-07-22';
   taskDialog.querySelector('#saveDialogButton').classList.add('task-create');
   taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
 }
@@ -223,26 +227,38 @@ function filterCompletedTasks() {
   }
 }
 
-function switchOffSortingButtons(turnOn) {
-  const sortingButtons = document.querySelector('.filterSort-container').children;
+function toggleSortingButtons(keepOnClass) {
+  const sortingButtons = document.querySelectorAll('.sort-button');
   for (let i = 0; i < sortingButtons.length; i += 1) {
-    if (sortingButtons[i] !== turnOn) {
+    if (!sortingButtons[i].classList.contains(keepOnClass)) {
       sortingButtons[i].classList.remove('sorting-active');
       sortingButtons[i].classList.remove('ascending');
       sortingButtons[i].classList.remove('descending');
+    } else {
+      sortingButtons[i].classList.add('sorting-active');
+      if (sortingButtons[i].classList.contains('ascending')) {
+        sortingButtons[i].classList.remove('ascending');
+        sortingButtons[i].classList.add('descending');
+      } else {
+        sortingButtons[i].classList.remove('descending');
+        sortingButtons[i].classList.add('ascending');
+      }
     }
   }
 }
 
-function styleSortingButton(button) {
-  button.classList.add('sorting-active');
-  if (button.classList.contains('ascending')) {
-    button.classList.remove('ascending');
-    button.classList.add('descending');
+function sortingDirection(keepOnClass) {
+  const sortingButtons = document.querySelectorAll('.sort-button');
+  let activeSortingButton = sortingButtons[0];
+  for (let i = 0; i < sortingButtons.length; i += 1) {
+    if (sortingButtons[i].classList.contains(keepOnClass)) {
+      activeSortingButton = sortingButtons[i];
+      return activeSortingButton;
+    }
+  }
+  if (activeSortingButton.classList.contains('ascending')) {
     return 0;
   }
-  button.classList.remove('descending');
-  button.classList.add('ascending');
   return 1;
 }
 
@@ -270,29 +286,29 @@ filterCompletedButton.addEventListener('click', (e) => {
 
 sortDueDateButton.addEventListener('click', (e) => {
   e.preventDefault();
-  switchOffSortingButtons(sortDueDateButton);
-  const ascendingTrue = styleSortingButton(sortDueDateButton);
+  toggleSortingButtons('dueDate');
+  const ascendingTrue = sortingDirection('dueDate');
   sortTasks('dueDate', ascendingTrue);
 });
 
 sortCreationDateButton.addEventListener('click', (e) => {
   e.preventDefault();
-  switchOffSortingButtons(sortCreationDateButton);
-  const ascendingTrue = styleSortingButton(sortCreationDateButton);
+  toggleSortingButtons('creationDate');
+  const ascendingTrue = sortingDirection('creationDate');
   sortTasks('creationDate', ascendingTrue);
 });
 
 sortImportanceButton.addEventListener('click', (e) => {
   e.preventDefault();
-  switchOffSortingButtons(sortImportanceButton);
-  const ascendingTrue = styleSortingButton(sortImportanceButton);
+  toggleSortingButtons('importance');
+  const ascendingTrue = sortingDirection('importance');
   sortTasks('importance', ascendingTrue);
 });
 
 sortNameButton.addEventListener('click', (e) => {
   e.preventDefault();
-  switchOffSortingButtons(sortNameButton);
-  const ascendingTrue = styleSortingButton(sortNameButton);
+  toggleSortingButtons('title');
+  const ascendingTrue = sortingDirection('title');
   sortTasks('title', ascendingTrue);
 });
 
@@ -326,17 +342,17 @@ document.addEventListener('click', (event) => {
 });
 
 function initializeTasks(fromStorage) {
-  const initialTaskList = fromStorage ? tm.getFromStorage() : tm.defaultTasksSorted();
-  renderTasks(initialTaskList);
+  const initialTaskList = fromStorage ? tm.getFromStorage('myTasks') : tm.defaultTasksSorted();
   initialTaskList.forEach((element) => {
     tm.addTask(element);
   });
-  switchOffSortingButtons(sortCreationDateButton);
-  styleSortingButton(sortCreationDateButton);
+  const retrievedSorting = tm.getFromStorage('mySorting');
+  toggleSortingButtons(retrievedSorting.mySortingType);
+  sortTasks(retrievedSorting.mySortingType, retrievedSorting.myAscendingState);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (tm.getFromStorage() === null || tm.getFromStorage().length === 0) {
+  if (tm.getFromStorage('myTasks') === null || tm.getFromStorage('myTasks').length === 0) {
     initializeTasks(false); // no stored tasks; initialize default tasks
   } else {
     initializeTasks(true); // there are stored tasks

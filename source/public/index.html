@@ -30,11 +30,11 @@
       <!-- A utility header with sorting and filtering buttons -->
       <section class="utility">
         <div class="filterSort-container">
-            <button id="filterCompleted" class="filter-button" type="button">Hide completed</button>
-            <button id="sortName" class="sort-button" type="button">Name</button>
-            <button id="sortDueDate" class="sort-button" type="button">Date due</button>
-            <button id="sortCreationDate" class="sort-button" type="button">Date created </button>
-            <button id="sortImportance" class="sort-button" type="button">Importance</button>
+            <button id="filterCompleted" class="completion filter-button" type="button">Hide completed</button>
+            <button id="sortName" class="title sort-button" type="button">Name</button>
+            <button id="sortDueDate" class="dueDate sort-button" type="button">Date due</button>
+            <button id="sortCreationDate" class="creationDate sort-button" type="button">Date created </button>
+            <button id="sortImportance" class="importance sort-button" type="button">Importance</button>
       </section>
       <!-- The Task list. Each Task is in an article -->
       <section class="task-list"> </section>
@@ -53,7 +53,7 @@
           </div>
           <div class="taskInput" id="taskDueDateInput">
             <label for="dueDate">Date due</label>
-            <input type="date" name="dueDate" id="taskDueDate" />
+            <input type="date" name="dueDate" id="taskDueDate"/>
           </div>
           <div class="taskInput" id="taskCompletionInput">
             <label for="completion">Complete</label>
@@ -61,7 +61,7 @@
           </div>
           <div class="taskInput" id="taskDescriptionInput">
             <label for="description">Description</label>
-            <input type="text" name="description" id="taskDescription" placeholder="What are the details of this task?"/>
+            <input type="text" name="description" id="taskDescription" placeholder="How would you describe this task?"/>
           </div>
           <div id="taskDialogButtons">
             <button id="cancelButton" value="cancel" formmethod="dialog">

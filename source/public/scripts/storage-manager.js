@@ -15,14 +15,15 @@ function storeTasks(tasks) {
   localStorage.setItem(localStorageTasksKey, parsedTasks);
 }
 
-function retrieveTasks() {
-  const retrievedTasks = localStorage.getItem(localStorageTasksKey.toString());
-  const parsedTasks = JSON.parse(retrievedTasks);
-  return parsedTasks;
+function retrieveElement(key) {
+  const retrievedElement = localStorage.getItem(key.toString());
+  const parsedElement = JSON.parse(retrievedElement);
+  // console.log(parsedElement);
+  return parsedElement;
 }
 
 export default {
   storeTasks,
-  retrieveTasks,
   storeSorting,
+  retrieveElement,
 };

@@ -20,8 +20,8 @@ const defaultTasks = [
   },
 ];
 
-function getFromStorage() {
-  return storageManager.retrieveTasks();
+function getFromStorage(key) {
+  return storageManager.retrieveElement(key);
 }
 function addTask(taskToAdd) {
   tasks.push(taskToAdd);
