@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/extensions
+import sm from './storage-manager.js';
+
 const tasks = [];
 const defaultTasks = [
   {
@@ -17,6 +20,8 @@ const defaultTasks = [
   },
 ];
 
+sm.storeData(defaultTasks);
+sm.retrieveData();
 function clearAndLog() {
 /*   console.clear();
   console.table(tasks); */

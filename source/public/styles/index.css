@@ -17,7 +17,7 @@
   --outline-color: rgb(194, 194, 194);
   --on-bg-hover: hsl(0, 0%, 86%);
   --transition-function: ease-in-out;
-  --transition-duration: 0.2s;
+  --transition-duration: 0.1s;
 }
 .dark-theme {
   transition: all var(--transition-duration) var(--transition-function);

@@ -16,11 +16,8 @@ const sortCreationDateButton = document.querySelector('#sortCreationDate');
 const sortImportanceButton = document.querySelector('#sortImportance');
 const filterCompletedButton = document.querySelector('#filterCompleted');
 
-const localStorageKey = 'myTasks';
 const placeholderTaskTitle = 'My task';
 const placeholderTaskDescription = 'Task description';
-
-console.log(`localStorageKey is: ${localStorageKey},`);
 
 function findObject(myArray, property, value) {
   for (let i = 0; i < myArray.length; i += 1) {
