@@ -331,6 +331,8 @@ function initializeTasks(fromStorage) {
   initialTaskList.forEach((element) => {
     tm.addTask(element);
   });
+  switchOffSortingButtons(sortCreationDateButton);
+  styleSortingButton(sortCreationDateButton);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
