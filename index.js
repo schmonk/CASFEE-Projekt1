@@ -3,7 +3,7 @@ import express from 'express';
 const app = express();
 const port = 3000;
 
-app.use(express.static('source/public'));
+app.use(express.static('source/client'));
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
