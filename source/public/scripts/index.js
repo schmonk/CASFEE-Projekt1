@@ -185,8 +185,6 @@ function openEditDialog(event) {
   taskDescription.value = existingTask.description;
   taskCompletion.checked = existingTask.completion;
   taskDueDate.value = `${existingTask.dueDate}`; // does not work yet
-  console.log(`ddate: ${taskDueDate.value}, type: ${typeof taskDueDate.value}`);
-  console.log(`exist. ddate: ${existingTask.dueDate}, type: ${typeof existingTask.dueDate}`);
   taskDialog.id = currentId;
   setupEditDialog(existingTask.title);
   taskDialog.showModal();
@@ -315,7 +313,7 @@ document.addEventListener('click', (event) => {
   }
 });
 
-document.addEventListener('submit', (event) => {
+document.addEventListener('click', (event) => {
   if (event.target.classList.contains('task-update')) {
     updateTask(event);
     taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
