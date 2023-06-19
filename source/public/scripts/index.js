@@ -1,6 +1,4 @@
 // eslint-disable-next-line import/extensions
-// import moment from 'moment';
-// eslint-disable-next-line import/extensions
 import tm from './task-manager.js';
 
 const createTaskButton = document.querySelector('#createTaskButton');
@@ -17,7 +15,6 @@ const sortNameButton = document.querySelector('#sortName');
 const sortCreationDateButton = document.querySelector('#sortCreationDate');
 const sortImportanceButton = document.querySelector('#sortImportance');
 const filterCompletedButton = document.querySelector('#filterCompleted');
-// const defaultSortingButton = sortCreationDateButton;
 
 const placeholderTaskTitle = 'My task';
 const placeholderTaskDescription = 'Task description';
@@ -25,7 +22,7 @@ const placeholderTaskDescription = 'Task description';
 function insertImportanceStars(amount) {
   let stars = '';
   for (let i = 0; i < amount; i += 1) {
-    stars += '★';
+    stars += '&#9733';
   }
   return stars;
 }
@@ -65,7 +62,6 @@ function renderTasks(sortedTaskArray) {
 }
 
 function sortTasks(property = 'creationDate', ascendingState = true) {
-  console.log(`sort by: ${property} and ascending is: ${ascendingState}`);
   const sortedArray = tm.tasksSorted(`${property}`, ascendingState);
   renderTasks(sortedArray);
 }
@@ -89,69 +85,62 @@ function clamp(value, lower, upper) {
   return myValue;
 }
 
-function setupEditDialog(title) {
-  taskDialog.querySelector('h2').textContent = `Edit "${title}"`;
-  taskDialog.querySelector('#saveDialogButton').textContent = 'Update';
-  taskDialog.querySelector('#saveDialogButton').classList.add('task-update');
-  taskDialog.querySelector('#saveDialogButton').classList.remove('task-create');
-}
-
-function openEditDialog(event) {
-  const taskContainer = event.target.parentElement.parentElement; // the task container
-  const currentId = taskContainer.id.toString();
-  const existingTask = findObject(tm.tasksSorted(), 'id', currentId);
-  taskTitle.value = existingTask.title;
-  taskImportance.value = existingTask.importance;
-  taskDescription.value = existingTask.description;
-  taskCompletion.checked = existingTask.completion;
-  // console.log(`existing due date: ${existingTask.dueDate}`);
-  taskDueDate.value = existingTask.dueDate; // does not work yet
-  taskDialog.id = currentId;
-  setupEditDialog(existingTask.title);
-  taskDialog.showModal();
-}
-
-function updateTask(event) {
-  event.preventDefault();
-  const existingTask = findObject(tm.tasksSorted(), 'id', taskDialog.id);
-
-  const task = {
-    id: existingTask.id,
-    title: taskTitle.value ? taskTitle.value : existingTask.title,
-    dueDate: taskDueDate.value ? taskDueDate.value : existingTask.dueDate,
-    creationDate: existingTask.creationDate,
-    description: taskDescription.value ? taskDescription.value : existingTask.description,
-    importance: taskImportance.value ? clamp(taskImportance.value, 0, 5) : existingTask.importance,
-    completion: taskCompletion.checked,
-  };
-
-  const indexToUpdate = tm.tasksSorted().indexOf(findObject(tm.tasksSorted(), 'id', taskDialog.id.toString()));
-  tm.updateTask(task, indexToUpdate);
-  sortTasks();
-}
-
 function createId() {
-  return `z${Date.now().toString()}`;
+  return `${Date.now().toString()}`;
 }
 
-function formatDate(date) {
+function formatDate(date, isForDisplay) {
   const dateFormatOptions = { day: 'numeric', month: 'numeric', year: 'numeric' };
-  const dateFormat = new Intl.DateTimeFormat('de-DE', dateFormatOptions);
+  const dateDisplayFormat = new Intl.DateTimeFormat('de-CH', dateFormatOptions);
+  const datePickerFormat = new Intl.DateTimeFormat('en-US', dateFormatOptions);
+  const dateFormat = isForDisplay ? dateDisplayFormat : datePickerFormat;
   return dateFormat.format(date);
 }
 
 function createCreationDate() {
   const today = Date.now();
-  // console.log(`creation date is today: ${formatDate(today)}`);
-  // console.log(moment().endOf('day').fromNow());
-  return formatDate(today);
+  return formatDate(today, true);
 }
 
 function createDefaultDueDate() {
   const days = 7; // how many days in the future is the default due date?
   const date = new Date();
   date.setDate(date.getDate() + days);
-  return formatDate(date);
+  return formatDate(date, true);
+}
+
+function createTask(e) {
+  e.preventDefault();
+  /*   console.log(`due date: ${taskDueDate.value}, type: ${typeof taskDueDate.value}`);
+  console.log(`parsed back: ${Date.parse(taskDueDate.value)}`); */
+  const newTask = {
+    id: createId(),
+    title: taskTitle.value ? taskTitle.value : placeholderTaskTitle,
+    dueDate: taskDueDate.value ? taskDueDate.value : createDefaultDueDate(),
+    creationDate: createCreationDate(),
+    description: taskDescription.value ? taskDescription.value : placeholderTaskDescription,
+    importance: taskImportance.value ? clamp(taskImportance.value, 1, 5) : '3',
+    completion: taskCompletion.checked,
+  };
+  addTaskToDOM(newTask);
+  tm.addTask(newTask);
+  sortTasks();
+}
+function updateTask(event) {
+  event.preventDefault();
+  const existingTask = findObject(tm.tasksSorted(), 'id', taskDialog.id);
+  const task = {
+    id: existingTask.id,
+    title: taskTitle.value ? taskTitle.value : existingTask.title,
+    dueDate: taskDueDate.value ? taskDueDate.value : existingTask.dueDate,
+    creationDate: existingTask.creationDate,
+    description: taskDescription.value ? taskDescription.value : existingTask.description,
+    importance: taskImportance.value ? clamp(taskImportance.value, 1, 5) : existingTask.importance,
+    completion: taskCompletion.checked,
+  };
+  const indexToUpdate = tm.tasksSorted().indexOf(findObject(tm.tasksSorted(), 'id', taskDialog.id.toString()));
+  tm.updateTask(task, indexToUpdate);
+  sortTasks();
 }
 
 function deleteTask(event) {
@@ -160,23 +149,7 @@ function deleteTask(event) {
   const indexToremove = tm.tasksSorted().indexOf(findObject(tm.tasksSorted(), 'id', element.id.toString()));
   tm.removeTask(indexToremove);
   element.remove();
-}
-
-function createTask(e) {
-  e.preventDefault();
-  /*   console.log(`due date is: ${taskDueDate.value}`);
-  console.log(`due date type: ${typeof taskDueDate.value}`); */
-  const newTask = {
-    id: createId(),
-    title: taskTitle.value ? taskTitle.value : placeholderTaskTitle,
-    dueDate: taskDueDate.value ? taskDueDate.value : createDefaultDueDate(),
-    creationDate: createCreationDate(),
-    description: taskDescription.value ? taskDescription.value : placeholderTaskDescription,
-    importance: taskImportance.value ? clamp(taskImportance.value, 0, 5) : '3',
-    completion: taskCompletion.checked,
-  };
-  addTaskToDOM(newTask);
-  tm.addTask(newTask);
+  sortTasks();
 }
 
 function toggleCompletion(event) {
@@ -196,11 +169,34 @@ function clearDialog() {
   taskImportance.value = '';
   taskCompletion.checked = false;
 }
+function setupEditDialog(title) {
+  taskDialog.querySelector('h2').textContent = `Edit "${title}"`;
+  taskDialog.querySelector('#saveDialogButton').textContent = 'Update';
+  taskDialog.querySelector('#saveDialogButton').classList.add('task-update');
+  taskDialog.querySelector('#saveDialogButton').classList.remove('task-create');
+}
+
+function openEditDialog(event) {
+  const taskContainer = event.target.parentElement.parentElement; // the task container
+  const currentId = taskContainer.id.toString();
+  const existingTask = findObject(tm.tasksSorted(), 'id', currentId);
+  taskTitle.value = existingTask.title;
+  taskImportance.value = existingTask.importance;
+  taskDescription.value = existingTask.description;
+  taskCompletion.checked = existingTask.completion;
+  taskDueDate.value = `${existingTask.dueDate}`; // does not work yet
+  console.log(`ddate: ${taskDueDate.value}, type: ${typeof taskDueDate.value}`);
+  console.log(`exist. ddate: ${existingTask.dueDate}, type: ${typeof existingTask.dueDate}`);
+  taskDialog.id = currentId;
+  setupEditDialog(existingTask.title);
+  taskDialog.showModal();
+}
+
 function setupCreationDialog() {
   taskDialog.querySelector('h2').textContent = 'Create a task';
   taskDialog.querySelector('#saveDialogButton').textContent = 'Create';
   taskDialog.querySelector('#taskImportance').value = 3;
-  taskDialog.querySelector('#taskDueDate').value = '2018-07-22';
+  // taskDialog.querySelector('#taskDueDate').valueAsDate = new Date();
   taskDialog.querySelector('#saveDialogButton').classList.add('task-create');
   taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
 }
@@ -267,20 +263,6 @@ function toggleSortingDirection(keepOnClass, ascendingState) {
   }
 }
 
-/* function sortingDirection(keepOnClass) {
-  const sortingButtons = document.querySelectorAll('.sort-button');
-  let activeSortingButton = sortingButtons[0];
-  for (let i = 0; i < sortingButtons.length; i += 1) {
-    if (sortingButtons[i].classList.contains(keepOnClass)) {
-      activeSortingButton = sortingButtons[i];
-    }
-  }
-  if (activeSortingButton.classList.contains('ascending')) {
-    return 0;
-  }
-  return 1;
-} */
-
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('task-completion')) {
     toggleCompletion(event);
@@ -333,7 +315,7 @@ document.addEventListener('click', (event) => {
   }
 });
 
-document.addEventListener('click', (event) => {
+document.addEventListener('submit', (event) => {
   if (event.target.classList.contains('task-update')) {
     updateTask(event);
     taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');

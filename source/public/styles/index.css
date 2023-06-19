@@ -62,7 +62,7 @@ input:hover {
 
 .container {
   display: grid;
-  grid-template-rows: 4fr 2fr 40fr 1fr;
+  grid-template-rows: 1fr 1fr 60fr 1fr;
   padding: 2rem;
   height: 100%;
   max-width: 1280px;
