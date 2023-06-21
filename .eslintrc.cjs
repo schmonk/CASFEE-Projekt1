@@ -11,7 +11,7 @@ module.exports = {
   rules: {
     "no-console": 0,
     "allowTemplateLiterals": 0,
-    "import/extensions": "ignorePackages",
+    "import/extensions": 0,
     "comments": 150
   },
 };
