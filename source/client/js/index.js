@@ -10,11 +10,12 @@ const taskImportance = document.querySelector('#taskImportance');
 const taskDueDate = document.querySelector('#taskDueDate');
 const taskDescription = document.querySelector('#taskDescription');
 const taskCompletion = document.querySelector('#taskCompletion');
-const sortDueDateButton = document.querySelector('#sortDueDate');
+/* const sortDueDateButton = document.querySelector('#sortDueDate');
 const sortNameButton = document.querySelector('#sortName');
 const sortCreationDateButton = document.querySelector('#sortCreationDate');
-const sortImportanceButton = document.querySelector('#sortImportance');
+const sortImportanceButton = document.querySelector('#sortImportance'); */
 const filterCompletedButton = document.querySelector('#filterCompleted');
+const filterSortContainer = document.querySelector('.filterSort-container');
 
 const placeholderTaskTitle = 'My task';
 const placeholderTaskDescription = 'Task description';
@@ -32,7 +33,7 @@ function createTaskHTML(task) {
   if (filterCompletedButton.classList.contains('filtering-active')) {
     hiddenString = 'completed hidden';
   }
-  return `<article id="${task.id}" class="task-container ${(task.completion) ? hiddenString : ''}">
+  return `<article id="${task.id}" data-id="${task.id}" class="task-container ${(task.completion) ? hiddenString : ''}">
   <input type="checkbox" name="completion" class="task-completion" ${(task.completion) ? 'checked' : ''}/>
     <div class="task-content">
       <h3 class="task-title">${task.title}</h3>
@@ -278,33 +279,36 @@ cancelButton.addEventListener('click', (e) => {
   clearDialog();
 });
 
-filterCompletedButton.addEventListener('click', (e) => {
-  e.preventDefault();
-  filterCompletedTasks();
-});
+filterSortContainer.addEventListener('click', (event) => {
+  event.preventDefault();
+  switch (event.target.id) {
+    case 'filterCompleted':
+      filterCompletedTasks();
+      break;
 
-sortDueDateButton.addEventListener('click', (e) => {
-  e.preventDefault();
-  const ascendingTrue = toggleSortingButtons('dueDate');
-  sortTasks('dueDate', ascendingTrue);
-});
-
-sortCreationDateButton.addEventListener('click', (e) => {
-  e.preventDefault();
-  const ascendingTrue = toggleSortingButtons('creationDate');
-  sortTasks('creationDate', ascendingTrue);
-});
-
-sortImportanceButton.addEventListener('click', (e) => {
-  e.preventDefault();
-  const ascendingTrue = toggleSortingButtons('importance');
-  sortTasks('importance', ascendingTrue);
-});
-
-sortNameButton.addEventListener('click', (e) => {
-  e.preventDefault();
-  const ascendingTrue = toggleSortingButtons('title');
-  sortTasks('title', ascendingTrue);
+    case 'sortDueDate': {
+      const ascendingTrue = toggleSortingButtons('dueDate');
+      sortTasks('dueDate', ascendingTrue);
+      break;
+    }
+    case 'sortName': {
+      const ascendingTrue = toggleSortingButtons('title');
+      sortTasks('title', ascendingTrue);
+      break;
+    }
+    case 'sortCreationDate': {
+      const ascendingTrue = toggleSortingButtons('creationDate');
+      sortTasks('creationDate', ascendingTrue);
+      break;
+    }
+    case 'sortImportance': {
+      const ascendingTrue = toggleSortingButtons('importance');
+      sortTasks('importance', ascendingTrue);
+      break;
+    }
+    default:
+      break;
+  }
 });
 
 document.addEventListener('click', (event) => {
