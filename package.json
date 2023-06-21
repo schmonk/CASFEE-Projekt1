@@ -12,7 +12,6 @@
     "eslint": "eslint \"**/*.js\"",
     "stylelint-check": "stylelint-config-prettier-check",
     "all": "npm run stylelint && npm run w3c  && npm run eslint  && npm run stylelint-check && node -e \"console.log('npm run all completed')\""
-
   },
   "author": "Eric Schaerrer",
   "license": "",
@@ -22,10 +21,11 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.27.5",
     "html-validator-cli": "^2.0.0",
-    "prettier": "2.6.2",
+    "prettier": "^2.6.2",
     "stylelint": "^14.7.1",
     "stylelint-config-prettier": "^9.0.5",
-    "stylelint-config-standard": "^25.0.0"
+    "stylelint-config-standard": "^25.0.0",
+    "stylelint-prettier": "^3.0.0"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
