@@ -172,7 +172,7 @@ function setupEditDialog(title) {
 
 function openEditDialog(event) {
   const taskContainer = event.target.parentElement.parentElement; // the task container
-  const currentId = taskContainer.id.toString();
+  const currentId = taskContainer.dataset.id.toString();
   const existingTask = findObject(tm.tasksSorted(), 'id', currentId);
   taskTitle.value = existingTask.title;
   taskImportance.value = existingTask.importance;
