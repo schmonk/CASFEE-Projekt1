@@ -41,6 +41,17 @@ function createTaskHTML(task) {
     </div>
     </article>`;
 }
+// const templateSource = document.querySelector(.....);
+function createTaskHTMLHandlebars(templateSource) {
+  // attach by
+  // Handlebars.compile(templateSource);
+}
+
+/* 
+function renderTasks () {
+  document.querySelector().insertAdjacentHTML = createTaskHTMLHandlebars(tasks);
+}
+*/
 
 function addTaskToDOM(task) {
   taskList.insertAdjacentHTML('beforeend', createTaskHTML(task));
@@ -255,6 +266,17 @@ function toggleSortingDirection(keepOnClass, ascendingState) {
   }
 }
 
+function initializeTasks(fromStorage) {
+  const initialTaskList = fromStorage ? tm.getFromStorage('myTasks') : tm.defaultTasksSorted();
+  initialTaskList.forEach((element) => {
+    tm.addTask(element);
+  });
+  const retrievedSorting = tm.getFromStorage('mySorting');
+  toggleSortingButtons(retrievedSorting.mySortingType);
+  toggleSortingDirection(retrievedSorting.mySortingType, retrievedSorting.myAscendingState);
+  sortTasks(retrievedSorting.mySortingType, retrievedSorting.myAscendingState);
+}
+
 document.addEventListener('click', (event) => {
   const myCL = event.target.classList;
   switch (true) {
@@ -321,16 +343,6 @@ filterSortContainer.addEventListener('click', (event) => {
   }
 });
 
-function initializeTasks(fromStorage) {
-  const initialTaskList = fromStorage ? tm.getFromStorage('myTasks') : tm.defaultTasksSorted();
-  initialTaskList.forEach((element) => {
-    tm.addTask(element);
-  });
-  const retrievedSorting = tm.getFromStorage('mySorting');
-  toggleSortingButtons(retrievedSorting.mySortingType);
-  toggleSortingDirection(retrievedSorting.mySortingType, retrievedSorting.myAscendingState);
-  sortTasks(retrievedSorting.mySortingType, retrievedSorting.myAscendingState);
-}
 
 document.addEventListener('DOMContentLoaded', () => {
   if (tm.getFromStorage('myTasks') === null || tm.getFromStorage('myTasks').length === 0) {

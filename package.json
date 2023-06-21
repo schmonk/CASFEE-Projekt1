@@ -13,7 +13,7 @@
     "stylelint-check": "stylelint-config-prettier-check",
     "all": "npm run stylelint && npm run w3c  && npm run eslint  && npm run stylelint-check && node -e \"console.log('npm run all completed')\""
   },
-  "author": "Eric Schaerrer",
+  "author": "Eric Schaerrer, Based on the template from Michael Gfeller",
   "license": "",
   "devDependencies": {
     "eslint": "^8.42.0",
