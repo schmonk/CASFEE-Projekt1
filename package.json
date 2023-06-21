@@ -10,7 +10,9 @@
     "stylelint": "stylelint \"**/*.css\"",
     "w3c": "html-validator --file ./source/client/index.html  --verbose",
     "eslint": "eslint \"**/*.js\"",
-    "all": "npm run stylelint && npm run w3c  && npm run eslint  && node -e \"console.log('npm run all completed')\""
+    "stylelint-check": "stylelint-config-prettier-check",
+    "all": "npm run stylelint && npm run w3c  && npm run eslint  && npm run stylelint-check && node -e \"console.log('npm run all completed')\""
+
   },
   "author": "Eric Schaerrer",
   "license": "",
@@ -22,6 +24,7 @@
     "html-validator-cli": "^2.0.0",
     "prettier": "2.6.2",
     "stylelint": "^14.7.1",
+    "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-standard": "^25.0.0"
   },
   "dependencies": {
