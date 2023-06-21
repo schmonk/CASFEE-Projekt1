@@ -10,7 +10,7 @@ module.exports = {
   },
   rules: {
     "no-console": 0,
-    "allowTemplateLiterals": true,
+    "allowTemplateLiterals": 0,
     "import/extensions": "ignorePackages",
     "comments": 150
   },

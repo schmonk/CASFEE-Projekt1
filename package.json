@@ -2,13 +2,13 @@
   "name": "cas-fee-projekt-1-eric-schaerrer",
   "version": "1.0.0",
   "description": "Testat template",
-  "main": "public/scripts/main.js",
+  "main": "source/client/js/index.js",
   "type": "module",
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "stylelint": "stylelint \"**/*.css\"",
-    "w3c": "html-validator --file ./source/public/index.html  --verbose",
+    "w3c": "html-validator --file ./source/client/index.html  --verbose",
     "eslint": "eslint \"**/*.js\"",
     "all": "npm run stylelint && npm run w3c  && npm run eslint  && node -e \"console.log('npm run all completed')\""
   },
