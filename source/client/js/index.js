@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/extensions
 import tm from './task-manager.js';
 
 const taskDialog = document.querySelector('.taskDialog');
@@ -199,8 +198,8 @@ function filterCompletedTasks() {
     filterCompletedButton.textContent = 'Show completed';
     for (let i = 0; i < tm.tasksSorted().length; i += 1) {
       if (tm.tasksSorted()[i].completion === true) {
-        // const element = taskList.querySelector(`#${tm.tasksSorted()[i].id}`);
-        const element = taskList.querySelectorAll('article').dataset.id;
+        const element = taskList.querySelector(`#${tm.tasksSorted()[i].id}`);
+        // const element = taskList.querySelectorAll('article').dataset.id;
         if (!element.classList.contains('hidden')) {
           element.classList.add('hidden');
         } else {

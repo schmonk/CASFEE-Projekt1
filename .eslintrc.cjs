@@ -9,5 +9,9 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    "no-console": 0,
+    "allowTemplateLiterals": true,
+    "import/extensions": "ignorePackages",
+    "comments": 150
   },
 };
