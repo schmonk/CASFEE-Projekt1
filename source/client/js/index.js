@@ -1,19 +1,13 @@
 // eslint-disable-next-line import/extensions
 import tm from './task-manager.js';
 
-const createTaskButton = document.querySelector('#createTaskButton');
 const taskDialog = document.querySelector('.taskDialog');
-const cancelButton = document.querySelector('#cancelButton');
 const taskList = document.querySelector('.task-list');
 const taskTitle = document.querySelector('#taskTitle');
 const taskImportance = document.querySelector('#taskImportance');
 const taskDueDate = document.querySelector('#taskDueDate');
 const taskDescription = document.querySelector('#taskDescription');
 const taskCompletion = document.querySelector('#taskCompletion');
-/* const sortDueDateButton = document.querySelector('#sortDueDate');
-const sortNameButton = document.querySelector('#sortName');
-const sortCreationDateButton = document.querySelector('#sortCreationDate');
-const sortImportanceButton = document.querySelector('#sortImportance'); */
 const filterCompletedButton = document.querySelector('#filterCompleted');
 const filterSortContainer = document.querySelector('.filterSort-container');
 
@@ -112,8 +106,6 @@ function createDefaultDueDate() {
 
 function createTask(e) {
   e.preventDefault();
-  /*   console.log(`due date: ${taskDueDate.value}, type: ${typeof taskDueDate.value}`);
-  console.log(`parsed back: ${Date.parse(taskDueDate.value)}`); */
   const newTask = {
     id: createId(),
     title: taskTitle.value ? taskTitle.value : placeholderTaskTitle,
@@ -129,6 +121,7 @@ function createTask(e) {
 }
 function updateTask(event) {
   event.preventDefault();
+  taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
   const existingTask = findObject(tm.tasksSorted(), 'id', taskDialog.id);
   const task = {
     id: existingTask.id,
@@ -206,7 +199,8 @@ function filterCompletedTasks() {
     filterCompletedButton.textContent = 'Show completed';
     for (let i = 0; i < tm.tasksSorted().length; i += 1) {
       if (tm.tasksSorted()[i].completion === true) {
-        const element = taskList.querySelector(`#${tm.tasksSorted()[i].id}`);
+        // const element = taskList.querySelector(`#${tm.tasksSorted()[i].id}`);
+        const element = taskList.querySelectorAll('article').dataset.id;
         if (!element.classList.contains('hidden')) {
           element.classList.add('hidden');
         } else {
@@ -263,20 +257,38 @@ function toggleSortingDirection(keepOnClass, ascendingState) {
 }
 
 document.addEventListener('click', (event) => {
-  if (event.target.classList.contains('task-completion')) {
-    toggleCompletion(event);
+  const myCL = event.target.classList;
+  switch (true) {
+    case (myCL.contains('task-add')):
+      setupCreationDialog();
+      taskDialog.showModal();
+      break;
+    case (myCL.contains('task-delete')):
+      deleteTask(event);
+      break;
+    case (myCL.contains('cancel')):
+      taskDialog.close();
+      clearDialog();
+      break;
+    case (myCL.contains('task-update')):
+      updateTask(event);
+      taskDialog.close();
+      clearDialog();
+      break;
+    case (myCL.contains('task-edit')):
+      openEditDialog(event);
+      break;
+    case (myCL.contains('task-completion')):
+      toggleCompletion(event);
+      break;
+    case (myCL.contains('task-create')):
+      createTask(event);
+      taskDialog.close();
+      clearDialog();
+      break;
+    default:
+      break;
   }
-});
-
-createTaskButton.addEventListener('click', () => {
-  setupCreationDialog();
-  taskDialog.showModal();
-});
-
-cancelButton.addEventListener('click', (e) => {
-  e.preventDefault();
-  taskDialog.close();
-  clearDialog();
 });
 
 filterSortContainer.addEventListener('click', (event) => {
@@ -285,7 +297,6 @@ filterSortContainer.addEventListener('click', (event) => {
     case 'filterCompleted':
       filterCompletedTasks();
       break;
-
     case 'sortDueDate': {
       const ascendingTrue = toggleSortingButtons('dueDate');
       sortTasks('dueDate', ascendingTrue);
@@ -308,34 +319,6 @@ filterSortContainer.addEventListener('click', (event) => {
     }
     default:
       break;
-  }
-});
-
-document.addEventListener('click', (event) => {
-  const myCL = event.target.classList;
-  switch (true) {
-    case (myCL.contains('task-delete')):
-      deleteTask(event);
-      break;
-    case (myCL.contains('task-update')):
-      updateTask(event);
-      taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
-      taskDialog.close();
-      clearDialog();
-      break;
-    case (myCL.contains('task-edit')):
-      openEditDialog(event);
-      break;
-    default:
-      break;
-  }
-});
-
-document.addEventListener('click', (event) => {
-  if (event.target.classList.contains('task-create') && !event.target.classList.contains('task-update')) {
-    createTask(event);
-    taskDialog.close();
-    clearDialog();
   }
 });
 
