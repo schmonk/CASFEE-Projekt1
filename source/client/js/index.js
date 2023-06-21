@@ -1,4 +1,4 @@
-import tm from './task-manager.js';
+import tm from './controllers/task-manager.js';
 
 const taskDialog = document.querySelector('.taskDialog');
 const taskList = document.querySelector('.task-list');
@@ -12,6 +12,8 @@ const filterSortContainer = document.querySelector('.filterSort-container');
 
 const placeholderTaskTitle = 'My task';
 const placeholderTaskDescription = 'Task description';
+
+/* View */
 
 function insertImportanceStars(amount) {
   let stars = '';
@@ -65,6 +67,8 @@ function renderTasks(sortedTaskArray) {
     addTaskToDOM(sortedTaskArray[i]);
   }
 }
+
+/* Model */
 
 function sortTasks(property = 'creationDate', ascendingState = true) {
   const sortedArray = tm.tasksSorted(`${property}`, ascendingState);
@@ -181,7 +185,7 @@ function setupEditDialog(title) {
 }
 
 function openEditDialog(event) {
-  const taskContainer = event.target.parentElement.parentElement; // the task container
+  const taskContainer = event.target.parentElement.parentElement;
   const currentId = taskContainer.dataset.id.toString();
   const existingTask = findObject(tm.tasksSorted(), 'id', currentId);
   taskTitle.value = existingTask.title;

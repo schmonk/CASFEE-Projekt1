@@ -1,7 +1,5 @@
 // eslint-disable-next-line import/extensions
 import storageManager from './storage-manager.js';
-
-const tasks = [];
 const defaultTasks = [
   {
     id: 'z01', title: 'Go for a run', dueDate: '22.6.2023', creationDate: '15.6.2023', description: 'If walking kids overtake you, go faster', importance: 1, completion: false,
@@ -19,6 +17,8 @@ const defaultTasks = [
     id: 'z05', title: 'Ze World domination', dueDate: '1.2.1990', creationDate: '15.6.2022', description: 'The squirrels might help you', importance: 4, completion: false,
   },
 ];
+
+const tasks = [];
 
 function getFromStorage(key) {
   return storageManager.retrieveElement(key);
