@@ -312,23 +312,22 @@ filterSortContainer.addEventListener('click', (event) => {
 });
 
 document.addEventListener('click', (event) => {
-  if (event.target.classList.contains('task-delete')) {
-    deleteTask(event);
-  }
-});
-
-document.addEventListener('click', (event) => {
-  if (event.target.classList.contains('task-update')) {
-    updateTask(event);
-    taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
-    taskDialog.close();
-    clearDialog();
-  }
-});
-
-document.addEventListener('click', (event) => {
-  if (event.target.classList.contains('task-edit')) {
-    openEditDialog(event);
+  const myCL = event.target.classList;
+  switch (true) {
+    case (myCL.contains('task-delete')):
+      deleteTask(event);
+      break;
+    case (myCL.contains('task-update')):
+      updateTask(event);
+      taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
+      taskDialog.close();
+      clearDialog();
+      break;
+    case (myCL.contains('task-edit')):
+      openEditDialog(event);
+      break;
+    default:
+      break;
   }
 });
 
