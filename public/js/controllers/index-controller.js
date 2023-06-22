@@ -291,7 +291,7 @@ document.addEventListener('click', async event => {
     case (myCL.contains('task-add')):
       setupCreationDialog();
       taskDialog.showModal();
-      await taskService.addTask(taskDialog.task);
+      await taskService.addTask(/* taskDialog.task */);
       break;
     case (myCL.contains('task-delete')):
       deleteTask(event);
