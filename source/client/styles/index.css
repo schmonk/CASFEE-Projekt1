@@ -15,6 +15,9 @@
     --on-bg-selected-hover: hsl(0, 0%, 74%);
     --outline-color: rgb(194, 194, 194);
     --on-bg-hover: hsl(0, 0%, 86%);
+    --on-bg-active: hsl(0, 0%, 82%);
+    --error-hover: hsl(0, 100%, 68%, 50%);
+    --error-active: hsl(0, 100%, 68%, 90%);
     --transition-function: ease-in-out;
     --transition-duration: 0.1s;
 }
@@ -29,7 +32,10 @@
     --on-bg-container: hsl(0, 0%, 18%);
     --on-bg-selected: hsl(0, 0%, 26%);
     --on-bg-selected-hover: hsl(0, 0%, 32%);
+    --error-hover: hsl(0, 61%, 42%, 50%);
+    --error-active: hsl(0, 61%, 42%, 90%);
     --on-bg-hover: hsl(0, 0%, 20%);
+    --on-bg-active: hsl(0, 0%, 24%);
 }
 
 body {
@@ -57,6 +63,12 @@ button:hover,
 select:hover,
 input:hover {
     background-color: var(--on-bg-hover);
+}
+
+button:active,
+select:active,
+input:active {
+    background-color: var(--on-bg-active);
 }
 
 .container {
@@ -97,11 +109,11 @@ input:hover {
 }
 
 .sorting-active:hover {
-    background-color: color-mix(
-        in hsl longer hue,
-        var(--on-bg-hover),
-        var(--on-bg-selected)
-    );
+    background-color: var(--on-bg-hover)
+}
+
+.sorting-active:active {
+    background-color: var(--on-bg-active)
 }
 
 .header {
@@ -209,4 +221,12 @@ dialog::backdrop {
 
 .hidden {
     display: none;
+}
+
+.task-delete:hover {
+    background-color: var(--error-hover);
+}
+
+.task-delete:active {
+    background-color: var(--error-active);
 }
