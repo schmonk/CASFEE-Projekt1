@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+    <meta charset="UTF-8" />
+    <title>Task App</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.min.js"
+      integrity="sha256-/PJBs6QWvXijOFIX04kZpLb6ZtSQckdOIavLWKKOgXU="
+      crossorigin="anonymous"
+      defer></script>
+      <link rel="stylesheet" href="styles/index.css" />
+    <link rel="icon" href="./favicon_checkDot.svg" type="image/svg+xml" />
+    <script src="./js/index.js" type="module"></script>
+    <script src="./js/theme-manager.js" type="module"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="leftGroup">
+          <h1>Task App</h1>
+          <div class="create">
+            <button id="createTaskButton" class="btn btn-primary task-add" type="button">+ Create task</button>
+          </div>
+        </div>
+        <div class="theme">
+          <button id="themeButton" type="button">☽</button>
+        </div>
+      </header>
+      <!-- A utility header with sorting and filtering buttons -->
+      <section class="utility">
+        <div class="filterSort-container">
+            <button id="filterCompleted" class="completion filter-button" type="button">Hide completed</button>
+            <button id="sortName" class="title sort-button" type="button">Name</button>
+            <button id="sortDueDate" class="dueDate sort-button" type="button">Date due</button>
+            <button id="sortCreationDate" class="creationDate sort-button" type="button">Date created </button>
+            <button id="sortImportance" class="importance sort-button" type="button">Importance</button>
+      </section>
+      <!-- The Task list. Each Task is in an article -->
+      <section class="task-list"> </section>
+
+      <!-- Dialog to create and edit a task -->
+      <dialog class="taskDialog" data-task-dialog="gugus">
+        <h2>Create a task</h2>
+        <form>
+          <div class="taskInput" id="taskTitleInput">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="taskTitle" required placeholder="Task title" />
+          </div>
+          <div class="taskInput" id="taskImportanceInput">
+            <label for="importance">Importance</label>
+            <input type="number" name="importance" id="taskImportance" value="3" min="1" max="5" />
+          </div>
+          <div class="taskInput" id="taskDueDateInput">
+            <label for="dueDate">Date due</label>
+            <input type="date" name="dueDate" id="taskDueDate"/>
+          </div>
+          <div class="taskInput" id="taskCompletionInput">
+            <label for="completion">Complete</label>
+            <input type="checkbox" name="completion" id="taskCompletion"/>
+          </div>
+          <div class="taskInput" id="taskDescriptionInput">
+            <label for="description">Description</label>
+            <input type="text" name="description" id="taskDescription" placeholder="How would you describe this task?"/>
+          </div>
+          <div id="taskDialogButtons">
+            <button id="cancelButton" class="cancel" value="cancel" formmethod="dialog">
+              Cancel
+            </button>
+            <button id="saveDialogButton" class="btn btn-primary task-create" value="default" type="submit">Create</button>
+          </div>
+        </form>
+      </dialog>
+
+      <footer>Copyright: &#169; Eric Schärrer 2023</footer>
+    </div>
+  </body>
+</html>
