@@ -113,14 +113,6 @@ input:active {
     content: '↓';
 }
 
-.sorting-active:hover {
-    background-color: var(--on-bg-hover)
-}
-
-.sorting-active:active {
-    background-color: var(--on-bg-active)
-}
-
 .header {
     display: flex;
     justify-content: space-between;

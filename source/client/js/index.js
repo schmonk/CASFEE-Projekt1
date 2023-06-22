@@ -9,9 +9,11 @@ const taskDescription = document.querySelector('#taskDescription');
 const taskCompletion = document.querySelector('#taskCompletion');
 const filterCompletedButton = document.querySelector('#filterCompleted');
 const filterSortContainer = document.querySelector('.filterSort-container');
-
 const placeholderTaskTitle = 'My task';
 const placeholderTaskDescription = 'Task description';
+
+const dialogTest = document.querySelector('[data-task-dialog]');
+console.log(dialogTest.dataset.taskDialog);
 
 /* View */
 
