@@ -11,10 +11,12 @@ class TaskService {
     }
 
     async getTask(id) {
+        console.log(`get task with id: ${id}`);
         return httpService.ajax("GET", `/tasks/${id}`, undefined);
     }
 
     async deleteTask(id) {
+        console.log(`delte task with id: ${id}`);
         return httpService.ajax("DELETE", `/tasks/${id}`, undefined);
     }
 }

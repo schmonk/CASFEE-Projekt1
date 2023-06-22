@@ -290,6 +290,7 @@ document.addEventListener('click', async event => {
       break;
     case (myCL.contains('task-delete')):
       deleteTask(event);
+      await taskService.deleteTask(event.target.parentElement.dataset.id);
       //TODO: render tasks
       break;
     case (myCL.contains('cancel')):
@@ -359,5 +360,6 @@ function initializeApp() {
 document.addEventListener('DOMContentLoaded', async event => {
   initializeTasks(true);
   console.log(await taskService.getAllTasks('title', true));
+  console.log(taskService.getTask('01'));
   await taskService.getAllTasks('importance', true);
 });
