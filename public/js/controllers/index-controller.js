@@ -358,6 +358,5 @@ document.addEventListener('DOMContentLoaded', async event => {
   } else {
     initializeTasks(true); // there are stored tasks
     await taskService.getAllTasks();
-    console.log(taskService.getAllTasks());
   }
 });

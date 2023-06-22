@@ -1,4 +1,4 @@
-class ValueStorage {
+/* class ValueStorage {
     setItem(name, value) {
         if (value) {
             localStorage.setItem(name, JSON.stringify(value));
@@ -13,4 +13,4 @@ class ValueStorage {
     }
 }
 
-export const valueStorage = new ValueStorage();
+export const valueStorage = new ValueStorage(); */

@@ -9,9 +9,8 @@ export class TaskStore {
         this.db = db || new Datastore(options)
     }
 
-    async add(taskTitle, taskDescription, taskDueDate, taskCreationDate, taskCompletion) {
-        const task = new Task(taskTitle, taskDescription, taskDueDate, taskCreationDate, taskCompletion);
-        // console.log(`add task with: ${task}`);       
+    async add(title, description, dueDate, creationDate, completion) {
+        const task = new Task(title, description, dueDate, creationDate, completion);
         return this.db.insert(task)
     }
 
@@ -25,10 +24,10 @@ export class TaskStore {
     }
 
     async all() {
-        return this.db.exec()
-            // .find({ orderedBy: currentUser })
-            // .sort({ taskCreationDate: -1 })
-            // .exec()
+        return this.db
+            .find({ })
+            .sort({ creationDate: -1 })
+            .exec()
     }
 }
 
