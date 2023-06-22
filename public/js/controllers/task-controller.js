@@ -1,17 +1,17 @@
-import { orderService } from '../services/order-service.js'
+import { taskService } from '../services/task-service.js/index.js'
 
 const orderContainer = document.querySelector("#orderContainer");
 const orderRenderer = Handlebars.compile(document.querySelector("#order-template").innerHTML);
 
-async function renderOrder() {
-    orderContainer.innerHTML = orderRenderer(await orderService.getOrder(orderId))
+async function renderTask() {
+    orderContainer.innerHTML = orderRenderer(await taskService.getOrder(orderId))
 }
 
 orderContainer.addEventListener("click", async event => {
     if (event.target.classList.contains("js-delete")) {
-        await orderService.deleteOrder(event.target.dataset.id);
-        renderOrder()
+        await taskService.deleteOrder(event.target.dataset.id);
+        renderTask()
     }
 });
 
-renderOrder();
+renderTask();

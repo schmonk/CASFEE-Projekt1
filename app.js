@@ -16,11 +16,11 @@ app.use(express.static(path.resolve('public/html')));
 app.use(express.static(path.resolve('public')));
 
 app.use(bodyParser.json());
-const jwtSecret = 'aklsdjfklöasjdcma8sd90mcklasdföasdf$ädasöfü pi340qkrlöam,dflöäasf';
+const jwtSecret = 'a/*  */klsdjfklöasjdcma8sd90mcklasdföasdf$ädasöfü pi340qkrlöam,dflöäasf';
 
-app.set("jwt-secret", jwtSecret); //secret should be in a config file - or better be a private key!
+/* app.set("jwt-secret", jwtSecret); //secret should be in a config file - or better be a private key!
 app.set("jwt-sign", {expiresIn: "1d", audience: "self", issuer: "pizza"});
-app.set("jwt-validate", {secret: jwtSecret, audience: "self", issuer: "pizza", algorithms: ["HS256"] });
+app.set("jwt-validate", {secret: jwtSecret, audience: "self", issuer: "pizza", algorithms: ["HS256"] }); */
 
 app.get("/", function (req, res) {
     res.sendFile("/html/index.html", {root: __dirname + '/public/'});
@@ -33,10 +33,10 @@ app.use((req, res, next) => {
 app.use("/", indexRoutes);
 app.use("/orders", orderRoutes);
 
-app.use(function (err, req, res, next) {
+/* app.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {
         res.status(401).send('No token / Invalid token provided');
     } else {
         next(err);
     }
-});
+}); */

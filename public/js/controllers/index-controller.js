@@ -1,4 +1,6 @@
-import tm from './controllers/task-manager.js';
+import tm from './task-manager.js';
+import { taskService } from '../services/task-service.js'
+
 
 const taskDialog = document.querySelector('.taskDialog');
 const taskList = document.querySelector('.task-list');
@@ -13,7 +15,7 @@ const placeholderTaskTitle = 'My task';
 const placeholderTaskDescription = 'Task description';
 
 const dialogTest = document.querySelector('[data-task-dialog]');
-console.log(dialogTest.dataset.taskDialog);
+// console.log(dialogTest.dataset.taskDialog);
 
 /* View */
 
@@ -283,12 +285,13 @@ function initializeTasks(fromStorage) {
   sortTasks(retrievedSorting.mySortingType, retrievedSorting.myAscendingState);
 }
 
-document.addEventListener('click', (event) => {
+document.addEventListener('click', async event => {
   const myCL = event.target.classList;
   switch (true) {
     case (myCL.contains('task-add')):
       setupCreationDialog();
       taskDialog.showModal();
+      await taskService.addTask(taskDialog.task);
       break;
     case (myCL.contains('task-delete')):
       deleteTask(event);

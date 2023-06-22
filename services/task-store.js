@@ -18,8 +18,8 @@ export class TaskStore {
         this.db = db || new Datastore(options);
     }
 
-    async add(pizzaName) {
-        let task = new Task(pizzaName);
+    async add(task) {
+        let task = new Task(task);
         return this.db.insert(order);
     }
 
