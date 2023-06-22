@@ -3,7 +3,8 @@ import {taskStore} from '../services/task-store.js'
 export class TaskController {
 
     getAllTasks = async (req, res) => {
-        res.json((await taskStore.all(req.body.sortingType, req.body.ascendingTrue)))
+        console.dir(req.query || [] );
+        res.json((await taskStore.all()))
     };
 
     addTask = async (req, res) => {

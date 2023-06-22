@@ -8,4 +8,4 @@ router.post("/", tasksController.addTask);
 router.get("/:id/", tasksController.showTask);
 router.delete("/:id/", tasksController.deleteTask);
 
-export const orderRoutes = router;
+export const taskRoutes = router;
