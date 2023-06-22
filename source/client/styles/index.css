@@ -10,6 +10,7 @@
     --primary-text-disabled-color: hsl(0, 0%, 75%);
     --primary-color: hsl(202, 100%, 71%);
     --primary-hover: hsl(202, 100%, 61%);
+    --primary-active: hsl(202, 100%, 51%);
     --on-bg-container: hsl(0, 0%, 94%);
     --on-bg-selected: hsl(0, 0%, 80%);
     --on-bg-selected-hover: hsl(0, 0%, 74%);
@@ -29,6 +30,7 @@
     --outline-color: rgb(100, 100, 100);
     --primary-color: hsl(202, 100%, 25%);
     --primary-hover: hsl(202, 100%, 35%);
+    --primary-active: hsl(202, 100%, 40%);
     --on-bg-container: hsl(0, 0%, 18%);
     --on-bg-selected: hsl(0, 0%, 26%);
     --on-bg-selected-hover: hsl(0, 0%, 32%);
@@ -88,6 +90,9 @@ input:active {
 }
 .btn-primary:hover {
     background-color: var(--primary-hover);
+}
+.btn-primary:active {
+    background-color: var(--primary-active);
 }
 
 .sorting-active,
