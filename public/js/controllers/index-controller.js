@@ -353,11 +353,7 @@ filterSortContainer.addEventListener('click', (event) => {
 
 
 document.addEventListener('DOMContentLoaded', async event => {
-  if (tm.getFromStorage('myTasks') === null || tm.getFromStorage('myTasks').length === 0) {
-    // initializeTasks(false); // no stored tasks; initialize default tasks
-  } else {
-    initializeTasks(true); // there are stored tasks
-    console.log(await taskService.getAllTasks());
+    initializeTasks(true);
+    console.log(await taskService.getAllTasks('title', true));
     await taskService.getAllTasks();
-  }
 });

@@ -10,9 +10,9 @@ export class TaskStore {
     }
 
     async add( title, description, dueDate, creationDate, completion) {
-        console.log('beeep');
+        // console.log('beeep');
         const task = new Task(title, description, dueDate, creationDate, completion);
-        console.log(this.db.insert(task));
+        // console.log(this.db.insert(task));
         return this.db.insert(task);
     }
 
@@ -25,11 +25,9 @@ export class TaskStore {
         return this.db.findOne({ _id: id })
     }
 
-    async all() {
-        return this.db
-            .find({ })
-            .sort({ creationDate: -1 })
-            .exec()
+    async all(sortingType, ascendingTrue) {
+        console.log(`sType: ${sortingType} and ascending is: ${ascendingTrue}`);
+        return this.db.find({ }).sort({ sortingType: +ascendingTrue }).exec();
     }
 }
 
