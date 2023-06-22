@@ -26,6 +26,22 @@ export class TaskStore {
     }
 
     async all(sortingType, ascendingTrue) {
+
+/*     function sortByKey(array, key, isAscending) {
+        return array.sort((a, b) => {
+            const x = a[key];
+            const y = b[key];
+            const sortingDirection = isAscending ? 1 : -1;
+            if (x < y) {
+            return -1 * sortingDirection;
+            }
+            if (x > y) {
+            return 1 * sortingDirection;
+            }
+            return 0;
+        });
+        } */
+
         console.log(`sType: ${sortingType} and ascending is: ${ascendingTrue}`);
         return this.db.find({ }).sort({ sortingType: +ascendingTrue }).exec();
     }
