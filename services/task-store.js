@@ -10,9 +10,7 @@ export class TaskStore {
     }
 
     async add( title, description, dueDate, creationDate, completion) {
-        // console.log('beeep');
         const task = new Task(title, description, dueDate, creationDate, completion);
-        // console.log(this.db.insert(task));
         return this.db.insert(task);
     }
 

@@ -183,6 +183,15 @@ function setupEditDialog(title) {
   taskDialog.querySelector('#saveDialogButton').classList.remove('task-create');
 }
 
+function setupCreationDialog() {
+  taskDialog.querySelector('h2').textContent = 'Create a task';
+  taskDialog.querySelector('#saveDialogButton').textContent = 'Create';
+  taskDialog.querySelector('#taskImportance').value = 3;
+  // taskDialog.querySelector('#taskDueDate').valueAsDate = new Date();
+  taskDialog.querySelector('#saveDialogButton').classList.add('task-create');
+  taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
+}
+
 function openEditDialog(event) {
   const taskContainer = event.target.parentElement.parentElement;
   const currentId = taskContainer.dataset.id.toString();
@@ -197,14 +206,6 @@ function openEditDialog(event) {
   taskDialog.showModal();
 }
 
-function setupCreationDialog() {
-  taskDialog.querySelector('h2').textContent = 'Create a task';
-  taskDialog.querySelector('#saveDialogButton').textContent = 'Create';
-  taskDialog.querySelector('#taskImportance').value = 3;
-  // taskDialog.querySelector('#taskDueDate').valueAsDate = new Date();
-  taskDialog.querySelector('#saveDialogButton').classList.add('task-create');
-  taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
-}
 
 function filterCompletedTasks() {
   filterCompletedButton.classList.toggle('filtering-active');
@@ -351,9 +352,12 @@ filterSortContainer.addEventListener('click', (event) => {
   }
 });
 
+function initializeApp() {
+  
+}
 
 document.addEventListener('DOMContentLoaded', async event => {
-    initializeTasks(true);
-    console.log(await taskService.getAllTasks('title', true));
-    await taskService.getAllTasks();
+  initializeTasks(true);
+  console.log(await taskService.getAllTasks('title', true));
+  await taskService.getAllTasks('importance', true);
 });
