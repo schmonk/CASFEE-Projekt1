@@ -149,6 +149,7 @@ input:active {
     /* grid-template-rows: repeat(2, 1fr); */
     background-color: var(--on-bg-container);
     min-width: 4rem;
+    min-height: 6rem;
     justify-content: center;
     align-items: center;
     border: 1px solid var(--outline-color);
