@@ -1,4 +1,4 @@
-import {CryptoUtil} from '../utils/crypto-util.js';
+/* import {CryptoUtil} from '../utils/crypto-util.js';
 import Datastore from 'nedb-promises'
 export class User {
     constructor(email, passwort) {
@@ -36,3 +36,4 @@ export class UserStore {
     }
 }
 export const userStore = new UserStore();
+ */

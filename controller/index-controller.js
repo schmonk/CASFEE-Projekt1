@@ -1,4 +1,4 @@
-import {SecurityUtil} from '../utils/security.js';
+/* import {SecurityUtil} from '../utils/security.js';
 
 export class IndexController {
     login = async (req, res) => {
@@ -7,3 +7,4 @@ export class IndexController {
 }
 
 export const indexController = new IndexController();
+ */

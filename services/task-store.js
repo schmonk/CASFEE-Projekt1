@@ -1,5 +1,5 @@
-import Datastore from 'nedb-promises'
-import Task from './task.js'
+import Datastore from 'nedb-promises';
+import Task from './task.js';
 export class TaskStore {
     constructor(db) {
         const options =
@@ -9,9 +9,11 @@ export class TaskStore {
         this.db = db || new Datastore(options)
     }
 
-    async add(title, description, dueDate, creationDate, completion) {
+    async add( title, description, dueDate, creationDate, completion) {
+        console.log('beeep');
         const task = new Task(title, description, dueDate, creationDate, completion);
-        return this.db.insert(task)
+        console.log(this.db.insert(task));
+        return this.db.insert(task);
     }
 
     async delete(id) {

@@ -1,9 +1,8 @@
 import { httpService } from './http-service.js'
 
 class TaskService {
-    async addTask(title, description, dueDate, creationDate, completion ) {
-        console.log('received task');
-        return httpService.ajax("POST", "/tasks/", { title: title, description: description, dueDate: dueDate, creationDate: creationDate, completion: completion });
+    async addTask(task) {
+        return httpService.ajax("POST", "/tasks/", { title: task.title, description: task.description, dueDate: task.dueDate, creationDate: task.creationDate, completion: task.completion });
     }
     
     async getAllTasks() {

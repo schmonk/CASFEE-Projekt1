@@ -130,7 +130,7 @@ function createTask(e) {
   addTaskToDOM(newTask);
   tm.addTask(newTask);
   sortTasks();
-  return newTask
+  return newTask;
 }
 function updateTask(event) {
   event.preventDefault();
