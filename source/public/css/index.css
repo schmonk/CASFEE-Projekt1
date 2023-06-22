@@ -1,39 +1,41 @@
 @import url('reset.css');
 @font-face {
-    font-family: 'Metropolis';
-    src: url(../fonts/Metropolis-Font/Metropolis-Regular.otf);
+    font-family: Metropolis;
+    src: url('../fonts/Metropolis-Font/Metropolis-Regular.otf');
 }
 
 :root {
-    --bg-color: hsl(0, 0%, 92%);
-    --primary-text-color: rgb(28, 28, 28);
-    --primary-text-disabled-color: hsl(0, 0%, 75%);
-    --primary-color: hsl(202, 100%, 71%);
-    --primary-hover: hsl(202, 100%, 61%);
-    --on-bg-container: hsl(0, 0%, 94%);
-    --on-bg-selected: hsl(0, 0%, 80%);
-    --on-bg-selected-hover: hsl(0, 0%, 74%);
+    --bg-color: hsl(0deg, 0%, 92%);
+    --primary-text-color: hsl(0deg, 0%, 11%);
+    --primary-text-disabled-color: hsl(0deg, 0%, 75%);
+    --primary-color: hsl(202deg, 100%, 71%);
+    --primary-hover: hsl(202deg, 100%, 61%);
+    --on-bg-container: hsl(0deg, 0%, 94%);
+    --on-bg-selected: hsl(0deg, 0%, 80%);
+    --on-bg-selected-hover: hsl(0deg, 0%, 74%);
+    --on-bg-selected-active: hsl(0deg, 0%, 60%);
     --outline-color: rgb(194, 194, 194);
-    --on-bg-hover: hsl(0, 0%, 86%);
+    --on-bg-hover: hsl(0deg, 0%, 86%);
     --transition-function: ease-in-out;
     --transition-duration: 0.1s;
 }
 .dark-theme {
     transition: all var(--transition-duration) var(--transition-function);
-    --bg-color: hsl(0, 0%, 14%);
-    --primary-text-color: rgb(235, 235, 235);
-    --primary-text-disabled-color: hsl(0, 0%, 24%);
-    --outline-color: rgb(100, 100, 100);
-    --primary-color: hsl(202, 100%, 25%);
-    --primary-hover: hsl(202, 100%, 35%);
-    --on-bg-container: hsl(0, 0%, 18%);
-    --on-bg-selected: hsl(0, 0%, 26%);
-    --on-bg-selected-hover: hsl(0, 0%, 32%);
-    --on-bg-hover: hsl(0, 0%, 20%);
+    --bg-color: hsl(0deg, 0%, 14%);
+    --primary-text-color: hsl(0deg, 0%, 92%);
+    --primary-text-disabled-color: hsl(0deg, 0%, 24%);
+    --outline-color: hsl(0deg, 0%, 39%);
+    --primary-color: hsl(202deg, 100%, 25%);
+    --primary-hover: hsl(202deg, 100%, 35%);
+    --on-bg-container: hsl(0deg, 0%, 18%);
+    --on-bg-selected: hsl(0deg, 0%, 26%);
+    --on-bg-selected-hover: hsl(0deg, 0%, 32%);
+    --on-bg-selected-active: hsl(0deg, 0%, 50%);
+    --on-bg-hover: hsl(0deg, 0%, 20%);
 }
 
 body {
-    font-family: 'Metropolis', sans-serif;
+    font-family: Metropolis, sans-serif;
     transition: all var(--transition-duration) var(--transition-function);
     background-color: var(--bg-color);
     color: var(--primary-text-color);
@@ -74,6 +76,7 @@ input:hover {
     background-color: var(--primary-color);
     border: none;
 }
+
 .btn-primary:hover {
     background-color: var(--primary-hover);
 }
@@ -83,9 +86,15 @@ input:hover {
     border: 1px solid var(--outline-color);
     background-color: var(--on-bg-selected);
 }
+
 .sorting-active:hover,
 .filtering-active:hover {
     background-color: var(--on-bg-selected-hover);
+}
+
+.sorting-active:active,
+.filtering-active:active {
+    background-color: var(--on-bg-selected-active);
 }
 
 .ascending::after {
@@ -109,6 +118,7 @@ input:hover {
     justify-content: space-between;
     align-items: center;
 }
+
 .leftGroup {
     display: flex;
     gap: 2rem;
@@ -167,18 +177,21 @@ input:hover {
     border: 1px solid var(--outline-color);
     border-radius: 0.6rem;
     margin: 5em auto;
-    padding: 2rem 2rem;
+    padding: 2rem;
 }
-.task-description {
+
+/* .task-description {
     grid-column: 2;
-}
+} */
+
 .taskDialog h2 {
     margin-bottom: 1rem;
 }
+
 .taskInput {
     display: flex;
     flex-direction: column;
-    padding: 1rem 0rem;
+    padding: 1rem 0;
 }
 
 .taskInput input {
@@ -191,7 +204,7 @@ input[type='checkbox'] {
 }
 
 dialog::backdrop {
-    background: hsla(0, 0%, 8%, 0.9);
+    background: hsla(0deg, 0%, 8%, 0.9);
 }
 
 #taskDialogButtons {
