@@ -7,6 +7,7 @@ export class TaskController {
     };
 
     addTask = async (req, res) => {
+        console.log('task controller adds task');
         res.json(await taskStore.add(req.body.name));
     };
 
