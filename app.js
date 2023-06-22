@@ -4,7 +4,7 @@ import path, {dirname} from 'path';
 // import {expressjwt} from 'express-jwt';
 
 
-import {indexRoutes} from './routes/index-routes.js';
+// import {indexRoutes} from './routes/index-routes.js';
 import {orderRoutes} from './routes/order-routes.js';
 import {fileURLToPath} from "url";
 
@@ -30,7 +30,7 @@ app.get("/", function (req, res) {
     console.log(req.auth || "no user");
     next();
 }); */
-app.use("/", indexRoutes);
+// app.use("/", indexRoutes);
 app.use("/tasks", orderRoutes);
 
 /* app.use(function (err, req, res, next) {

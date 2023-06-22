@@ -4,14 +4,14 @@ export class TaskStore {
     constructor(db) {
         const options =
             process.env.DB_TYPE === 'FILE'
-                ? { filename: './data/orders.db', autoload: true }
+                ? { filename: './data/tasks.db', autoload: true }
                 : {}
         this.db = db || new Datastore(options)
     }
 
     async add(taskTitle, taskDescription, taskDueDate, taskCreationDate, taskCompletion) {
         const task = new Task(taskTitle, taskDescription, taskDueDate, taskCreationDate, taskCompletion);
-        console.log(`add task: ${task}`);
+        // console.log(`add task with: ${task}`);       
         return this.db.insert(task)
     }
 
@@ -24,11 +24,11 @@ export class TaskStore {
         return this.db.findOne({ _id: id })
     }
 
-    async all(currentUser) {
-        return this.db
-            .find({ orderedBy: currentUser })
-            .sort({ orderDate: -1 })
-            .exec()
+    async all() {
+        return this.db.exec()
+            // .find({ orderedBy: currentUser })
+            // .sort({ taskCreationDate: -1 })
+            // .exec()
     }
 }
 

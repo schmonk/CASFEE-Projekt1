@@ -20,4 +20,4 @@ export class TaskController {
     };
 }
 
-export const taskController = new TaskController();
+export const tasksController = new TaskController();

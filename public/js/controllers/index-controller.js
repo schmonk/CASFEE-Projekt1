@@ -1,6 +1,5 @@
 import tm from './task-manager.js';
 import { taskService } from '../services/task-service.js'
-// import { Task, taskStore } from '../../../services/task-store.js'
 
 const taskDialog = document.querySelector('.taskDialog');
 const taskList = document.querySelector('.task-list');
@@ -353,10 +352,12 @@ filterSortContainer.addEventListener('click', (event) => {
 });
 
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async event => {
   if (tm.getFromStorage('myTasks') === null || tm.getFromStorage('myTasks').length === 0) {
-    initializeTasks(false); // no stored tasks; initialize default tasks
+    // initializeTasks(false); // no stored tasks; initialize default tasks
   } else {
     initializeTasks(true); // there are stored tasks
+    await taskService.getAllTasks();
+    console.log(taskService.getAllTasks());
   }
 });
