@@ -1,6 +1,6 @@
 import tm from './task-manager.js';
 import { taskService } from '../services/task-service.js'
-
+// import { Task, taskStore } from '../../../services/task-store.js'
 
 const taskDialog = document.querySelector('.taskDialog');
 const taskList = document.querySelector('.task-list');
@@ -13,11 +13,6 @@ const filterCompletedButton = document.querySelector('#filterCompleted');
 const filterSortContainer = document.querySelector('.filterSort-container');
 const placeholderTaskTitle = 'My task';
 const placeholderTaskDescription = 'Task description';
-
-const dialogTest = document.querySelector('[data-task-dialog]');
-// console.log(dialogTest.dataset.taskDialog);
-
-/* View */
 
 function insertImportanceStars(amount) {
   let stars = '';
@@ -136,6 +131,7 @@ function createTask(e) {
   addTaskToDOM(newTask);
   tm.addTask(newTask);
   sortTasks();
+  return newTask
 }
 function updateTask(event) {
   event.preventDefault();
@@ -291,10 +287,10 @@ document.addEventListener('click', async event => {
     case (myCL.contains('task-add')):
       setupCreationDialog();
       taskDialog.showModal();
-      await taskService.addTask(/* taskDialog.task */);
       break;
     case (myCL.contains('task-delete')):
       deleteTask(event);
+      //TODO: render tasks
       break;
     case (myCL.contains('cancel')):
       taskDialog.close();
@@ -304,17 +300,21 @@ document.addEventListener('click', async event => {
       updateTask(event);
       taskDialog.close();
       clearDialog();
+      //TODO: render tasks
       break;
     case (myCL.contains('task-edit')):
       openEditDialog(event);
       break;
     case (myCL.contains('task-completion')):
       toggleCompletion(event);
+      //TODO: render tasks
       break;
     case (myCL.contains('task-create')):
-      createTask(event);
+      const task = createTask(event);
+      await taskService.addTask(task);
       taskDialog.close();
       clearDialog();
+      //TODO: render tasks
       break;
     default:
       break;

@@ -1,4 +1,4 @@
-import {taskStore} from '../services/task-store.js/index.js'
+import {taskStore} from '../services/task-store.js'
 
 export class TaskController {
 

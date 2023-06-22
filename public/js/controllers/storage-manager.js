@@ -18,7 +18,6 @@ function storeTasks(tasks) {
 function retrieveElement(key) {
   const retrievedElement = localStorage.getItem(key.toString());
   const parsedElement = JSON.parse(retrievedElement);
-  // console.log(parsedElement);
   return parsedElement;
 }
 
