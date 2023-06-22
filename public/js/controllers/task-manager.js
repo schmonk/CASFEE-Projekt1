@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/extensions
 import storageManager from './storage-manager.js';
 const defaultTasks = [
   {
