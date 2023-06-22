@@ -10,7 +10,7 @@ class HttpService {
             fetchHeaders.append("authorization", "Bearer "+ valueStorage.getItem(tokenKey))
         }   */      
         
-        console.log(`data as json: ${JSON.stringify(data)}`);
+        // console.log(`data as json: ${JSON.stringify(data)}`);
         return fetch(url, {
             method: method,
             headers: fetchHeaders, 

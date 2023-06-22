@@ -357,6 +357,7 @@ document.addEventListener('DOMContentLoaded', async event => {
     // initializeTasks(false); // no stored tasks; initialize default tasks
   } else {
     initializeTasks(true); // there are stored tasks
+    console.log(await taskService.getAllTasks());
     await taskService.getAllTasks();
   }
 });
