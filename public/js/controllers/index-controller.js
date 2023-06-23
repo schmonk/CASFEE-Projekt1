@@ -1,36 +1,36 @@
-import tm from './task-manager.js';
-import { taskService } from '../services/task-service.js';
+import tm from "./task-manager.js";
+import { taskService } from "../services/task-service.js";
 
-const taskDialog = document.querySelector('.taskDialog');
-const taskList = document.querySelector('.task-list');
-const taskTitle = document.querySelector('#taskTitle');
-const taskImportance = document.querySelector('#taskImportance');
-const taskDueDate = document.querySelector('#taskDueDate');
-const taskDescription = document.querySelector('#taskDescription');
-const taskCompletion = document.querySelector('#taskCompletion');
-const filterCompletedButton = document.querySelector('#filterCompleted');
-const filterSortContainer = document.querySelector('.filterSort-container');
-const placeholderTaskTitle = 'My task';
-const placeholderTaskDescription = 'Task description';
+const taskDialog = document.querySelector(".taskDialog");
+const taskList = document.querySelector(".task-list");
+const taskTitle = document.querySelector("#taskTitle");
+const taskImportance = document.querySelector("#taskImportance");
+const taskDueDate = document.querySelector("#taskDueDate");
+const taskDescription = document.querySelector("#taskDescription");
+const taskCompletion = document.querySelector("#taskCompletion");
+const filterCompletedButton = document.querySelector("#filterCompleted");
+const filterSortContainer = document.querySelector(".filterSort-container");
+const placeholderTaskTitle = "My task";
+const placeholderTaskDescription = "Task description";
 
 function insertImportanceStars(amount) {
-  let stars = '';
+  let stars = "";
   for (let i = 0; i < amount; i += 1) {
-    stars += '&#9733';
+    stars += "&#9733";
   }
   return stars;
 }
 
 function createTaskHTML(task) {
-  let hiddenString = 'completed';
-  if (filterCompletedButton.classList.contains('filtering-active')) {
-    hiddenString = 'completed hidden';
+  let hiddenString = "completed";
+  if (filterCompletedButton.classList.contains("filtering-active")) {
+    hiddenString = "completed hidden";
   }
   return `<article data-id="${task._id}" class="task-container ${
-    task.completion ? hiddenString : ''
+    task.completion ? hiddenString : ""
   }">
     <input type="checkbox" name="completion" class="task-completion" ${
-      task.completion ? 'checked' : ''
+      task.completion ? "checked" : ""
     }/>
     <div class="task-content">
       <h3 class="task-title">${task.title}</h3>
@@ -58,11 +58,11 @@ function renderTasks () {
 */
 
 function addTaskToDOM(task) {
-  taskList.insertAdjacentHTML('beforeend', createTaskHTML(task));
+  taskList.insertAdjacentHTML("beforeend", createTaskHTML(task));
 }
 
 async function renderTasks() {
-  const sortedTaskArray = await taskService.getAllTasks('title', true);
+  const sortedTaskArray = await taskService.getAllTasks("title", true);
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
   }
@@ -73,7 +73,7 @@ async function renderTasks() {
 
 /* Model */
 
-function sortTasks(property = 'creationDate', ascendingState = true) {
+function sortTasks(property = "creationDate", ascendingState = true) {
   const sortedArray = tm.tasksSorted(`${property}`, ascendingState);
   renderTasks(sortedArray);
 }
@@ -102,9 +102,9 @@ function createId() {
 }
 
 function formatDate(date, isForDisplay) {
-  const dateFormatOptions = { day: 'numeric', month: 'numeric', year: 'numeric' };
-  const dateDisplayFormat = new Intl.DateTimeFormat('de-CH', dateFormatOptions);
-  const datePickerFormat = new Intl.DateTimeFormat('en-US', dateFormatOptions);
+  const dateFormatOptions = { day: "numeric", month: "numeric", year: "numeric" };
+  const dateDisplayFormat = new Intl.DateTimeFormat("de-CH", dateFormatOptions);
+  const datePickerFormat = new Intl.DateTimeFormat("en-US", dateFormatOptions);
   const dateFormat = isForDisplay ? dateDisplayFormat : datePickerFormat;
   return dateFormat.format(date);
 }
@@ -129,7 +129,7 @@ function createTask(e) {
     dueDate: taskDueDate.value ? taskDueDate.value : createDefaultDueDate(),
     creationDate: createCreationDate(),
     description: taskDescription.value ? taskDescription.value : placeholderTaskDescription,
-    importance: taskImportance.value ? clamp(taskImportance.value, 1, 5) : '3',
+    importance: taskImportance.value ? clamp(taskImportance.value, 1, 5) : "3",
     completion: taskCompletion.checked,
   };
   /*   addTaskToDOM(newTask);
@@ -139,7 +139,7 @@ function createTask(e) {
 }
 function updateTask(event) {
   event.preventDefault();
-  taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
+  taskDialog.querySelector("#saveDialogButton").classList.remove("task-update");
   // console.log(`update task with id: ${event.target.parentElement._id}`);
   // const existingTask = findObject(tm.tasksSorted(), 'id', taskDialog.id);
   const task = {
@@ -164,7 +164,7 @@ function deleteTask(event) {
   const element = event.target.parentElement.parentElement;
   const indexToremove = tm
     .tasksSorted()
-    .indexOf(findObject(tm.tasksSorted(), 'id', element.id.toString()));
+    .indexOf(findObject(tm.tasksSorted(), "id", element.id.toString()));
   tm.removeTask(indexToremove);
   element.remove();
   sortTasks();
@@ -172,35 +172,35 @@ function deleteTask(event) {
 
 function toggleCompletion(event) {
   const taskContainer = event.target.parentElement;
-  taskContainer.classList.toggle('completed');
+  taskContainer.classList.toggle("completed");
   const currentId = taskContainer.id.toString();
-  const existingTask = findObject(tm.tasksSorted(), 'id', currentId);
+  const existingTask = findObject(tm.tasksSorted(), "id", currentId);
   existingTask.completion = !existingTask.completion;
-  const indexToUpdate = tm.tasksSorted().indexOf(findObject(tm.tasksSorted(), 'id', currentId));
+  const indexToUpdate = tm.tasksSorted().indexOf(findObject(tm.tasksSorted(), "id", currentId));
   tm.updateTask(existingTask, indexToUpdate);
 }
 
 function clearDialog() {
-  taskTitle.value = '';
-  taskDueDate.value = '';
-  taskDescription.value = '';
-  taskImportance.value = '';
+  taskTitle.value = "";
+  taskDueDate.value = "";
+  taskDescription.value = "";
+  taskImportance.value = "";
   taskCompletion.checked = false;
 }
 function setupEditDialog(title) {
-  taskDialog.querySelector('h2').textContent = `Edit "${title}"`;
-  taskDialog.querySelector('#saveDialogButton').textContent = 'Update';
-  taskDialog.querySelector('#saveDialogButton').classList.add('task-update');
-  taskDialog.querySelector('#saveDialogButton').classList.remove('task-create');
+  taskDialog.querySelector("h2").textContent = `Edit "${title}"`;
+  taskDialog.querySelector("#saveDialogButton").textContent = "Update";
+  taskDialog.querySelector("#saveDialogButton").classList.add("task-update");
+  taskDialog.querySelector("#saveDialogButton").classList.remove("task-create");
 }
 
 function setupCreationDialog() {
-  taskDialog.querySelector('h2').textContent = 'Create a task';
-  taskDialog.querySelector('#saveDialogButton').textContent = 'Create';
-  taskDialog.querySelector('#taskImportance').value = 3;
+  taskDialog.querySelector("h2").textContent = "Create a task";
+  taskDialog.querySelector("#saveDialogButton").textContent = "Create";
+  taskDialog.querySelector("#taskImportance").value = 3;
   // taskDialog.querySelector('#taskDueDate').valueAsDate = new Date();
-  taskDialog.querySelector('#saveDialogButton').classList.add('task-create');
-  taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
+  taskDialog.querySelector("#saveDialogButton").classList.add("task-create");
+  taskDialog.querySelector("#saveDialogButton").classList.remove("task-update");
 }
 
 async function openEditDialog(event) {
@@ -219,48 +219,48 @@ async function openEditDialog(event) {
 }
 
 function filterCompletedTasks() {
-  filterCompletedButton.classList.toggle('filtering-active');
-  if (filterCompletedButton.classList.contains('filtering-active')) {
-    filterCompletedButton.textContent = 'Show completed';
+  filterCompletedButton.classList.toggle("filtering-active");
+  if (filterCompletedButton.classList.contains("filtering-active")) {
+    filterCompletedButton.textContent = "Show completed";
     for (let i = 0; i < tm.tasksSorted().length; i += 1) {
       if (tm.tasksSorted()[i].completion === true) {
         const element = taskList.querySelector(`#${tm.tasksSorted()[i].id}`);
         // const element = taskList.querySelectorAll('article').dataset.id;
-        if (!element.classList.contains('hidden')) {
-          element.classList.add('hidden');
+        if (!element.classList.contains("hidden")) {
+          element.classList.add("hidden");
         } else {
-          element.classList.remove('hidden');
+          element.classList.remove("hidden");
         }
       }
     }
   } else {
-    filterCompletedButton.textContent = 'Hide completed';
+    filterCompletedButton.textContent = "Hide completed";
     for (let i = 0; i < tm.tasksSorted().length; i += 1) {
       if (tm.tasksSorted()[i].completion === true) {
         const element = taskList.querySelector(`#${tm.tasksSorted()[i].id}`);
-        element.classList.remove('hidden');
+        element.classList.remove("hidden");
       }
     }
   }
 }
 
 function toggleSortingButtons(keepOnClass) {
-  const sortingButtons = document.querySelectorAll('.sort-button');
+  const sortingButtons = document.querySelectorAll(".sort-button");
   let sortingDirection = 0;
   for (let i = 0; i < sortingButtons.length; i += 1) {
     if (!sortingButtons[i].classList.contains(keepOnClass)) {
-      sortingButtons[i].classList.remove('sorting-active');
-      sortingButtons[i].classList.remove('ascending');
-      sortingButtons[i].classList.remove('descending');
+      sortingButtons[i].classList.remove("sorting-active");
+      sortingButtons[i].classList.remove("ascending");
+      sortingButtons[i].classList.remove("descending");
     } else {
-      sortingButtons[i].classList.add('sorting-active');
-      if (sortingButtons[i].classList.contains('ascending')) {
-        sortingButtons[i].classList.remove('ascending');
-        sortingButtons[i].classList.add('descending');
+      sortingButtons[i].classList.add("sorting-active");
+      if (sortingButtons[i].classList.contains("ascending")) {
+        sortingButtons[i].classList.remove("ascending");
+        sortingButtons[i].classList.add("descending");
         sortingDirection = 1;
       } else {
-        sortingButtons[i].classList.remove('descending');
-        sortingButtons[i].classList.add('ascending');
+        sortingButtons[i].classList.remove("descending");
+        sortingButtons[i].classList.add("ascending");
         sortingDirection = 0;
       }
     }
@@ -269,63 +269,71 @@ function toggleSortingButtons(keepOnClass) {
 }
 
 function toggleSortingDirection(keepOnClass, ascendingState) {
-  const sortingButtons = document.querySelectorAll('.sort-button');
+  const sortingButtons = document.querySelectorAll(".sort-button");
   for (let i = 0; i < sortingButtons.length; i += 1) {
-    if (sortingButtons[i].classList.contains('sorting-active') && ascendingState) {
-      sortingButtons[i].classList.remove('ascending');
-      sortingButtons[i].classList.add('descending');
-    } else if (sortingButtons[i].classList.contains('sorting-active') && !ascendingState) {
-      sortingButtons[i].classList.remove('descending');
-      sortingButtons[i].classList.add('ascending');
+    if (sortingButtons[i].classList.contains("sorting-active") && ascendingState) {
+      sortingButtons[i].classList.remove("ascending");
+      sortingButtons[i].classList.add("descending");
+    } else if (sortingButtons[i].classList.contains("sorting-active") && !ascendingState) {
+      sortingButtons[i].classList.remove("descending");
+      sortingButtons[i].classList.add("ascending");
     }
   }
 }
 
 function initializeTasks(fromStorage) {
-  const initialTaskList = fromStorage ? tm.getFromStorage('myTasks') : tm.defaultTasksSorted();
+  const initialTaskList = fromStorage ? tm.getFromStorage("myTasks") : tm.defaultTasksSorted();
   initialTaskList.forEach((element) => {
     tm.addTask(element);
   });
-  const retrievedSorting = tm.getFromStorage('mySorting');
+  const retrievedSorting = tm.getFromStorage("mySorting");
   toggleSortingButtons(retrievedSorting.mySortingType);
   toggleSortingDirection(retrievedSorting.mySortingType, retrievedSorting.myAscendingState);
   sortTasks(retrievedSorting.mySortingType, retrievedSorting.myAscendingState);
 }
 
-document.addEventListener('click', async (event) => {
+document.addEventListener("click", async (event) => {
   const myCL = event.target.classList;
   const taskContainer = event.target.parentElement.parentElement;
   switch (true) {
-    case myCL.contains('task-add'):
+    case myCL.contains("task-add"):
       setupCreationDialog();
       taskDialog.showModal();
       break;
-    case myCL.contains('task-delete'):
+    case myCL.contains("task-delete"):
       // deleteTask(event);
       await taskService.deleteTask(taskContainer.dataset.id);
       renderTasks();
       break;
-    case myCL.contains('cancel'):
+    case myCL.contains("cancel"):
       taskDialog.close();
       clearDialog();
       break;
-    case myCL.contains('task-update'):
+    case myCL.contains("task-update"):
       console.log(`update task with ID: ${taskDialog.dataset.id}`);
       const taskToUpdate = updateTask(event);
-      await taskService.updateTask(taskDialog.dataset.id, taskToUpdate);
+      await taskService.updateTask(
+        taskDialog.dataset.id,
+        taskToUpdate.title,
+        taskToUpdate.description,
+        taskToUpdate.dueDate,
+        taskToUpdate.creationDate,
+        taskToUpdate.completionk,
+        taskToUpdate.importance
+      );
       taskDialog.close();
       clearDialog();
       renderTasks();
       break;
-    case myCL.contains('task-edit'):
+    case myCL.contains("task-edit"):
       openEditDialog(event);
       break;
-    case myCL.contains('task-completion'):
+    case myCL.contains("task-completion"):
       toggleCompletion(event);
       // await taskService.updateTask();
       renderTasks();
       break;
-    case myCL.contains('task-create'):
+    case myCL.contains("task-create"):
       const taskToCreate = createTask(event);
       await taskService.addTask(taskToCreate);
       taskDialog.close();
@@ -337,30 +345,30 @@ document.addEventListener('click', async (event) => {
   }
 });
 
-filterSortContainer.addEventListener('click', (event) => {
+filterSortContainer.addEventListener("click", (event) => {
   event.preventDefault();
   switch (event.target.id) {
-    case 'filterCompleted':
+    case "filterCompleted":
       filterCompletedTasks();
       break;
-    case 'sortDueDate': {
-      const ascendingTrue = toggleSortingButtons('dueDate');
-      sortTasks('dueDate', ascendingTrue);
+    case "sortDueDate": {
+      const ascendingTrue = toggleSortingButtons("dueDate");
+      sortTasks("dueDate", ascendingTrue);
       break;
     }
-    case 'sortName': {
-      const ascendingTrue = toggleSortingButtons('title');
-      sortTasks('title', ascendingTrue);
+    case "sortName": {
+      const ascendingTrue = toggleSortingButtons("title");
+      sortTasks("title", ascendingTrue);
       break;
     }
-    case 'sortCreationDate': {
-      const ascendingTrue = toggleSortingButtons('creationDate');
-      sortTasks('creationDate', ascendingTrue);
+    case "sortCreationDate": {
+      const ascendingTrue = toggleSortingButtons("creationDate");
+      sortTasks("creationDate", ascendingTrue);
       break;
     }
-    case 'sortImportance': {
-      const ascendingTrue = toggleSortingButtons('importance');
-      sortTasks('importance', ascendingTrue);
+    case "sortImportance": {
+      const ascendingTrue = toggleSortingButtons("importance");
+      sortTasks("importance", ascendingTrue);
       break;
     }
     default:
@@ -368,9 +376,9 @@ filterSortContainer.addEventListener('click', (event) => {
   }
 });
 
-document.addEventListener('DOMContentLoaded', async (event) => {
+document.addEventListener("DOMContentLoaded", async (event) => {
   initializeTasks(true);
-  const initialTasks = await taskService.getAllTasks('title', true);
+  const initialTasks = await taskService.getAllTasks("title", true);
   // console.log(initialTasks);
   // console.log(taskService.getTask(initialTasks[0]._id));
   renderTasks(initialTasks);

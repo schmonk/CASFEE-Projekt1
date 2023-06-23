@@ -21,30 +21,19 @@ export class TaskStore {
     return this.db.findOne({ _id: id });
   }
 
-  async update(
-    { "_id": id },
-    {
-      $set: {
-        "title": title,
-        "description": description,
-        "dueDate": dueDate,
-        "creationDate": creationDate,
-        "completion": completion,
-        "importance": importance,
-      },
-    }
-  ) {
-    // const task = new Task(title, description, dueDate, creationDate, completion);
-    console.log(`update this is: ${id}`);
-    return this.db.update(
-      { _id: id },
+  async update(id, { title, description, dueDate, creationDate, completion, importance }) {
+    console.log(`taskstore update this ID: ${id}`);
+    await this.db.update(
+      { "_id": id },
       {
-        title: title,
-        description: description,
-        dueDate: dueDate,
-        creationDate: creationDate,
-        completion: completion,
-        importance: importance,
+        $set: {
+          "title": title,
+          "description": description,
+          "dueDate": dueDate,
+          "creationDate": creationDate,
+          "completion": completion,
+          "importance": importance,
+        },
       }
     );
   }
