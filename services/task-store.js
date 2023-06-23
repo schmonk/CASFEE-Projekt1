@@ -40,9 +40,10 @@ export class TaskStore {
         });
         } */
 
-        console.log(`sType: ${sortingType} and ascending is: ${ascendingTrue}`);
+        // console.log(`sType: ${sortingType} and ascending is: ${ascendingTrue}`);
         // return this.db.find({ }).sort({ sortingType: +ascendingTrue }).exec();
-        return this.db.find({ }).sort({ title: +1 }).exec();
+        // return this.db.find({ state: { $ne: "DELETED" }} ).sort({ title: +1 }).exec(); // returns all except those that are deleted
+        return this.db.find({ state: { $ne: "DELETED" }} ).sort({ title: +1 }).exec();
     }
 }
 

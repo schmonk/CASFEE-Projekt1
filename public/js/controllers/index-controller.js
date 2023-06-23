@@ -26,8 +26,8 @@ function createTaskHTML(task) {
   if (filterCompletedButton.classList.contains('filtering-active')) {
     hiddenString = 'completed hidden';
   }
-  return `<article id="${task._id}" data-id="${task._id}" class="task-container ${(task.completion) ? hiddenString : ''}">
-  <input type="checkbox" name="completion" class="task-completion" ${(task.completion) ? 'checked' : ''}/>
+  return `<article data-id="${task._id}" class="task-container ${(task.completion) ? hiddenString : ''}">
+    <input type="checkbox" name="completion" class="task-completion" ${(task.completion) ? 'checked' : ''}/>
     <div class="task-content">
       <h3 class="task-title">${task.title}</h3>
       <p class="task-description">${task.description}</p>
@@ -136,6 +136,7 @@ function createTask(e) {
 function updateTask(event) {
   event.preventDefault();
   taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
+  console.log(`update task with id: ${event.target.parentElement._id}`);
   const existingTask = findObject(tm.tasksSorted(), 'id', taskDialog.id);
   const task = {
     id: existingTask.id,
@@ -196,13 +197,14 @@ function setupCreationDialog() {
 function openEditDialog(event) {
   const taskContainer = event.target.parentElement.parentElement;
   const currentId = taskContainer.dataset.id.toString();
-  const existingTask = findObject(tm.tasksSorted(), 'id', currentId);
+  const existingTask = taskService.getTask(currentId);
+  console.log(existingTask);
+  taskDialog.id = currentId;
   taskTitle.value = existingTask.title;
   taskImportance.value = existingTask.importance;
   taskDescription.value = existingTask.description;
   taskCompletion.checked = existingTask.completion;
   taskDueDate.value = `${existingTask.dueDate}`; // does not work yet
-  taskDialog.id = currentId;
   setupEditDialog(existingTask.title);
   taskDialog.showModal();
 }
@@ -291,7 +293,8 @@ document.addEventListener('click', async event => {
       break;
     case (myCL.contains('task-delete')):
       deleteTask(event);
-      await taskService.deleteTask(event.target.parentElement.dataset.id);
+      // console.log(`id to delete: ${event.target.parentElement.parentElement.dataset.id}`);
+      await taskService.deleteTask(event.target.parentElement.parentElement.dataset.id);
       //TODO: render tasks
       break;
     case (myCL.contains('cancel')):
@@ -361,8 +364,8 @@ function initializeApp() {
 document.addEventListener('DOMContentLoaded', async event => {
   initializeTasks(true);
   const initialTasks = await taskService.getAllTasks('title', true); 
-  console.log(initialTasks);
-  console.log(taskService.getTask('01'));
+  // console.log(initialTasks);
+  // console.log(taskService.getTask(initialTasks[0]._id));
   renderTasks(initialTasks);
   // await taskService.getAllTasks('importance', true);
 });

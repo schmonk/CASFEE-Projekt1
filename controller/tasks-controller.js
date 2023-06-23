@@ -18,6 +18,8 @@ export class TaskController {
     };
 
     deleteTask = async (req, res) => {
+        console.log('beep deleteTask called');
+        console.log(`the req param ID is = ${req.params.id}`);
         res.json(await taskStore.delete(req.params.id)); // TODO should return 402 if not ok
     };
 }
