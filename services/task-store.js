@@ -23,7 +23,6 @@ export class TaskStore {
   }
 
   async update(id, title, description, dueDate, creationDate, completion, importance) {
-    // console.log(`TStore update this ID: ${id}`);
     console.log(`TStore update this title: ${title}`);
     try {
       await this.db.update(
@@ -33,7 +32,7 @@ export class TaskStore {
             "title": title,
             "description": description,
             "dueDate": dueDate,
-            "creationDate": creationDate,
+            // "creationDate": creationDate,
             "completion": completion,
             "importance": importance,
           },
@@ -43,7 +42,6 @@ export class TaskStore {
       console.log(`error is: ${error}`);
     }
     return this.get(id);
-    // throw new Error("Whoops!");
   }
 
   async all(sortingType, ascendingTrue) {
