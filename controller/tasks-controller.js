@@ -20,9 +20,20 @@ export class TaskController {
   };
 
   updateTask = async (req, res) => {
-    console.log(`req is: ${req}`);
-    console.log(`update task from the task controller, ID: ${req.params.id}`);
-    res.json(await taskStore.update(req.params.id));
+    console.log(`req Params are: ${req.params.title}`);
+    console.log(`req body are: ${req.body.title}`);
+    // console.log(`update task from the task controller, ID: ${req.params.id}`);
+    res.json(
+      await taskStore.update(
+        req.params.id,
+        req.body.title,
+        req.body.description,
+        req.body.dueDate,
+        req.body.creationDate,
+        req.body.completion,
+        req.body.importance
+      )
+    );
   };
 
   showTask = async (req, res) => {
@@ -30,8 +41,8 @@ export class TaskController {
   };
 
   deleteTask = async (req, res) => {
-    console.log("beep deleteTask called");
-    console.log(`the req param ID is = ${req.params.id}`);
+    // console.log("beep deleteTask called");
+    // console.log(`the req param ID is = ${req.params.id}`);
     res.json(await taskStore.delete(req.params.id)); // TODO should return 402 if not ok
   };
 }

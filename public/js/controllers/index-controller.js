@@ -132,16 +132,12 @@ function createTask(e) {
     importance: taskImportance.value ? clamp(taskImportance.value, 1, 5) : "3",
     completion: taskCompletion.checked,
   };
-  /*   addTaskToDOM(newTask);
-  tm.addTask(newTask); */
-  sortTasks();
   return newTask;
 }
 function updateTask(event) {
   event.preventDefault();
   taskDialog.querySelector("#saveDialogButton").classList.remove("task-update");
-  // console.log(`update task with id: ${event.target.parentElement._id}`);
-  // const existingTask = findObject(tm.tasksSorted(), 'id', taskDialog.id);
+
   const task = {
     id: taskDialog.dataset.id,
     title: taskTitle.value,
@@ -150,24 +146,18 @@ function updateTask(event) {
     completion: taskCompletion.checked,
     dueDate: taskDueDate.value, // does not work yet
   };
-
   return task;
-  /*   const indexToUpdate = tm
-    .tasksSorted()
-    .indexOf(findObject(tm.tasksSorted(), 'id', taskDialog.id.toString()));
-  tm.updateTask(task, indexToUpdate);
-  sortTasks(); */
 }
 
 function deleteTask(event) {
-  event.preventDefault();
+  /*   event.preventDefault();
   const element = event.target.parentElement.parentElement;
   const indexToremove = tm
     .tasksSorted()
     .indexOf(findObject(tm.tasksSorted(), "id", element.id.toString()));
   tm.removeTask(indexToremove);
   element.remove();
-  sortTasks();
+  sortTasks(); */
 }
 
 function toggleCompletion(event) {
@@ -313,17 +303,17 @@ document.addEventListener("click", async (event) => {
       console.log(`update task with ID: ${taskDialog.dataset.id}`);
       const taskToUpdate = updateTask(event);
       await taskService.updateTask(
-        taskDialog.dataset.id
-        /*         taskToUpdate.title,
+        taskDialog.dataset.id,
+        taskToUpdate.title,
         taskToUpdate.description,
         taskToUpdate.dueDate,
         taskToUpdate.creationDate,
         taskToUpdate.completionk,
-        taskToUpdate.importance */
+        taskToUpdate.importance
       );
+      renderTasks();
       taskDialog.close();
       clearDialog();
-      renderTasks();
       break;
     case myCL.contains("task-edit"):
       openEditDialog(event);

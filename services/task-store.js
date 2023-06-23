@@ -13,7 +13,7 @@ export class TaskStore {
   }
 
   async delete(id) {
-    console.log(`!TStore Delete this ID: ${id}`);
+    // console.log(`!TStore Delete this ID: ${id}`);
     await this.db.update({ _id: id }, { $set: { state: "DELETED" } });
     return this.get(id);
   }
@@ -22,37 +22,30 @@ export class TaskStore {
     return this.db.findOne({ _id: id });
   }
 
-  async update(id /* title, description, dueDate, creationDate, completion, importance */) {
-    console.log(`TStore update this ID: ${id}`);
-    await this.db.update(
-      { _id: id },
-      {
-        "title": "title",
-        "description": "description",
-        "dueDate": "dueDate",
-        "creationDate": "creationDate",
-        "completion": "completion",
-        "importance": "importance",
-      }
-    );
+  async update(id, title, description, dueDate, creationDate, completion, importance) {
+    // console.log(`TStore update this ID: ${id}`);
+    console.log(`TStore update this title: ${title}`);
+    try {
+      await this.db.update(
+        { _id: id },
+        {
+          $set: {
+            "title": title,
+            "description": description,
+            "dueDate": dueDate,
+            "creationDate": creationDate,
+            "completion": completion,
+            "importance": importance,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(`error is: ${error}`);
+    }
+    return this.get(id);
+    // throw new Error("Whoops!");
   }
-  /*   async update(id, title, description, dueDate, creationDate, completion, importance ) {
-    console.log(`TStore update this ID: ${id}`);
-    await this.db.update(
-      { _id: id },
-      {
-        $set: {
-          title: "title",
-          description: "description",
-          dueDate: "dueDate",
-          creationDate: "creationDate",
-          completion: "completion",
-          importance: "importance",
-        },
-      }
-    );
-  }
- */
+
   async all(sortingType, ascendingTrue) {
     /*     function sortByKey(array, key, isAscending) {
         return array.sort((a, b) => {
