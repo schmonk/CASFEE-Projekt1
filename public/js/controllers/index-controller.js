@@ -140,22 +140,23 @@ function createTask(e) {
 function updateTask(event) {
   event.preventDefault();
   taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
-  console.log(`update task with id: ${event.target.parentElement._id}`);
-  const existingTask = findObject(tm.tasksSorted(), 'id', taskDialog.id);
+  // console.log(`update task with id: ${event.target.parentElement._id}`);
+  // const existingTask = findObject(tm.tasksSorted(), 'id', taskDialog.id);
   const task = {
-    id: existingTask.id,
-    title: taskTitle.value ? taskTitle.value : existingTask.title,
-    dueDate: taskDueDate.value ? taskDueDate.value : existingTask.dueDate,
-    creationDate: existingTask.creationDate,
-    description: taskDescription.value ? taskDescription.value : existingTask.description,
-    importance: taskImportance.value ? clamp(taskImportance.value, 1, 5) : existingTask.importance,
+    id: taskDialog.dataset.id,
+    title: taskTitle.value,
+    importance: taskImportance.value,
+    description: taskDescription.value,
     completion: taskCompletion.checked,
+    dueDate: taskDueDate.value, // does not work yet
   };
-  const indexToUpdate = tm
+
+  return task;
+  /*   const indexToUpdate = tm
     .tasksSorted()
     .indexOf(findObject(tm.tasksSorted(), 'id', taskDialog.id.toString()));
   tm.updateTask(task, indexToUpdate);
-  sortTasks();
+  sortTasks(); */
 }
 
 function deleteTask(event) {
@@ -207,7 +208,7 @@ async function openEditDialog(event) {
   const currentId = taskContainer.dataset.id.toString();
   const existingTask = await taskService.getTask(currentId);
   // console.table(existingTask);
-  taskDialog.id = currentId;
+  taskDialog.dataset.id = currentId;
   taskTitle.value = existingTask.title;
   taskImportance.value = existingTask.importance;
   taskDescription.value = existingTask.description;
@@ -293,15 +294,15 @@ function initializeTasks(fromStorage) {
 
 document.addEventListener('click', async (event) => {
   const myCL = event.target.classList;
+  const taskContainer = event.target.parentElement.parentElement;
   switch (true) {
     case myCL.contains('task-add'):
       setupCreationDialog();
       taskDialog.showModal();
       break;
     case myCL.contains('task-delete'):
-      deleteTask(event);
-      // console.log(`id to delete: ${event.target.parentElement.parentElement.dataset.id}`);
-      await taskService.deleteTask(event.target.parentElement.parentElement.dataset.id);
+      // deleteTask(event);
+      await taskService.deleteTask(taskContainer.dataset.id);
       renderTasks();
       break;
     case myCL.contains('cancel'):
@@ -309,26 +310,27 @@ document.addEventListener('click', async (event) => {
       clearDialog();
       break;
     case myCL.contains('task-update'):
+      console.log(`update task with ID: ${taskDialog.dataset.id}`);
+      const taskToUpdate = updateTask(event);
+      await taskService.updateTask(taskDialog.dataset.id, taskToUpdate);
       taskDialog.close();
-      await taskService.updateTask('test');
-      renderTasks();
       clearDialog();
+      renderTasks();
       break;
     case myCL.contains('task-edit'):
       openEditDialog(event);
       break;
     case myCL.contains('task-completion'):
       toggleCompletion(event);
+      // await taskService.updateTask();
       renderTasks();
-      //TODO: render tasks
       break;
     case myCL.contains('task-create'):
-      const task = createTask(event);
-      await taskService.addTask(task);
+      const taskToCreate = createTask(event);
+      await taskService.addTask(taskToCreate);
       taskDialog.close();
       clearDialog();
       renderTasks();
-      //TODO: render tasks
       break;
     default:
       break;
