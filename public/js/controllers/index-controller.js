@@ -1,5 +1,5 @@
 import tm from './task-manager.js';
-import { taskService } from '../services/task-service.js'
+import { taskService } from '../services/task-service.js';
 
 const taskDialog = document.querySelector('.taskDialog');
 const taskList = document.querySelector('.task-list');
@@ -26,8 +26,12 @@ function createTaskHTML(task) {
   if (filterCompletedButton.classList.contains('filtering-active')) {
     hiddenString = 'completed hidden';
   }
-  return `<article data-id="${task._id}" class="task-container ${(task.completion) ? hiddenString : ''}">
-    <input type="checkbox" name="completion" class="task-completion" ${(task.completion) ? 'checked' : ''}/>
+  return `<article data-id="${task._id}" class="task-container ${
+    task.completion ? hiddenString : ''
+  }">
+    <input type="checkbox" name="completion" class="task-completion" ${
+      task.completion ? 'checked' : ''
+    }/>
     <div class="task-content">
       <h3 class="task-title">${task.title}</h3>
       <p class="task-description">${task.description}</p>
@@ -58,7 +62,7 @@ function addTaskToDOM(task) {
 }
 
 async function renderTasks() {
-  const sortedTaskArray = await taskService.getAllTasks('title', true); ;
+  const sortedTaskArray = await taskService.getAllTasks('title', true);
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
   }
@@ -128,7 +132,7 @@ function createTask(e) {
     importance: taskImportance.value ? clamp(taskImportance.value, 1, 5) : '3',
     completion: taskCompletion.checked,
   };
-/*   addTaskToDOM(newTask);
+  /*   addTaskToDOM(newTask);
   tm.addTask(newTask); */
   sortTasks();
   return newTask;
@@ -147,7 +151,9 @@ function updateTask(event) {
     importance: taskImportance.value ? clamp(taskImportance.value, 1, 5) : existingTask.importance,
     completion: taskCompletion.checked,
   };
-  const indexToUpdate = tm.tasksSorted().indexOf(findObject(tm.tasksSorted(), 'id', taskDialog.id.toString()));
+  const indexToUpdate = tm
+    .tasksSorted()
+    .indexOf(findObject(tm.tasksSorted(), 'id', taskDialog.id.toString()));
   tm.updateTask(task, indexToUpdate);
   sortTasks();
 }
@@ -155,7 +161,9 @@ function updateTask(event) {
 function deleteTask(event) {
   event.preventDefault();
   const element = event.target.parentElement.parentElement;
-  const indexToremove = tm.tasksSorted().indexOf(findObject(tm.tasksSorted(), 'id', element.id.toString()));
+  const indexToremove = tm
+    .tasksSorted()
+    .indexOf(findObject(tm.tasksSorted(), 'id', element.id.toString()));
   tm.removeTask(indexToremove);
   element.remove();
   sortTasks();
@@ -208,7 +216,6 @@ async function openEditDialog(event) {
   setupEditDialog(existingTask.title);
   taskDialog.showModal();
 }
-
 
 function filterCompletedTasks() {
   filterCompletedButton.classList.toggle('filtering-active');
@@ -284,43 +291,43 @@ function initializeTasks(fromStorage) {
   sortTasks(retrievedSorting.mySortingType, retrievedSorting.myAscendingState);
 }
 
-document.addEventListener('click', async event => {
+document.addEventListener('click', async (event) => {
   const myCL = event.target.classList;
   switch (true) {
-    case (myCL.contains('task-add')):
+    case myCL.contains('task-add'):
       setupCreationDialog();
       taskDialog.showModal();
       break;
-    case (myCL.contains('task-delete')):
+    case myCL.contains('task-delete'):
       deleteTask(event);
       // console.log(`id to delete: ${event.target.parentElement.parentElement.dataset.id}`);
       await taskService.deleteTask(event.target.parentElement.parentElement.dataset.id);
       renderTasks();
       break;
-      case (myCL.contains('cancel')):
-        taskDialog.close();
-        clearDialog();
-        break;
-        case (myCL.contains('task-update')):
-          taskDialog.close();
-          await taskService.updateTask('test');
-          renderTasks();
-          clearDialog();
-          break;
-          case (myCL.contains('task-edit')):
-            openEditDialog(event);
-            break;
-            case (myCL.contains('task-completion')):
-              toggleCompletion(event);
-              renderTasks();
-              //TODO: render tasks
-              break;
-              case (myCL.contains('task-create')):
-                const task = createTask(event);
-                await taskService.addTask(task);
-                taskDialog.close();
-                clearDialog();
-                renderTasks();
+    case myCL.contains('cancel'):
+      taskDialog.close();
+      clearDialog();
+      break;
+    case myCL.contains('task-update'):
+      taskDialog.close();
+      await taskService.updateTask('test');
+      renderTasks();
+      clearDialog();
+      break;
+    case myCL.contains('task-edit'):
+      openEditDialog(event);
+      break;
+    case myCL.contains('task-completion'):
+      toggleCompletion(event);
+      renderTasks();
+      //TODO: render tasks
+      break;
+    case myCL.contains('task-create'):
+      const task = createTask(event);
+      await taskService.addTask(task);
+      taskDialog.close();
+      clearDialog();
+      renderTasks();
       //TODO: render tasks
       break;
     default:
@@ -359,9 +366,9 @@ filterSortContainer.addEventListener('click', (event) => {
   }
 });
 
-document.addEventListener('DOMContentLoaded', async event => {
+document.addEventListener('DOMContentLoaded', async (event) => {
   initializeTasks(true);
-  const initialTasks = await taskService.getAllTasks('title', true); 
+  const initialTasks = await taskService.getAllTasks('title', true);
   // console.log(initialTasks);
   // console.log(taskService.getTask(initialTasks[0]._id));
   renderTasks(initialTasks);
