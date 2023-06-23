@@ -26,9 +26,10 @@
           <button id="themeButton" type="button">☽</button>
         </div>
       </header>
+
       <!-- A utility header with sorting and filtering buttons -->
       <section class="utility">
-        <div class="filterSort-container">
+        <div data-filter-sort-container="fsContainerTest" class="filterSort-container">
             <button id="filterCompleted" class="completion filter-button" type="button">Hide completed</button>
             <button id="sortName" class="title sort-button" type="button">Name</button>
             <button id="sortDueDate" class="dueDate sort-button" type="button">Date due</button>
@@ -36,7 +37,7 @@
             <button id="sortImportance" class="importance sort-button" type="button">Importance</button>
       </section>
       <!-- The Task list. Each Task is in an article -->
-      <section class="task-list"> </section>
+      <section data-task-list-container="test" class="task-list"> </section>
 
       <!-- Dialog to create and edit a task -->
       <dialog class="taskDialog" data-task-dialog="gugus">

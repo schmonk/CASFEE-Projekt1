@@ -26,7 +26,7 @@ function createTaskHTML(task) {
   if (filterCompletedButton.classList.contains('filtering-active')) {
     hiddenString = 'completed hidden';
   }
-  return `<article id="${task.id}" data-id="${task.id}" class="task-container ${(task.completion) ? hiddenString : ''}">
+  return `<article id="${task._id}" data-id="${task._id}" class="task-container ${(task.completion) ? hiddenString : ''}">
   <input type="checkbox" name="completion" class="task-completion" ${(task.completion) ? 'checked' : ''}/>
     <div class="task-content">
       <h3 class="task-title">${task.title}</h3>
