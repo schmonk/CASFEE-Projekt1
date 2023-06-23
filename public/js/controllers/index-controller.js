@@ -297,13 +297,14 @@ document.addEventListener('click', async event => {
       await taskService.deleteTask(event.target.parentElement.parentElement.dataset.id);
       //TODO: render tasks
       break;
-    case (myCL.contains('cancel')):
-      taskDialog.close();
-      clearDialog();
-      break;
-    case (myCL.contains('task-update')):
-      updateTask(event);
-      taskDialog.close();
+      case (myCL.contains('cancel')):
+        taskDialog.close();
+        clearDialog();
+        break;
+      case (myCL.contains('task-update')):
+        updateTask(event);
+        taskDialog.close();
+      await taskService.updateTask(event.target.parentElement.parentElement.dataset.id);
       clearDialog();
       //TODO: render tasks
       break;

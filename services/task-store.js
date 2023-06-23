@@ -23,6 +23,12 @@ export class TaskStore {
         return this.db.findOne({ _id: id })
     }
 
+    async update(id, title, description, dueDate, creationDate, completion) {
+        // const task = new Task(title, description, dueDate, creationDate, completion);
+        console.log(`update this is: ${id}`);
+        return this.db.update({_id: id}, {title: title, description: description, dueDate: dueDate, creationDate: creationDate, completion: completion});
+    }
+
     async all(sortingType, ascendingTrue) {
 
 /*     function sortByKey(array, key, isAscending) {
