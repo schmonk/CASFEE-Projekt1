@@ -2,7 +2,7 @@ import { httpService } from './http-service.js'
 
 class TaskService {
     async addTask(task) {
-        return httpService.ajax("POST", "/tasks/", { title: task.title, description: task.description, dueDate: task.dueDate, creationDate: task.creationDate, completion: task.completion });
+        return httpService.ajax("POST", "/tasks/", { title: task.title, description: task.description, dueDate: task.dueDate, creationDate: task.creationDate, completion: task.completion, importance: task.importance });
     }
     
     async getAllTasks() {

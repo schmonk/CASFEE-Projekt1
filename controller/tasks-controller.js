@@ -8,7 +8,7 @@ export class TaskController {
     };
 
     addTask = async (req, res) => {
-        res.json(await taskStore.add(req.body.title, req.body.description, req.body.dueDate, req.body.creationDate, req.body.completion));
+        res.json(await taskStore.add(req.body.title, req.body.description, req.body.dueDate, req.body.creationDate, req.body.completion, req.body.importance));
     };
 
     updateTask = async (req, res) => {

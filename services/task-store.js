@@ -9,8 +9,8 @@ export class TaskStore {
         this.db = db || new Datastore(options)
     }
 
-    async add( title, description, dueDate, creationDate, completion) {
-        const task = new Task(title, description, dueDate, creationDate, completion);
+    async add( title, description, dueDate, creationDate, completion, importance) {
+        const task = new Task(title, description, dueDate, creationDate, completion, importance);
         return this.db.insert(task);
     }
 

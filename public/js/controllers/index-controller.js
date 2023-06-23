@@ -57,8 +57,8 @@ function addTaskToDOM(task) {
   taskList.insertAdjacentHTML('beforeend', createTaskHTML(task));
 }
 
-function renderTasks(sortedTaskArray) {
-  
+async function renderTasks() {
+  const sortedTaskArray = await taskService.getAllTasks('title', true); ;
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
   }
@@ -128,8 +128,8 @@ function createTask(e) {
     importance: taskImportance.value ? clamp(taskImportance.value, 1, 5) : '3',
     completion: taskCompletion.checked,
   };
-  addTaskToDOM(newTask);
-  tm.addTask(newTask);
+/*   addTaskToDOM(newTask);
+  tm.addTask(newTask); */
   sortTasks();
   return newTask;
 }
@@ -198,7 +198,7 @@ async function openEditDialog(event) {
   const taskContainer = event.target.parentElement.parentElement;
   const currentId = taskContainer.dataset.id.toString();
   const existingTask = await taskService.getTask(currentId);
-  console.table(existingTask);
+  // console.table(existingTask);
   taskDialog.id = currentId;
   taskTitle.value = existingTask.title;
   taskImportance.value = existingTask.importance;
@@ -295,31 +295,32 @@ document.addEventListener('click', async event => {
       deleteTask(event);
       // console.log(`id to delete: ${event.target.parentElement.parentElement.dataset.id}`);
       await taskService.deleteTask(event.target.parentElement.parentElement.dataset.id);
-      //TODO: render tasks
+      renderTasks();
       break;
       case (myCL.contains('cancel')):
         taskDialog.close();
         clearDialog();
         break;
-      case (myCL.contains('task-update')):
-        // updateTask(event);
-        taskDialog.close();
-      await taskService.updateTask('test');
-      clearDialog();
-      //TODO: render tasks
-      break;
-    case (myCL.contains('task-edit')):
-      openEditDialog(event);
-      break;
-    case (myCL.contains('task-completion')):
-      toggleCompletion(event);
-      //TODO: render tasks
-      break;
-    case (myCL.contains('task-create')):
-      const task = createTask(event);
-      await taskService.addTask(task);
-      taskDialog.close();
-      clearDialog();
+        case (myCL.contains('task-update')):
+          taskDialog.close();
+          await taskService.updateTask('test');
+          renderTasks();
+          clearDialog();
+          break;
+          case (myCL.contains('task-edit')):
+            openEditDialog(event);
+            break;
+            case (myCL.contains('task-completion')):
+              toggleCompletion(event);
+              renderTasks();
+              //TODO: render tasks
+              break;
+              case (myCL.contains('task-create')):
+                const task = createTask(event);
+                await taskService.addTask(task);
+                taskDialog.close();
+                clearDialog();
+                renderTasks();
       //TODO: render tasks
       break;
     default:
