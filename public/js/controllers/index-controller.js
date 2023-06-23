@@ -282,14 +282,14 @@ function toggleSortingDirection(keepOnClass, ascendingState) {
 }
 
 function initializeTasks(fromStorage) {
-  const initialTaskList = fromStorage ? tm.getFromStorage("myTasks") : tm.defaultTasksSorted();
+  /*   const initialTaskList = fromStorage ? tm.getFromStorage("myTasks") : tm.defaultTasksSorted();
   initialTaskList.forEach((element) => {
     tm.addTask(element);
   });
   const retrievedSorting = tm.getFromStorage("mySorting");
   toggleSortingButtons(retrievedSorting.mySortingType);
   toggleSortingDirection(retrievedSorting.mySortingType, retrievedSorting.myAscendingState);
-  sortTasks(retrievedSorting.mySortingType, retrievedSorting.myAscendingState);
+  sortTasks(retrievedSorting.mySortingType, retrievedSorting.myAscendingState); */
 }
 
 document.addEventListener("click", async (event) => {
@@ -313,13 +313,13 @@ document.addEventListener("click", async (event) => {
       console.log(`update task with ID: ${taskDialog.dataset.id}`);
       const taskToUpdate = updateTask(event);
       await taskService.updateTask(
-        taskDialog.dataset.id,
-        taskToUpdate.title,
+        taskDialog.dataset.id
+        /*         taskToUpdate.title,
         taskToUpdate.description,
         taskToUpdate.dueDate,
         taskToUpdate.creationDate,
         taskToUpdate.completionk,
-        taskToUpdate.importance
+        taskToUpdate.importance */
       );
       taskDialog.close();
       clearDialog();
@@ -377,10 +377,10 @@ filterSortContainer.addEventListener("click", (event) => {
 });
 
 document.addEventListener("DOMContentLoaded", async (event) => {
-  initializeTasks(true);
-  const initialTasks = await taskService.getAllTasks("title", true);
+  // initializeTasks(true);
+  // const initialTasks = await taskService.getAllTasks("title", true);
   // console.log(initialTasks);
   // console.log(taskService.getTask(initialTasks[0]._id));
-  renderTasks(initialTasks);
+  renderTasks();
   // await taskService.getAllTasks('importance', true);
 });

@@ -23,19 +23,12 @@ class TaskService {
   }
 
   async updateTask(id, title, description, dueDate, creationDate, completion, importance) {
-    console.log(`TS: update task with id: ${id}`);
-    console.log(`TS: update task: ${id}`);
+    // console.log(`TS: update task with id: ${id}`);
+    console.log(`TService: update task: ${id}`);
     /*     console.log(
       `TS: update task: ${(id, title, description, dueDate, creationDate, completion, importance)}`
     ); */
-    return httpService.ajax("POST", `/tasks/${id}`, {
-      title: title,
-      description: description,
-      dueDate: dueDate,
-      creationDate: creationDate,
-      completion: completion,
-      importance: importance,
-    });
+    return httpService.ajax("POST", `/tasks/${id}`, undefined);
   }
 
   async deleteTask(id) {
