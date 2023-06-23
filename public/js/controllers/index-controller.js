@@ -194,11 +194,11 @@ function setupCreationDialog() {
   taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
 }
 
-function openEditDialog(event) {
+async function openEditDialog(event) {
   const taskContainer = event.target.parentElement.parentElement;
   const currentId = taskContainer.dataset.id.toString();
-  const existingTask = taskService.getTask(currentId);
-  console.log(existingTask);
+  const existingTask = await taskService.getTask(currentId);
+  console.table(existingTask);
   taskDialog.id = currentId;
   taskTitle.value = existingTask.title;
   taskImportance.value = existingTask.importance;
@@ -302,9 +302,9 @@ document.addEventListener('click', async event => {
         clearDialog();
         break;
       case (myCL.contains('task-update')):
-        updateTask(event);
+        // updateTask(event);
         taskDialog.close();
-      await taskService.updateTask(event.target.parentElement.parentElement.dataset.id);
+      await taskService.updateTask('test');
       clearDialog();
       //TODO: render tasks
       break;
@@ -357,10 +357,6 @@ filterSortContainer.addEventListener('click', (event) => {
       break;
   }
 });
-
-function initializeApp() {
-  
-}
 
 document.addEventListener('DOMContentLoaded', async event => {
   initializeTasks(true);

@@ -10,6 +10,11 @@ class TaskService {
         return httpService.ajax("GET", "/tasks/", undefined);
     }
 
+    async updateTask(id) {
+        console.log(`get task with id: ${id}`);
+        return httpService.ajax("POST", `/tasks/${id}`, undefined);
+    }
+
     async getTask(id) {
         console.log(`get task with id: ${id}`);
         return httpService.ajax("GET", `/tasks/${id}`, undefined);

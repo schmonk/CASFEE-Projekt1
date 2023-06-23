@@ -3,15 +3,18 @@ import {taskStore} from '../services/task-store.js'
 export class TaskController {
 
     getAllTasks = async (req, res) => {
-        console.dir('just a test', 'another test ASC' || [] );
         // console.dir(req.params.sortingType, req.params.ascendingTrue || [] );
         res.json((await taskStore.all()))
     };
 
     addTask = async (req, res) => {
-        // console.log('task controller adds task');
         res.json(await taskStore.add(req.body.title, req.body.description, req.body.dueDate, req.body.creationDate, req.body.completion));
     };
+
+    updateTask = async (req, res) => {
+        console.log('update task from the task controller');
+        res.json(await taskStore.update(req.body.id))
+    }
 
     showTask = async (req, res) => {
         res.json(await taskStore.get(req.params.id));
