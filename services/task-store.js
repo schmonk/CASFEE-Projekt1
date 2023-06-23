@@ -41,7 +41,8 @@ export class TaskStore {
         } */
 
         console.log(`sType: ${sortingType} and ascending is: ${ascendingTrue}`);
-        return this.db.find({ }).sort({ sortingType: +ascendingTrue }).exec();
+        // return this.db.find({ }).sort({ sortingType: +ascendingTrue }).exec();
+        return this.db.find({ }).sort({ title: +1 }).exec();
     }
 }
 

@@ -58,6 +58,7 @@ function addTaskToDOM(task) {
 }
 
 function renderTasks(sortedTaskArray) {
+  
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
   }
@@ -359,7 +360,9 @@ function initializeApp() {
 
 document.addEventListener('DOMContentLoaded', async event => {
   initializeTasks(true);
-  console.log(await taskService.getAllTasks('title', true));
+  const initialTasks = await taskService.getAllTasks('title', true); 
+  console.log(initialTasks);
   console.log(taskService.getTask('01'));
-  await taskService.getAllTasks('importance', true);
+  renderTasks(initialTasks);
+  // await taskService.getAllTasks('importance', true);
 });
