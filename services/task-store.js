@@ -28,14 +28,12 @@ export class TaskStore {
       await this.db.update(
         { _id: id },
         {
-          $set: {
-            "title": title,
-            "description": description,
-            "dueDate": dueDate,
-            // "creationDate": creationDate,
-            "completion": completion,
-            "importance": importance,
-          },
+          "title": title,
+          "description": description,
+          "dueDate": dueDate,
+          "creationDate": creationDate,
+          "completion": completion,
+          "importance": importance,
         }
       );
     } catch (error) {
