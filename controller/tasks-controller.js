@@ -1,22 +1,13 @@
 import { taskStore } from "../services/task-store.js";
+import { clamp } from "../public//js/services/utils.js";
 
 export class TaskController {
   getAllTasks = async (req, res) => {
-    // console.dir(req.params.sortingType, req.params.ascendingTrue || [] );
-    /*     console.log(`TaskController: Query${req.query}, BODY: ${req.body}, PARAMS: ${req.params}`);
-    console.dir(req); */
-    res.json(
-      await taskStore.all(req.query.sortingType, req.query.ascendingTrue, req.query.filteringTrue)
-    );
+    res.json(await taskStore.all(req.query.sortingType, req.query.ascending, req.query.filtering));
   };
 
   addTask = async (req, res) => {
-    // TODO: check in the request that values are valid
-    let importance = req.body.importance;
-    if (importance > 5) {
-      console.log("importance was bigger than 5, clamping that cochonne now!! 🔐 ");
-      importance = 5;
-    }
+    let importance = clamp(req.body.importance, 1, 5);
     res.json(
       await taskStore.add(
         req.body.title,
@@ -30,8 +21,7 @@ export class TaskController {
   };
 
   updateTask = async (req, res) => {
-    /*     console.log(`req Params ID: ${req.params.id}`);
-    console.log(`req body title: ${req.body.title}`); */
+    let importance = clamp(req.body.importance, 1, 5);
     res.json(
       await taskStore.update(
         req.params.id,
@@ -40,7 +30,7 @@ export class TaskController {
         req.body.dueDate,
         req.body.creationDate,
         req.body.completion,
-        req.body.importance
+        importance
       )
     );
   };
@@ -50,8 +40,6 @@ export class TaskController {
   };
 
   deleteTask = async (req, res) => {
-    // console.log("beep deleteTask called");
-    // console.log(`the req param ID is = ${req.params.id}`);
     res.json(await taskStore.delete(req.params.id)); // TODO should return 402 if not ok
   };
 }

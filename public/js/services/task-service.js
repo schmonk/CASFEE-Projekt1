@@ -12,14 +12,10 @@ class TaskService {
     });
   }
 
-  async getAllTasks(sortingType, ascendingTrue, filteringTrue) {
-    // console.log("TService: get all tasks");
-    /*     console.log(
-      // `TService sort by ${sortingType} with ASC: ${ascendingTrue} and filter: ${filteringTrue}`
-    ); */
+  async getAllTasks(sortingType, ascending, filtering) {
     return httpService.ajax(
       "GET",
-      `/tasks/sortingFiltering?sortingType=${sortingType}&ascendingTrue=${ascendingTrue}&filteringTrue=${filteringTrue}`,
+      `/tasks/sortingFiltering?sortingType=${sortingType}&ascending=${ascending}&filtering=${filtering}`,
       undefined
     );
   }
@@ -41,7 +37,6 @@ class TaskService {
   }
 
   async deleteTask(id) {
-    // console.log(`TService: DEL task w/ ID: ${id}`);
     return httpService.ajax("DELETE", `/tasks/${id}`, undefined);
   }
 }

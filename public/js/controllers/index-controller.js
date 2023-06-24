@@ -53,9 +53,9 @@ function addTaskToDOM(task) {
   taskList.insertAdjacentHTML("beforeend", createTaskHTML(task));
 }
 
-async function renderTasks(sortingType = "importance", asceningTrue = true, filteringTrue = false) {
-  // console.log(`renderTask: type: ${sortingType}, ASC: ${asceningTrue}, FILTER: ${filteringTrue}`);
-  const sortedTaskArray = await taskService.getAllTasks(sortingType, asceningTrue, filteringTrue);
+async function renderTasks(sortingType = "importance", ascending = true, filtering = false) {
+  // console.log(`renderTask: type: ${sortingType}, ASC: ${ascending}, FILTER: ${filtering}`);
+  const sortedTaskArray = await taskService.getAllTasks(sortingType, ascending, filtering);
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
   }

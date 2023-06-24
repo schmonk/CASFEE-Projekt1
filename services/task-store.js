@@ -13,7 +13,6 @@ export class TaskStore {
   }
 
   async delete(id) {
-    // console.log(`!TStore Delete this ID: ${id}`);
     await this.db.update({ _id: id }, { $set: { state: "DELETED" } });
     return this.get(id);
   }
@@ -42,25 +41,18 @@ export class TaskStore {
     return this.get(id);
   }
 
-  async all(sortingType, ascendingTrue, filteringTrue) {
-    console.log(
-      `TStore: sortType: ${sortingType}, ascending is: ${ascendingTrue}, filtering is: ${filteringTrue}`
-    );
-    //TODO: change boolean variable names
-    //
-    let sortingDirection = ascendingTrue ? -1 : 1;
-    // console.log(ascendingTrue);
-    console.log(`sorting is: ${sortingType}: ${sortingDirection}`);
+  async all(sortingType, ascending, filtering) {
+    let sortingDirection = ascending ? -1 : 1;
     let sorting = {};
     sorting[sortingType] = sortingDirection;
 
-    console.log("sorting:");
-    console.log(sorting);
+    console.log("sortingType, ascending, filtering, sorting");
+    console.log(sortingType, ascending, filtering, sorting);
     // .find({ state: { $ne: "DELETED" } }) // returns all that do not include "DELETED"
     // .find({completion: "false"}) // all that are open
 
     return this.db
-      .find({ state: { $ne: "DELETED" }, completion: { $ne: ascendingTrue } })
+      .find({ state: { $ne: "DELETED" }, completion: { $ne: filtering } })
       .sort(sorting)
       .exec();
   }
