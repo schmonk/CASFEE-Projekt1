@@ -14,9 +14,9 @@ class TaskService {
 
   async getAllTasks(sortingType, ascendingTrue, filteringTrue) {
     // console.log("TService: get all tasks");
-    console.log(
-      `TService sort by ${sortingType} with ASC: ${ascendingTrue} and filter: ${filteringTrue}`
-    );
+    /*     console.log(
+      // `TService sort by ${sortingType} with ASC: ${ascendingTrue} and filter: ${filteringTrue}`
+    ); */
     return httpService.ajax(
       "GET",
       `/tasks/sortingFiltering?sortingType=${sortingType}&ascendingTrue=${ascendingTrue}&filteringTrue=${filteringTrue}`,

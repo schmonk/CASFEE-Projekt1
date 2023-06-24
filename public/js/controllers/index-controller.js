@@ -64,7 +64,7 @@ function addTaskToDOM(task) {
 }
 
 async function renderTasks() {
-  const sortedTaskArray = await taskService.getAllTasks("title", true, true);
+  const sortedTaskArray = await taskService.getAllTasks("title", true, false);
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
   }

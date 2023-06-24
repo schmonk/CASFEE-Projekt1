@@ -24,8 +24,8 @@ export class TaskController {
   };
 
   updateTask = async (req, res) => {
-    console.log(`req Params ID: ${req.params.id}`);
-    console.log(`req body title: ${req.body.title}`);
+    /*     console.log(`req Params ID: ${req.params.id}`);
+    console.log(`req body title: ${req.body.title}`); */
     res.json(
       await taskStore.update(
         req.params.id,

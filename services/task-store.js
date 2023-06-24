@@ -43,34 +43,24 @@ export class TaskStore {
   }
 
   async all(sortingType, ascendingTrue, filteringTrue) {
-    /*     function sortByKey(array, key, isAscending) {
-        return array.sort((a, b) => {
-            const x = a[key];
-            const y = b[key];
-            const sortingDirection = isAscending ? 1 : -1;
-            if (x < y) {
-            return -1 * sortingDirection;
-            }
-            if (x > y) {
-            return 1 * sortingDirection;
-            }
-            return 0;
-        });
-        } */
-
     console.log(
       `TStore: sortType: ${sortingType}, ascending is: ${ascendingTrue}, filtering is: ${filteringTrue}`
     );
-    const sortingDirection = ascendingTrue ? 1 : -1;
-    // console.log(`TStore sorting Type: ${sortingType}`);
-    // console.log(`TStore sorting Direction: ${ascendingTrue}`);
-    // return this.db.find({ }).sort({ sortingType: +ascendingTrue }).exec();
-    // return this.db.find({ state: { $ne: "DELETED" }} ).sort({ title: +1 }).exec(); // returns all except those that are deleted
-    /*     const sortOptions = ;
-    const findOptions = ; */
+    let sortingDirection = ascendingTrue ? 1 : -1;
+    // console.log(ascendingTrue);
+    // console.log(sortingDirection);
+    let filteringCompleted = {};
+    if (filteringTrue) {
+      filteringCompleted.completion = filteringTrue ? "true" : "false";
+    }
+    console.log(filteringCompleted);
     // .find({ state: { $ne: "DELETED" } }) // returns all that do not include "DELETED"
     // .find({completion: "false"}) // all that are open
-    return this.db.find({}).sort({ title: sortingDirection }).exec();
+
+    return this.db
+      .find({ state: { $ne: "DELETED" } })
+      .sort({ sortingType: sortingDirection })
+      .exec();
   }
 }
 
