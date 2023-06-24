@@ -41,3 +41,47 @@
 {"title":"test c","description":"Task description","dueDate":"","completion":false,"importance":"5","_id":"U8nBybRKvTbJNmwn"}
 {"title":"test c","description":"Task description","dueDate":"","completion":true,"importance":"5","_id":"U8nBybRKvTbJNmwn"}
 {"title":"test c","description":"Task description","dueDate":"","completion":false,"importance":"5","_id":"U8nBybRKvTbJNmwn"}
+{"title":"Test time format","description":"Task description","dueDate":"1.7.2023","creationDate":"24.6.2023","completion":false,"importance":"3","_id":"c7cyggCIdeSStWFm"}
+{"title":"Another MS test","description":"Task description","dueDate":"1.7.2023","creationDate":1687625658574,"completion":false,"importance":"3","_id":"2JBzLtBYXzqone0c"}
+{"title":"Another MS test","description":"Task description","dueDate":"","completion":false,"importance":"3","_id":"2JBzLtBYXzqone0c"}
+{"title":"test c","description":"Task description","dueDate":"","completion":false,"importance":"5","_id":"U8nBybRKvTbJNmwn"}
+{"title":"My task","description":"Task description","dueDate":1688230622065,"creationDate":1687625822065,"completion":false,"importance":"3","_id":"xKYBJfOu8M6RMnTo"}
+{"title":"test c","description":"Task description","dueDate":"","completion":false,"importance":"5","_id":"U8nBybRKvTbJNmwn","state":"DELETED"}
+{"title":"Another MS test","description":"Task description","dueDate":"","completion":false,"importance":"3","_id":"2JBzLtBYXzqone0c","state":"DELETED"}
+{"title":"Caesar was from Rome","description":"asdf","dueDate":"","completion":false,"importance":"3","_id":"RdKduacKtANyH5Yf","state":"DELETED"}
+{"title":"Test time format","description":"Task description","dueDate":"1.7.2023","creationDate":"24.6.2023","completion":false,"importance":"3","_id":"c7cyggCIdeSStWFm","state":"DELETED"}
+{"title":"My task","description":"Task description","dueDate":1688230622065,"creationDate":1687625822065,"completion":false,"importance":"3","_id":"xKYBJfOu8M6RMnTo","state":"DELETED"}
+{"title":"A test","description":"Oh a description","dueDate":"2023-06-25","creationDate":"24.6.2023","completion":false,"importance":"1","_id":"5AIJjYJGrJroqusn","state":"DELETED"}
+{"title":"A","description":"Task description","dueDate":1688230631441,"creationDate":1687625831441,"completion":false,"importance":"3","_id":"Wipz8qNfTYXCO0sW"}
+{"title":"B","description":"Task description","dueDate":1688230634209,"creationDate":1687625834209,"completion":false,"importance":"3","_id":"QdQt6RREX4xuNRiO"}
+{"title":"Bbbb","description":"Task description","dueDate":"","creationDate":1687625857863,"completion":false,"importance":"3","_id":"QdQt6RREX4xuNRiO"}
+{"title":"C","description":"Task description","dueDate":1688230727641,"creationDate":1687625927641,"completion":false,"importance":"3","_id":"LVucRZmtkpuK9UKJ"}
+{"_id":"LVucRZmtkpuK9UKJ"}
+{"_id":"LVucRZmtkpuK9UKJ","state":"DELETED"}
+{"title":"Cc","description":"Task description","dueDate":1688230790356,"creationDate":1687625990356,"completion":false,"importance":"3","_id":"hhE15iVFoOTorLX5"}
+{"_id":"hhE15iVFoOTorLX5"}
+{"title":"D","description":"Task description","dueDate":1688230829558,"creationDate":1687626029558,"completion":false,"importance":"3","_id":"XTEyz9H8jR7dg2F2"}
+{"_id":"XTEyz9H8jR7dg2F2"}
+{"_id":"XTEyz9H8jR7dg2F2","state":"DELETED"}
+{"_id":"hhE15iVFoOTorLX5","state":"DELETED"}
+{"title":"aaaa","description":"Task description","dueDate":1688230851709,"creationDate":1687626051709,"completion":false,"importance":"3","_id":"EttxZguufOSp6g8p"}
+{"_id":"EttxZguufOSp6g8p"}
+{"_id":"EttxZguufOSp6g8p","state":"DELETED"}
+{"title":"AA","description":"Task description","dueDate":"1.7.2023","creationDate":1687626143854,"completion":false,"importance":"3","_id":"oHsrQ1KfDwVK0khv"}
+{"title":"Bbbb","description":"Task description","dueDate":"","creationDate":1687625857863,"completion":false,"importance":"3","_id":"QdQt6RREX4xuNRiO","state":"DELETED"}
+{"title":"B","description":"Task description","dueDate":1688230976978,"creationDate":1687626176978,"completion":false,"importance":"3","_id":"1yjFoi1tLVID7iqr"}
+{"title":"aa","description":"Task description","dueDate":1688230980316,"creationDate":1687626180316,"completion":false,"importance":"3","_id":"kwtfdag8u3N875DJ"}
+{"title":"aaa","description":"Task description","dueDate":1688230982833,"creationDate":1687626182833,"completion":false,"importance":"3","_id":"rjnzAOcCp7nNqxWT"}
+{"title":"AA","description":"Task description","dueDate":"","completion":false,"importance":"3","_id":"oHsrQ1KfDwVK0khv"}
+{"title":"aaa","description":"Task description","dueDate":"2023-06-26","completion":false,"importance":"3","_id":"rjnzAOcCp7nNqxWT"}
+{"title":"aa","description":"Task description","dueDate":"2023-06-25","completion":false,"importance":"3","_id":"kwtfdag8u3N875DJ"}
+{"title":"aa","description":"Task description","dueDate":"2023-06-25","completion":false,"importance":"3","_id":"kwtfdag8u3N875DJ"}
+{"title":"aaaaaa","description":"Task description","dueDate":"2023-06-25","completion":false,"importance":"3","_id":"kwtfdag8u3N875DJ"}
+{"title":"AA","description":"Task description","dueDate":"","completion":false,"importance":"3","_id":"oHsrQ1KfDwVK0khv","state":"DELETED"}
+{"title":"A","description":"Task description","dueDate":"","completion":false,"importance":"3","_id":"Wipz8qNfTYXCO0sW"}
+{"title":"A","description":"Task description","dueDate":1688232835163,"creationDate":1687628035163,"completion":false,"importance":"3","_id":"nmPz5RsUANieZ6LH"}
+{"title":"ZZZ","description":"Task description","dueDate":1688232838981,"creationDate":1687628038981,"completion":false,"importance":"3","_id":"2DzJ99BykyhWgZcP"}
+{"title":"aaaaaa","description":"Task description","dueDate":"2023-06-25","completion":false,"importance":"3","_id":"kwtfdag8u3N875DJ","state":"DELETED"}
+{"title":"B","description":"Task description","dueDate":1688230976978,"creationDate":1687626176978,"completion":false,"importance":"3","_id":"1yjFoi1tLVID7iqr","state":"DELETED"}
+{"title":"ZZZ","description":"Task description","dueDate":"","completion":false,"importance":"3","_id":"2DzJ99BykyhWgZcP"}
+{"title":"ZZZ","description":"Task description","dueDate":"","completion":false,"importance":"3","_id":"2DzJ99BykyhWgZcP"}

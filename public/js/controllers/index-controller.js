@@ -63,10 +63,6 @@ async function renderTasks(sortingType = "importance", ascending = true, filteri
   }
 }
 
-function createId() {
-  return `${Date.now().toString()}`;
-}
-
 function formatDate(date, isForDisplay) {
   const dateFormatOptions = { day: "numeric", month: "numeric", year: "numeric" };
   const dateDisplayFormat = new Intl.DateTimeFormat("de-CH", dateFormatOptions);
@@ -76,21 +72,23 @@ function formatDate(date, isForDisplay) {
 }
 
 function createCreationDate() {
-  const today = Date.now();
-  return formatDate(today, true);
+  const today = new Date();
+  const todayMS = today.getTime();
+  return todayMS;
 }
 
 function createDefaultDueDate() {
   const days = 7; // how many days in the future is the default due date?
   const date = new Date();
   date.setDate(date.getDate() + days);
-  return formatDate(date, true);
+  const dateMS = date.getTime();
+  return dateMS;
 }
 
 function createTask(e) {
   e.preventDefault();
   const newTask = {
-    id: createId(),
+    // id: createId(),
     title: taskTitle.value ? taskTitle.value : placeholderTaskTitle,
     dueDate: taskDueDate.value ? taskDueDate.value : createDefaultDueDate(),
     creationDate: createCreationDate(),
