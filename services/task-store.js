@@ -22,7 +22,6 @@ export class TaskStore {
   }
 
   async update(id, title, description, dueDate, creationDate, completion, importance) {
-    console.log(`TStore update this title: ${title}`);
     try {
       await this.db.update(
         { _id: id },
@@ -42,15 +41,11 @@ export class TaskStore {
   }
 
   async all(sortingType, ascending, filtering) {
-    let sortingDirection = ascending ? -1 : 1;
+    // console.log("ascending is:", ascending);
+    let sortingDirection = 1;
+    sortingDirection = ascending ? -1 : 1;
     let sorting = {};
     sorting[sortingType] = sortingDirection;
-
-    console.log("sortingType, ascending, filtering, sorting");
-    console.log(sortingType, ascending, filtering, sorting);
-    // .find({ state: { $ne: "DELETED" } }) // returns all that do not include "DELETED"
-    // .find({completion: "false"}) // all that are open
-
     return this.db
       .find({ state: { $ne: "DELETED" }, completion: { $ne: filtering } })
       .sort(sorting)

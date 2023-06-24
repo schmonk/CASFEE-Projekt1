@@ -1,5 +1,43 @@
 {"title":"A test","description":"Oh a description","dueDate":"2023-06-25","creationDate":"24.6.2023","completion":false,"importance":"1","_id":"5AIJjYJGrJroqusn"}
 {"title":"Caesar was from Rome","description":"asdf","dueDate":"1.7.2023","creationDate":"24.6.2023","completion":false,"importance":"3","_id":"RdKduacKtANyH5Yf"}
+{"title":"test c","description":"Task description","dueDate":"1.7.2023","creationDate":"24.6.2023","completion":false,"importance":"3","_id":"U8nBybRKvTbJNmwn"}
 {"title":"Send an email to Michael","description":"asdf","dueDate":"2023-06-25","completion":false,"importance":"5","_id":"ij4UsebI4DfWLM2k"}
 {"title":"Bees are cool","description":"they go bzzzzzzzzz","dueDate":"","completion":false,"importance":"1","_id":"v2iv1EZBiIfqKsZB"}
-{"title":"test c","description":"Task description","dueDate":"1.7.2023","creationDate":"24.6.2023","completion":true,"importance":"3","_id":"U8nBybRKvTbJNmwn"}
+{"title":"Send an email to Michael","description":"asdf","dueDate":"2023-06-25","completion":false,"importance":"5","_id":"ij4UsebI4DfWLM2k","state":"DELETED"}
+{"title":"Bees are cool","description":"they go bzzzzzzzzz","dueDate":"","completion":false,"importance":"1","_id":"v2iv1EZBiIfqKsZB","state":"DELETED"}
+{"title":"Caesar was from Rome","description":"asdf","dueDate":"","completion":false,"importance":"3","_id":"RdKduacKtANyH5Yf"}
+{"title":"test c","description":"Task description","dueDate":"","completion":false,"importance":"5","_id":"U8nBybRKvTbJNmwn"}
+{"title":"Caesar was from Rome","description":"asdf","dueDate":"","completion":true,"importance":"3","_id":"RdKduacKtANyH5Yf"}
+{"title":"Caesar was from Rome","description":"asdf","dueDate":"","completion":false,"importance":"3","_id":"RdKduacKtANyH5Yf"}
+{"title":"A test","description":"Oh a description","dueDate":"2023-06-25","creationDate":"24.6.2023","completion":true,"importance":"1","_id":"5AIJjYJGrJroqusn"}
+{"title":"A test","description":"Oh a description","dueDate":"2023-06-25","creationDate":"24.6.2023","completion":false,"importance":"1","_id":"5AIJjYJGrJroqusn"}
+{"title":"A test","description":"Oh a description","dueDate":"2023-06-25","creationDate":"24.6.2023","completion":true,"importance":"1","_id":"5AIJjYJGrJroqusn"}
+{"title":"A test","description":"Oh a description","dueDate":"2023-06-25","creationDate":"24.6.2023","completion":false,"importance":"1","_id":"5AIJjYJGrJroqusn"}
+{"title":"A test","description":"Oh a description","dueDate":"2023-06-25","creationDate":"24.6.2023","completion":true,"importance":"1","_id":"5AIJjYJGrJroqusn"}
+{"title":"A test","description":"Oh a description","dueDate":"2023-06-25","creationDate":"24.6.2023","completion":false,"importance":"1","_id":"5AIJjYJGrJroqusn"}
+{"title":"Caesar was from Rome","description":"asdf","dueDate":"","completion":true,"importance":"3","_id":"RdKduacKtANyH5Yf"}
+{"title":"Caesar was from Rome","description":"asdf","dueDate":"","completion":false,"importance":"3","_id":"RdKduacKtANyH5Yf"}
+{"title":"Caesar was from Rome","description":"asdf","dueDate":"","completion":true,"importance":"3","_id":"RdKduacKtANyH5Yf"}
+{"title":"Caesar was from Rome","description":"asdf","dueDate":"","completion":false,"importance":"3","_id":"RdKduacKtANyH5Yf"}
+{"title":"Caesar was from Rome","description":"asdf","dueDate":"","completion":true,"importance":"3","_id":"RdKduacKtANyH5Yf"}
+{"title":"Caesar was from Rome","description":"asdf","dueDate":"","completion":false,"importance":"3","_id":"RdKduacKtANyH5Yf"}
+{"title":"Caesar was from Rome","description":"asdf","dueDate":"","completion":true,"importance":"3","_id":"RdKduacKtANyH5Yf"}
+{"title":"Caesar was from Rome","description":"asdf","dueDate":"","completion":false,"importance":"3","_id":"RdKduacKtANyH5Yf"}
+{"title":"test c","description":"Task description","dueDate":"","completion":true,"importance":"5","_id":"U8nBybRKvTbJNmwn"}
+{"title":"test c","description":"Task description","dueDate":"","completion":false,"importance":"5","_id":"U8nBybRKvTbJNmwn"}
+{"title":"A test","description":"Oh a description","dueDate":"2023-06-25","creationDate":"24.6.2023","completion":true,"importance":"1","_id":"5AIJjYJGrJroqusn"}
+{"title":"A test","description":"Oh a description","dueDate":"2023-06-25","creationDate":"24.6.2023","completion":false,"importance":"1","_id":"5AIJjYJGrJroqusn"}
+{"title":"A test","description":"Oh a description","dueDate":"2023-06-25","creationDate":"24.6.2023","completion":true,"importance":"1","_id":"5AIJjYJGrJroqusn"}
+{"title":"A test","description":"Oh a description","dueDate":"2023-06-25","creationDate":"24.6.2023","completion":false,"importance":"1","_id":"5AIJjYJGrJroqusn"}
+{"title":"test c","description":"Task description","dueDate":"","completion":true,"importance":"5","_id":"U8nBybRKvTbJNmwn"}
+{"title":"test c","description":"Task description","dueDate":"","completion":false,"importance":"5","_id":"U8nBybRKvTbJNmwn"}
+{"title":"test c","description":"Task description","dueDate":"","completion":true,"importance":"5","_id":"U8nBybRKvTbJNmwn"}
+{"title":"test c","description":"Task description","dueDate":"","completion":false,"importance":"5","_id":"U8nBybRKvTbJNmwn"}
+{"title":"test c","description":"Task description","dueDate":"","completion":true,"importance":"5","_id":"U8nBybRKvTbJNmwn"}
+{"title":"test c","description":"Task description","dueDate":"","completion":false,"importance":"5","_id":"U8nBybRKvTbJNmwn"}
+{"title":"test c","description":"Task description","dueDate":"","completion":true,"importance":"5","_id":"U8nBybRKvTbJNmwn"}
+{"title":"test c","description":"Task description","dueDate":"","completion":false,"importance":"5","_id":"U8nBybRKvTbJNmwn"}
+{"title":"test c","description":"Task description","dueDate":"","completion":true,"importance":"5","_id":"U8nBybRKvTbJNmwn"}
+{"title":"test c","description":"Task description","dueDate":"","completion":false,"importance":"5","_id":"U8nBybRKvTbJNmwn"}
+{"title":"test c","description":"Task description","dueDate":"","completion":true,"importance":"5","_id":"U8nBybRKvTbJNmwn"}
+{"title":"test c","description":"Task description","dueDate":"","completion":false,"importance":"5","_id":"U8nBybRKvTbJNmwn"}

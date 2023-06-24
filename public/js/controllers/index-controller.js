@@ -22,7 +22,6 @@ function insertImportanceStars(amount) {
   }
   return stars;
 }
-//TODO: change boolean variable names
 
 function createTaskHTML(task) {
   let hiddenString = "completed";
@@ -54,7 +53,7 @@ function addTaskToDOM(task) {
 }
 
 async function renderTasks(sortingType = "importance", ascending = true, filtering = false) {
-  // console.log(`renderTask: type: ${sortingType}, ASC: ${ascending}, FILTER: ${filtering}`);
+  // console.log(`renderTasks: type: ${sortingType}, ASC: ${ascending}, FILTER: ${filtering}`);
   const sortedTaskArray = await taskService.getAllTasks(sortingType, ascending, filtering);
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
@@ -124,7 +123,6 @@ async function toggleCOmpletionControl(event) {
   const taskContainer = event.target.parentElement;
   updateToggleView(taskContainer);
   const currentId = taskContainer.dataset.id.toString();
-  // console.log(`toggle completion on ID : ${currentId}`);
   const existingTask = await taskService.getTask(currentId);
   taskCompletion.checked = existingTask.completion;
 
@@ -138,7 +136,7 @@ async function toggleCOmpletionControl(event) {
     existingTask.importance
   );
 
-  renderTasks();
+  await renderTasks();
 }
 
 function clearDialog() {
@@ -281,8 +279,9 @@ filterSortContainer.addEventListener("click", (event) => {
       renderTasks(undefined, undefined, true);
       break;
     case "sortName": {
-      console.log("sortName");
-
+      event.target.dataset.ascending = event.target.dataset.ascending === "true" ? "false" : "true";
+      let ascending = event.target.dataset.ascending === "true" ? true : false;
+      renderTasks("title", ascending, undefined);
       break;
     }
     case "sortDueDate": {
