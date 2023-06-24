@@ -24,6 +24,13 @@ function insertImportanceStars(amount) {
 }
 
 function createTaskHTML(task) {
+  /*   console.log("duedate: ", task.dueDate);
+  console.log("creationdate: ", task.creationDate); */
+  let convertedDueDate = convertMSToDateString(task.dueDate);
+  let convertedCreationDate = convertMSToDateString(task.creationDate);
+  console.log(task.title, "duedate: ", convertedDueDate);
+  console.log("creationdate: ", convertedCreationDate);
+
   let hiddenString = "completed";
   if (filterCompletedButton.classList.contains("filtering-active")) {
     hiddenString = "completed hidden";
@@ -38,8 +45,8 @@ function createTaskHTML(task) {
     <h3 class="task-title">${task.title}</h3>
     <p class="task-description">${task.description}</p>
     </div>
-    <p class="task-due-date">Due ${task.dueDate}</p>
-    <p class="task-created-date" >Created ${task.creationDate}</p>
+    <p class="task-due-date">Due ${convertedDueDate}</p>
+    <p class="task-created-date" >Created ${convertedCreationDate}</p>
     <p ><span class="task-importance">${insertImportanceStars(task.importance)}</span></p>
     <div class="buttongroup">
     <button class="btn task-delete">Delete</button>
@@ -63,13 +70,39 @@ async function renderTasks(sortingType = "importance", ascending = true, filteri
   }
 }
 
-function formatDate(date, isForDisplay) {
+function convertDateToMS(date) {
+  let convertedDate = new Date(date).getTime();
+  console.log("convert to MS: ", convertedDate);
+  return convertedDate;
+}
+
+function convertMSToDate(valueInMS) {
+  let convertedValue = new Date(valueInMS);
+  // console.log("convert ms to this datestring: ", convertedValue);
+  return convertedValue;
+}
+
+function convertMSToDateString(valueInMS) {
+  let convertedValue = new Date(valueInMS).toDateString();
+  // console.log("convert ms to this datestring: ", convertedValue);
+  return convertedValue;
+}
+
+function convertMSForDatePicker(valueInMS) {
+  const options = { year: "numeric", month: "numeric", day: "numeric" };
+  let outPut = convertMSToDate(valueInMS).toLocaleDateString(undefined, options);
+  console.log("output for Date Picker: ", outPut, typeof outPut);
+  // console.log(event.toLocaleDateString(undefined, options));
+  return outPut;
+}
+
+/* function formatDate(date, isForDisplay) {
   const dateFormatOptions = { day: "numeric", month: "numeric", year: "numeric" };
   const dateDisplayFormat = new Intl.DateTimeFormat("de-CH", dateFormatOptions);
   const datePickerFormat = new Intl.DateTimeFormat("en-US", dateFormatOptions);
   const dateFormat = isForDisplay ? dateDisplayFormat : datePickerFormat;
   return dateFormat.format(date);
-}
+} */
 
 function createCreationDate() {
   const today = new Date();
@@ -88,7 +121,6 @@ function createDefaultDueDate() {
 function createTask(e) {
   e.preventDefault();
   const newTask = {
-    // id: createId(),
     title: taskTitle.value ? taskTitle.value : placeholderTaskTitle,
     dueDate: taskDueDate.value ? taskDueDate.value : createDefaultDueDate(),
     creationDate: createCreationDate(),
@@ -155,7 +187,7 @@ function setupCreationDialog() {
   taskDialog.querySelector("h2").textContent = "Create a task";
   taskDialog.querySelector("#saveDialogButton").textContent = "Create";
   taskDialog.querySelector("#taskImportance").value = 3;
-  // taskDialog.querySelector('#taskDueDate').valueAsDate = new Date();
+  taskDialog.querySelector("#taskDueDate").valueAsDate = new Date();
   taskDialog.querySelector("#saveDialogButton").classList.add("task-create");
   taskDialog.querySelector("#saveDialogButton").classList.remove("task-update");
 }
@@ -164,12 +196,18 @@ async function openEditDialog(event) {
   const taskContainer = event.target.parentElement.parentElement;
   const currentId = taskContainer.dataset.id.toString();
   const existingTask = await taskService.getTask(currentId);
+  /*   console.log("existing task due date: ", existingTask.dueDate);
+  let datePickerFormat = convertMSForDatePicker(existingTask.dueDate);
+  console.log("due date date picker: ", datePickerFormat); */
+
   taskDialog.dataset.id = currentId;
   taskTitle.value = existingTask.title;
   taskImportance.value = existingTask.importance;
   taskDescription.value = existingTask.description;
   taskCompletion.checked = existingTask.completion;
-  taskDueDate.value = `${existingTask.dueDate}`; // does not work yet
+  // taskDueDate.value = convertMSForDatePicker(existingTask.dueDate);
+  taskDueDate.valueAsDate = convertMSToDate(existingTask.dueDate);
+  // taskDueDate.setAttribute("value", convertMSForDatePicker(existingTask.dueDate));
   setupEditDialog(existingTask.title);
   taskDialog.showModal();
 }
