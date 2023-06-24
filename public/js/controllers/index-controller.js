@@ -196,18 +196,12 @@ async function openEditDialog(event) {
   const taskContainer = event.target.parentElement.parentElement;
   const currentId = taskContainer.dataset.id.toString();
   const existingTask = await taskService.getTask(currentId);
-  /*   console.log("existing task due date: ", existingTask.dueDate);
-  let datePickerFormat = convertMSForDatePicker(existingTask.dueDate);
-  console.log("due date date picker: ", datePickerFormat); */
-
   taskDialog.dataset.id = currentId;
   taskTitle.value = existingTask.title;
   taskImportance.value = existingTask.importance;
   taskDescription.value = existingTask.description;
   taskCompletion.checked = existingTask.completion;
-  // taskDueDate.value = convertMSForDatePicker(existingTask.dueDate);
   taskDueDate.valueAsDate = convertMSToDate(existingTask.dueDate);
-  // taskDueDate.setAttribute("value", convertMSForDatePicker(existingTask.dueDate));
   setupEditDialog(existingTask.title);
   taskDialog.showModal();
 }
@@ -258,7 +252,6 @@ document.addEventListener("click", async (event) => {
       taskDialog.showModal();
       break;
     case myCL.contains("task-delete"):
-      // deleteTask(event);
       await taskService.deleteTask(taskContainer.dataset.id);
       renderTasks();
       break;
@@ -287,7 +280,6 @@ document.addEventListener("click", async (event) => {
       break;
     case myCL.contains("task-completion"):
       toggleCOmpletionControl(event);
-      // await taskService.updateTask();
       renderTasks();
       break;
     case myCL.contains("task-create"):
