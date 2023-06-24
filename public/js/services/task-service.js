@@ -13,12 +13,12 @@ class TaskService {
   }
 
   async getAllTasks() {
-    console.log("TS: get all tasks");
+    console.log("TService: get all tasks");
     return httpService.ajax("GET", "/tasks/", undefined);
   }
 
   async getTask(id) {
-    console.log(`TS:  get task with id: ${id}`);
+    console.log(`TService:  get task, id: ${id}`);
     return httpService.ajax("GET", `/tasks/${id}`, undefined);
   }
 
@@ -34,7 +34,7 @@ class TaskService {
   }
 
   async deleteTask(id) {
-    console.log(`TS: DEL task w/ ID: ${id}`);
+    console.log(`TService: DEL task w/ ID: ${id}`);
     return httpService.ajax("DELETE", `/tasks/${id}`, undefined);
   }
 }

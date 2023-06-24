@@ -160,14 +160,27 @@ function deleteTask(event) {
   sortTasks(); */
 }
 
-function toggleCompletion(event) {
-  const taskContainer = event.target.parentElement;
+function updateToggleView(taskContainer) {
   taskContainer.classList.toggle("completed");
-  const currentId = taskContainer.id.toString();
-  const existingTask = findObject(tm.tasksSorted(), "id", currentId);
-  existingTask.completion = !existingTask.completion;
-  const indexToUpdate = tm.tasksSorted().indexOf(findObject(tm.tasksSorted(), "id", currentId));
-  tm.updateTask(existingTask, indexToUpdate);
+}
+
+async function toggleCOmpletionControl(event) {
+  const taskContainer = event.target.parentElement;
+  updateToggleView(taskContainer);
+  const currentId = taskContainer.dataset.id.toString();
+  console.log(`toggle completion on ID : ${currentId}`);
+  const existingTask = await taskService.getTask(currentId);
+  taskCompletion.checked = existingTask.completion;
+  await taskService.updateTask(
+    currentId,
+    existingTask.title,
+    existingTask.description,
+    existingTask.dueDate,
+    existingTask.creationDate,
+    (existingTask.completion = !existingTask.completion),
+    existingTask.importance
+  );
+  renderTasks();
 }
 
 function clearDialog() {
@@ -197,7 +210,6 @@ async function openEditDialog(event) {
   const taskContainer = event.target.parentElement.parentElement;
   const currentId = taskContainer.dataset.id.toString();
   const existingTask = await taskService.getTask(currentId);
-  // console.table(existingTask);
   taskDialog.dataset.id = currentId;
   taskTitle.value = existingTask.title;
   taskImportance.value = existingTask.importance;
@@ -308,7 +320,7 @@ document.addEventListener("click", async (event) => {
         taskToUpdate.description,
         taskToUpdate.dueDate,
         taskToUpdate.creationDate,
-        taskToUpdate.completionk,
+        taskToUpdate.completion,
         taskToUpdate.importance
       );
       renderTasks();
@@ -319,7 +331,7 @@ document.addEventListener("click", async (event) => {
       openEditDialog(event);
       break;
     case myCL.contains("task-completion"):
-      toggleCompletion(event);
+      toggleCOmpletionControl(event);
       // await taskService.updateTask();
       renderTasks();
       break;
