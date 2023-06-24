@@ -1,7 +1,7 @@
 import tm from "./task-manager.js";
 import { taskService } from "../services/task-service.js";
 import { clamp } from "../services/utils.js";
-import { sortTasks } from "../services/utils.js";
+// import { sortTasks } from "../services/utils.js";
 
 const taskDialog = document.querySelector(".taskDialog");
 const taskList = document.querySelector(".task-list");
@@ -62,19 +62,6 @@ async function renderTasks(sortingType = "importance", asceningTrue = true, filt
     addTaskToDOM(sortedTaskArray[i]);
   }
 }
-
-/* Model */
-
-/* 
-function findObject(myArray, property, value) {
-  for (let i = 0; i < myArray.length; i += 1) {
-    if (myArray[i][property] === value) {
-      return myArray[i]; // Return object if found
-    }
-  }
-  return null; // Object not found
-}
- */
 
 function createId() {
   return `${Date.now().toString()}`;
@@ -190,32 +177,6 @@ async function openEditDialog(event) {
   taskDialog.showModal();
 }
 
-function filterCompletedTasks() {
-  filterCompletedButton.classList.toggle("filtering-active");
-  if (filterCompletedButton.classList.contains("filtering-active")) {
-    filterCompletedButton.textContent = "Show completed";
-    for (let i = 0; i < tm.tasksSorted().length; i += 1) {
-      if (tm.tasksSorted()[i].completion === true) {
-        const element = taskList.querySelector(`#${tm.tasksSorted()[i].id}`);
-        // const element = taskList.querySelectorAll('article').dataset.id;
-        if (!element.classList.contains("hidden")) {
-          element.classList.add("hidden");
-        } else {
-          element.classList.remove("hidden");
-        }
-      }
-    }
-  } else {
-    filterCompletedButton.textContent = "Hide completed";
-    for (let i = 0; i < tm.tasksSorted().length; i += 1) {
-      if (tm.tasksSorted()[i].completion === true) {
-        const element = taskList.querySelector(`#${tm.tasksSorted()[i].id}`);
-        element.classList.remove("hidden");
-      }
-    }
-  }
-}
-
 function toggleSortingButtons(keepOnClass) {
   const sortingButtons = document.querySelectorAll(".sort-button");
   let sortingDirection = 0;
@@ -251,17 +212,6 @@ function toggleSortingDirection(keepOnClass, ascendingState) {
       sortingButtons[i].classList.add("ascending");
     }
   }
-}
-
-function initializeTasks(fromStorage) {
-  /*   const initialTaskList = fromStorage ? tm.getFromStorage("myTasks") : tm.defaultTasksSorted();
-  initialTaskList.forEach((element) => {
-    tm.addTask(element);
-  });
-  const retrievedSorting = tm.getFromStorage("mySorting");
-  toggleSortingButtons(retrievedSorting.mySortingType);
-  toggleSortingDirection(retrievedSorting.mySortingType, retrievedSorting.myAscendingState);
-  sortTasks(retrievedSorting.mySortingType, retrievedSorting.myAscendingState); */
 }
 
 document.addEventListener("click", async (event) => {
@@ -323,33 +273,25 @@ filterSortContainer.addEventListener("click", (event) => {
     case "filterCompleted":
       console.log("filterCompleted");
       renderTasks(undefined, undefined, true);
-      // filterCompletedTasks();
       break;
     case "sortName": {
       console.log("sortName");
-      // const ascendingTrue = toggleSortingButtons("title");
-      // sortTasks("title", ascendingTrue);
+
       break;
     }
     case "sortDueDate": {
       console.log("sortDueDate");
       renderTasks("dueDate", undefined, undefined);
-      // const ascendingTrue = toggleSortingButtons("dueDate");
-      // sortTasks("dueDate", ascendingTrue);
       break;
     }
     case "sortCreationDate": {
       console.log("sortCreationDate");
       renderTasks("creationDate", undefined, undefined);
-      // const ascendingTrue = toggleSortingButtons("creationDate");
-      // sortTasks("creationDate", ascendingTrue);
       break;
     }
     case "sortImportance": {
       console.log("sortImportance");
       renderTasks("importance", undefined, undefined);
-      // const ascendingTrue = toggleSortingButtons("importance");
-      // sortTasks("importance", ascendingTrue);
       break;
     }
     default:
@@ -358,10 +300,5 @@ filterSortContainer.addEventListener("click", (event) => {
 });
 
 document.addEventListener("DOMContentLoaded", async (event) => {
-  // initializeTasks(true);
-  // const initialTasks = await taskService.getAllTasks("title", true);
-  // console.log(initialTasks);
-  // console.log(taskService.getTask(initialTasks[0]._id));
   renderTasks();
-  // await taskService.getAllTasks('importance', true);
 });
