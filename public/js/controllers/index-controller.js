@@ -1,6 +1,7 @@
-import tm from "./task-manager.js";
+// import tm from "./task-manager.js";
 import { taskService } from "../services/task-service.js";
 import { clamp } from "../services/utils.js";
+
 // import { sortTasks } from "../services/utils.js";
 
 const taskDialog = document.querySelector(".taskDialog");
@@ -15,7 +16,7 @@ const filterSortContainer = document.querySelector(".filterSort-container");
 const placeholderTaskTitle = "My task";
 const placeholderTaskDescription = "Task description";
 
-function insertImportanceStars(amount) {
+function generateStars(amount) {
   let stars = "";
   for (let i = 0; i < amount; i += 1) {
     stars += "&#9733";
@@ -28,8 +29,8 @@ function createTaskHTML(task) {
   console.log("creationdate: ", task.creationDate); */
   let convertedDueDate = convertMSToDateString(task.dueDate);
   let convertedCreationDate = convertMSToDateString(task.creationDate);
-  console.log(task.title, "duedate: ", convertedDueDate);
-  console.log("creationdate: ", convertedCreationDate);
+  /*   console.log(task.title, "duedate: ", convertedDueDate);
+  console.log("creationdate: ", convertedCreationDate); */
 
   let hiddenString = "completed";
   if (filterCompletedButton.classList.contains("filtering-active")) {
@@ -47,7 +48,7 @@ function createTaskHTML(task) {
     </div>
     <p class="task-due-date">Due ${convertedDueDate}</p>
     <p class="task-created-date" >Created ${convertedCreationDate}</p>
-    <p ><span class="task-importance">${insertImportanceStars(task.importance)}</span></p>
+    <p ><span class="task-importance">${generateStars(task.importance)}</span></p>
     <div class="buttongroup">
     <button class="btn task-delete">Delete</button>
     <button class="btn task-edit">Edit</button>
@@ -91,7 +92,7 @@ function convertMSToDateString(valueInMS) {
 function convertMSForDatePicker(valueInMS) {
   const options = { year: "numeric", month: "numeric", day: "numeric" };
   let outPut = convertMSToDate(valueInMS).toLocaleDateString(undefined, options);
-  console.log("output for Date Picker: ", outPut, typeof outPut);
+  // console.log("output for Date Picker: ", outPut, typeof outPut);
   // console.log(event.toLocaleDateString(undefined, options));
   return outPut;
 }
@@ -104,7 +105,7 @@ function convertMSForDatePicker(valueInMS) {
   return dateFormat.format(date);
 } */
 
-function createCreationDate() {
+function creationDate() {
   const today = new Date();
   const todayMS = today.getTime();
   return todayMS;
@@ -123,24 +124,27 @@ function createTask(e) {
   const newTask = {
     title: taskTitle.value ? taskTitle.value : placeholderTaskTitle,
     dueDate: taskDueDate.value ? taskDueDate.value : createDefaultDueDate(),
-    creationDate: createCreationDate(),
+    creationDate: creationDate(),
     description: taskDescription.value ? taskDescription.value : placeholderTaskDescription,
     importance: taskImportance.value ? clamp(taskImportance.value, 1, 5) : "3",
     completion: taskCompletion.checked,
   };
   return newTask;
 }
-function updateTask(event) {
+async function updateTask(event) {
   event.preventDefault();
   taskDialog.querySelector("#saveDialogButton").classList.remove("task-update");
-
+  const currentId = taskDialog.dataset.id.toString();
+  const existingTask = await taskService.getTask(currentId);
+  // console.log("existing task creation date:", existingTask.creationDate);
   const task = {
     id: taskDialog.dataset.id,
     title: taskTitle.value,
-    importance: taskImportance.value,
     description: taskDescription.value,
+    dueDate: taskDueDate.value,
+    creationDate: existingTask.creationDate, // does not work yet
     completion: taskCompletion.checked,
-    dueDate: taskDueDate.value, // does not work yet
+    importance: taskImportance.value,
   };
   return task;
 }
@@ -260,8 +264,9 @@ document.addEventListener("click", async (event) => {
       clearDialog();
       break;
     case myCL.contains("task-update"):
-      console.log(`update task with ID: ${taskDialog.dataset.id}`);
-      const taskToUpdate = updateTask(event);
+      // console.log(`update task with ID: ${taskDialog.dataset.id}`);
+      const taskToUpdate = await updateTask(event);
+      console.log("taskToUpdate CD: ", taskToUpdate.creationDate);
       await taskService.updateTask(
         taskDialog.dataset.id,
         taskToUpdate.title,
