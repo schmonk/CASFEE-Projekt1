@@ -41,9 +41,8 @@ export class TaskStore {
   }
 
   async all(sortingType, ascending, filtering) {
-    // console.log("ascending is:", ascending);
-    let sortingDirection = 1;
-    sortingDirection = ascending ? -1 : 1;
+    // let completed = filtering === "true" ? true : false;
+    let sortingDirection = ascending === "true" ? -1 : 1;
     let sorting = {};
     sorting[sortingType] = sortingDirection;
     return this.db
