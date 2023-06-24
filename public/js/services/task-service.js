@@ -26,7 +26,6 @@ class TaskService {
   }
 
   async updateTask(id, title, description, dueDate, creationDate, completion, importance) {
-    console.log("CD in service: ", creationDate);
     return httpService.ajax("POST", `/tasks/${id}`, {
       title,
       description,

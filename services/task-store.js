@@ -22,7 +22,6 @@ export class TaskStore {
   }
 
   async update(id, title, description, dueDate, creationDate, completion, importance) {
-    console.log("task store CD", creationDate);
     try {
       await this.db.update(
         { _id: id },

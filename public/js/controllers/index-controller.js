@@ -264,9 +264,7 @@ document.addEventListener("click", async (event) => {
       clearDialog();
       break;
     case myCL.contains("task-update"):
-      // console.log(`update task with ID: ${taskDialog.dataset.id}`);
       const taskToUpdate = await updateTask(event);
-      console.log("taskToUpdate CD: ", taskToUpdate.creationDate);
       await taskService.updateTask(
         taskDialog.dataset.id,
         taskToUpdate.title,
