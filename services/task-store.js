@@ -48,17 +48,13 @@ export class TaskStore {
     );
     let sortingDirection = ascendingTrue ? 1 : -1;
     // console.log(ascendingTrue);
-    // console.log(sortingDirection);
-    let filteringCompleted = {};
-    if (filteringTrue) {
-      filteringCompleted.completion = filteringTrue ? "true" : "false";
-    }
-    console.log(filteringCompleted);
+    console.log(`sortingDirection is: ${sortingDirection}`);
+
     // .find({ state: { $ne: "DELETED" } }) // returns all that do not include "DELETED"
     // .find({completion: "false"}) // all that are open
 
     return this.db
-      .find({ state: { $ne: "DELETED" } })
+      .find({ state: { $ne: "DELETED" }, completion: { $ne: filteringTrue } })
       .sort({ sortingType: sortingDirection })
       .exec();
   }
