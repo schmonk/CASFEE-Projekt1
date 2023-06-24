@@ -1,5 +1,7 @@
 import tm from "./task-manager.js";
 import { taskService } from "../services/task-service.js";
+import { clamp } from "../services/utils.js";
+import { sortTasks } from "../services/utils.js";
 
 const taskDialog = document.querySelector(".taskDialog");
 const taskList = document.querySelector(".task-list");
@@ -62,7 +64,7 @@ function addTaskToDOM(task) {
 }
 
 async function renderTasks() {
-  const sortedTaskArray = await taskService.getAllTasks("title", true);
+  const sortedTaskArray = await taskService.getAllTasks("title", true, true);
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
   }
@@ -73,11 +75,7 @@ async function renderTasks() {
 
 /* Model */
 
-function sortTasks(property = "creationDate", ascendingState = true) {
-  const sortedArray = tm.tasksSorted(`${property}`, ascendingState);
-  renderTasks(sortedArray);
-}
-
+/* 
 function findObject(myArray, property, value) {
   for (let i = 0; i < myArray.length; i += 1) {
     if (myArray[i][property] === value) {
@@ -86,16 +84,7 @@ function findObject(myArray, property, value) {
   }
   return null; // Object not found
 }
-
-function clamp(value, lower, upper) {
-  let myValue = value;
-  if (myValue < lower) {
-    myValue = lower;
-  } else if (myValue > upper) {
-    myValue = upper;
-  }
-  return myValue;
-}
+ */
 
 function createId() {
   return `${Date.now().toString()}`;

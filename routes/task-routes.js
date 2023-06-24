@@ -1,9 +1,9 @@
-import express from 'express';
+import express from "express";
 
 const router = express.Router();
-import {tasksController} from '../controller/tasks-controller.js';
+import { tasksController } from "../controller/tasks-controller.js";
 
-router.get("/", tasksController.getAllTasks);
+router.get("/sortingFiltering", tasksController.getAllTasks);
 router.post("/", tasksController.addTask);
 router.get("/:id/", tasksController.showTask);
 router.post("/:id/", tasksController.updateTask);
