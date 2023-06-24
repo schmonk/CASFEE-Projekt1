@@ -22,6 +22,7 @@ function insertImportanceStars(amount) {
   }
   return stars;
 }
+//TODO: change boolean variable names
 
 function createTaskHTML(task) {
   let hiddenString = "completed";
@@ -31,12 +32,12 @@ function createTaskHTML(task) {
   return `<article data-id="${task._id}" class="task-container ${
     task.completion ? hiddenString : ""
   }">
-    <input type="checkbox" name="completion" class="task-completion" ${
-      task.completion ? "checked" : ""
-    }/>
+  <input type="checkbox" name="completion" class="task-completion" ${
+    task.completion ? "checked" : ""
+  }/>
     <div class="task-content">
-      <h3 class="task-title">${task.title}</h3>
-      <p class="task-description">${task.description}</p>
+    <h3 class="task-title">${task.title}</h3>
+    <p class="task-description">${task.description}</p>
     </div>
     <p class="task-due-date">Due ${task.dueDate}</p>
     <p class="task-created-date" >Created ${task.creationDate}</p>
@@ -53,7 +54,7 @@ function addTaskToDOM(task) {
 }
 
 async function renderTasks(sortingType = "importance", asceningTrue = true, filteringTrue = false) {
-  console.log(`renderTask: type: ${sortingType}, ASC: ${asceningTrue}, FILTER: ${filteringTrue}`);
+  // console.log(`renderTask: type: ${sortingType}, ASC: ${asceningTrue}, FILTER: ${filteringTrue}`);
   const sortedTaskArray = await taskService.getAllTasks(sortingType, asceningTrue, filteringTrue);
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
@@ -265,6 +266,11 @@ document.addEventListener("click", async (event) => {
     default:
       break;
   }
+});
+
+taskImportance.addEventListener("blur", (event) => {
+  console.log("blur task importance");
+  taskImportance.value = clamp(taskImportance.value, 1, 5);
 });
 
 filterSortContainer.addEventListener("click", (event) => {

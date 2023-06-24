@@ -11,6 +11,12 @@ export class TaskController {
   };
 
   addTask = async (req, res) => {
+    // TODO: check in the request that values are valid
+    let importance = req.body.importance;
+    if (importance > 5) {
+      console.log("importance was bigger than 5, clamping that cochonne now!! 🔐 ");
+      importance = 5;
+    }
     res.json(
       await taskStore.add(
         req.body.title,
@@ -18,7 +24,7 @@ export class TaskController {
         req.body.dueDate,
         req.body.creationDate,
         req.body.completion,
-        req.body.importance
+        importance
       )
     );
   };

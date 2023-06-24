@@ -46,6 +46,8 @@ export class TaskStore {
     console.log(
       `TStore: sortType: ${sortingType}, ascending is: ${ascendingTrue}, filtering is: ${filteringTrue}`
     );
+    //TODO: change boolean variable names
+    //
     let sortingDirection = ascendingTrue ? -1 : 1;
     // console.log(ascendingTrue);
     console.log(`sorting is: ${sortingType}: ${sortingDirection}`);
