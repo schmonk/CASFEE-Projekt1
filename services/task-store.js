@@ -46,16 +46,20 @@ export class TaskStore {
     console.log(
       `TStore: sortType: ${sortingType}, ascending is: ${ascendingTrue}, filtering is: ${filteringTrue}`
     );
-    let sortingDirection = ascendingTrue ? 1 : -1;
+    let sortingDirection = ascendingTrue ? -1 : 1;
     // console.log(ascendingTrue);
-    console.log(`sortingDirection is: ${sortingDirection}`);
+    console.log(`sorting is: ${sortingType}: ${sortingDirection}`);
+    let sorting = {};
+    sorting[sortingType] = sortingDirection;
 
+    console.log("sorting:");
+    console.log(sorting);
     // .find({ state: { $ne: "DELETED" } }) // returns all that do not include "DELETED"
     // .find({completion: "false"}) // all that are open
 
     return this.db
-      .find({ state: { $ne: "DELETED" }, completion: { $ne: filteringTrue } })
-      .sort({ sortingType: sortingDirection })
+      .find({ state: { $ne: "DELETED" }, completion: { $ne: ascendingTrue } })
+      .sort(sorting)
       .exec();
   }
 }

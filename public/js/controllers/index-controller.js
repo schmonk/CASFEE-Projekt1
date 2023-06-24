@@ -10,7 +10,7 @@ const taskImportance = document.querySelector("#taskImportance");
 const taskDueDate = document.querySelector("#taskDueDate");
 const taskDescription = document.querySelector("#taskDescription");
 const taskCompletion = document.querySelector("#taskCompletion");
-const filterCompletedButton = document.querySelector("#filterCompleted");
+const filterCompletedButton = document.querySelector(".filter-button");
 const filterSortContainer = document.querySelector(".filterSort-container");
 const placeholderTaskTitle = "My task";
 const placeholderTaskDescription = "Task description";
@@ -47,24 +47,14 @@ function createTaskHTML(task) {
     </div>
     </article>`;
 }
-// const templateSource = document.querySelector(.....);
-function createTaskHTMLHandlebars(templateSource) {
-  // attach by
-  // Handlebars.compile(templateSource);
-}
-
-/* 
-function renderTasks () {
-  document.querySelector().insertAdjacentHTML = createTaskHTMLHandlebars(tasks);
-}
-*/
 
 function addTaskToDOM(task) {
   taskList.insertAdjacentHTML("beforeend", createTaskHTML(task));
 }
 
-async function renderTasks() {
-  const sortedTaskArray = await taskService.getAllTasks("importance", true, true);
+async function renderTasks(sortingType = "importance", asceningTrue = true, filteringTrue = false) {
+  console.log(`renderTask: type: ${sortingType}, ASC: ${asceningTrue}, FILTER: ${filteringTrue}`);
+  const sortedTaskArray = await taskService.getAllTasks(sortingType, asceningTrue, filteringTrue);
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
   }
@@ -138,17 +128,6 @@ function updateTask(event) {
   return task;
 }
 
-function deleteTask(event) {
-  /*   event.preventDefault();
-  const element = event.target.parentElement.parentElement;
-  const indexToremove = tm
-    .tasksSorted()
-    .indexOf(findObject(tm.tasksSorted(), "id", element.id.toString()));
-  tm.removeTask(indexToremove);
-  element.remove();
-  sortTasks(); */
-}
-
 function updateToggleView(taskContainer) {
   taskContainer.classList.toggle("completed");
 }
@@ -157,9 +136,10 @@ async function toggleCOmpletionControl(event) {
   const taskContainer = event.target.parentElement;
   updateToggleView(taskContainer);
   const currentId = taskContainer.dataset.id.toString();
-  console.log(`toggle completion on ID : ${currentId}`);
+  // console.log(`toggle completion on ID : ${currentId}`);
   const existingTask = await taskService.getTask(currentId);
   taskCompletion.checked = existingTask.completion;
+
   await taskService.updateTask(
     currentId,
     existingTask.title,
@@ -169,6 +149,7 @@ async function toggleCOmpletionControl(event) {
     (existingTask.completion = !existingTask.completion),
     existingTask.importance
   );
+
   renderTasks();
 }
 
@@ -338,28 +319,37 @@ document.addEventListener("click", async (event) => {
 
 filterSortContainer.addEventListener("click", (event) => {
   event.preventDefault();
-  switch (event.target.id) {
+  switch (event.target.dataset.id) {
     case "filterCompleted":
-      filterCompletedTasks();
+      console.log("filterCompleted");
+      renderTasks(undefined, undefined, true);
+      // filterCompletedTasks();
       break;
-    case "sortDueDate": {
-      const ascendingTrue = toggleSortingButtons("dueDate");
-      sortTasks("dueDate", ascendingTrue);
+    case "sortName": {
+      console.log("sortName");
+      // const ascendingTrue = toggleSortingButtons("title");
+      // sortTasks("title", ascendingTrue);
       break;
     }
-    case "sortName": {
-      const ascendingTrue = toggleSortingButtons("title");
-      sortTasks("title", ascendingTrue);
+    case "sortDueDate": {
+      console.log("sortDueDate");
+      renderTasks("dueDate", undefined, undefined);
+      // const ascendingTrue = toggleSortingButtons("dueDate");
+      // sortTasks("dueDate", ascendingTrue);
       break;
     }
     case "sortCreationDate": {
-      const ascendingTrue = toggleSortingButtons("creationDate");
-      sortTasks("creationDate", ascendingTrue);
+      console.log("sortCreationDate");
+      renderTasks("creationDate", undefined, undefined);
+      // const ascendingTrue = toggleSortingButtons("creationDate");
+      // sortTasks("creationDate", ascendingTrue);
       break;
     }
     case "sortImportance": {
-      const ascendingTrue = toggleSortingButtons("importance");
-      sortTasks("importance", ascendingTrue);
+      console.log("sortImportance");
+      renderTasks("importance", undefined, undefined);
+      // const ascendingTrue = toggleSortingButtons("importance");
+      // sortTasks("importance", ascendingTrue);
       break;
     }
     default:
