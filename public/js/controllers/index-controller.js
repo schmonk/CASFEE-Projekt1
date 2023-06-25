@@ -34,18 +34,14 @@ function relativeDueTime(dueDate) {
   let nowConverted = new Date().getTime();
   let diff = Math.abs(nowConverted - dueDateConverted);
   const sign = Math.sign(dueDateConverted - nowConverted);
-  // console.log("difference: ", sign * diff, "now", nowConverted, "due", dueDateConverted);
   if (diff < oneDayInMS) {
-    if (sign === 1) {
-      // console.log("yesterday");
-      return "yesterday";
-    } else if (sign === -1) {
-      // console.log("today");
+    if (sign === -1) {
       return "today";
+    } else if (sign === 1) {
+      return "tomorrow";
     }
   } else {
     let diffInDays = Math.floor(diff / oneDayInMS);
-    // console.log(relTimeFormat.format(sign * diffInDays, "day"));
     return relTimeFormat.format(sign * diffInDays, "day");
   }
 }
