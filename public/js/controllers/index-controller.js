@@ -167,36 +167,19 @@ async function renderTasks(sortingType, ascending, filtering) {
   checkEmptyList(sortedTaskArray, filtering);
 }
 
-/* function convertDateToMS(date) {
-  let convertedDate = new Date(date).getTime();
-  console.log("convert to MS: ", convertedDate);
-  return convertedDate;
-} */
-
 function convertMSToDate(valueInMS) {
   let convertedValue = new Date(valueInMS);
-  // console.log("convert ms to this datestring: ", convertedValue);
   return convertedValue;
 }
 
 function convertMSToDateString(valueInMS) {
   let convertedValue = new Date(valueInMS).toDateString();
-  // console.log("convert ms to this datestring: ", convertedValue);
   return convertedValue;
 }
 
-/* function convertMSForDatePicker(valueInMS) {
-  const options = { year: "numeric", month: "numeric", day: "numeric" };
-  let outPut = convertMSToDate(valueInMS).toLocaleDateString(undefined, options);
-  // console.log("output for Date Picker: ", outPut, typeof outPut);
-  // console.log(event.toLocaleDateString(undefined, options));
-  return outPut;
-} */
-
 function creationDate() {
-  const today = new Date();
-  const todayMS = today.getTime();
-  return todayMS;
+  const todayInMS = new Date().getTime();
+  return todayInMS;
 }
 
 function createDefaultDueDate() {
@@ -296,27 +279,6 @@ async function openEditDialog(event) {
   taskDueDate.valueAsDate = convertMSToDate(existingTask.dueDate);
   setupEditDialog(existingTask.title);
   taskDialog.showModal();
-}
-
-/* function toggleSortingDirection(keepOnClass, ascendingState) {
-  const sortingButtons = document.querySelectorAll(".sort-button");
-  for (let i = 0; i < sortingButtons.length; i += 1) {
-    if (sortingButtons[i].classList.contains("sorting-active") && ascendingState) {
-      sortingButtons[i].classList.remove("ascending");
-      sortingButtons[i].classList.add("descending");
-    } else if (sortingButtons[i].classList.contains("sorting-active") && !ascendingState) {
-      sortingButtons[i].classList.remove("descending");
-      sortingButtons[i].classList.add("ascending");
-    }
-  }
-} */
-
-function checkValidity(event) {
-  if (taskTitle.validity.tooShort) {
-    taskTitle.setCustomValidity("Please enter a title");
-  } else {
-    taskTitle.setCustomValidity("");
-  }
 }
 
 document.addEventListener("click", async (event) => {
