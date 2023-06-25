@@ -68,6 +68,32 @@ function initlializeSettingsStorage() {
   return settings;
 }
 
+function renderFilterSortButtons(sortingType, ascending, filtering) {
+  for (const child of filterSortContainer.children) {
+    if (sortingType === child.dataset.filterSort) {
+      // console.log("style this:", child.dataset.filterSort);
+      child.classList.add("sorting-active");
+      if (ascending === true) {
+        child.classList.add("ascending");
+        child.classList.remove("descending");
+      } else if (ascending === false) {
+        child.classList.add("descending");
+        child.classList.remove("ascending");
+      }
+    } else {
+      child.classList.remove("sorting-active");
+      child.classList.remove("ascending");
+      child.classList.remove("descending");
+    }
+    if (child.dataset.filterSort === "filter" && filtering === true) {
+      child.classList.add("sorting-active");
+    } else if (child.dataset.filterSort === "filter" && filtering === false) {
+      child.classList.remove("sorting-active");
+    }
+  }
+  // console.log("Style type:", sortingType, "ascending:", ascending, "filtering", filtering);
+}
+
 async function renderTasks(sortingType, ascending, filtering) {
   let storedSettings = valueStorage.getItem(lsSettingsKey);
   if (sortingType) {
@@ -93,7 +119,6 @@ async function renderTasks(sortingType, ascending, filtering) {
     valueStorage.setItem(lsSettingsKey, storedSettings);
   }
   if (filtering === undefined) {
-    console.log("filtering is: undefined ");
     if (storedSettings) {
       filtering = storedSettings.filtering;
     } else {
@@ -101,7 +126,6 @@ async function renderTasks(sortingType, ascending, filtering) {
       filtering = settings.filtering;
     }
   } else {
-    console.log("filtering is:", filtering);
     storedSettings.filtering = filtering;
     valueStorage.setItem(lsSettingsKey, storedSettings);
   }
@@ -113,6 +137,7 @@ async function renderTasks(sortingType, ascending, filtering) {
   for (let i = 0; i < sortedTaskArray.length; i += 1) {
     addTaskToDOM(sortedTaskArray[i]);
   }
+  renderFilterSortButtons(sortingType, ascending, filtering);
 }
 
 function convertDateToMS(date) {
@@ -342,31 +367,31 @@ taskImportance.addEventListener("blur", (event) => {
 filterSortContainer.addEventListener("click", (event) => {
   event.preventDefault();
   let targetDataSet = event.target.dataset;
-  switch (targetDataSet.id) {
-    case "filterCompleted":
+  switch (targetDataSet.filterSort) {
+    case "filter":
       event.target.dataset.filtering = event.target.dataset.filtering === "true" ? "false" : "true";
       let filtering = event.target.dataset.filtering === "true" ? true : false;
       renderTasks(undefined, undefined, filtering);
       break;
-    case "sortName": {
+    case "title": {
       event.target.dataset.ascending = event.target.dataset.ascending === "true" ? "false" : "true";
       let ascending = event.target.dataset.ascending === "true" ? true : false;
       renderTasks("title", ascending, undefined);
       break;
     }
-    case "sortDueDate": {
+    case "dueDate": {
       event.target.dataset.ascending = event.target.dataset.ascending === "true" ? "false" : "true";
       let ascending = event.target.dataset.ascending === "true" ? true : false;
       renderTasks("dueDate", ascending, undefined);
       break;
     }
-    case "sortCreationDate": {
+    case "creationDate": {
       event.target.dataset.ascending = event.target.dataset.ascending === "true" ? "false" : "true";
       let ascending = event.target.dataset.ascending === "true" ? true : false;
       renderTasks("creationDate", ascending, undefined);
       break;
     }
-    case "sortImportance": {
+    case "importance": {
       event.target.dataset.ascending = event.target.dataset.ascending === "true" ? "false" : "true";
       let ascending = event.target.dataset.ascending === "true" ? true : false;
       renderTasks("importance", ascending, undefined);
