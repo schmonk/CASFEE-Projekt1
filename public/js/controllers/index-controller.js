@@ -7,6 +7,7 @@ import { valueStorage } from "./storage-manager.js";
 
 const taskDialog = document.querySelector(".taskDialog");
 const taskList = document.querySelector(".task-list");
+const emptyStatement = document.querySelector('[data-id="emptyStatement"]');
 const taskTitle = document.querySelector("#taskTitle");
 const taskImportance = document.querySelector("#taskImportance");
 const taskDueDate = document.querySelector("#taskDueDate");
@@ -92,6 +93,16 @@ function renderFilterSortButtons(sortingType, ascending, filtering) {
   }
 }
 
+function checkEmptyList(taskArray, filtering) {
+  if (taskArray.length === 0) {
+    if (filtering) {
+      taskList.innerText = "There are no open tasks. Well done!";
+    } else {
+      taskList.innerText = "There are no tasks. Click on 'Create task' to add one.";
+    }
+  }
+}
+
 async function renderTasks(sortingType, ascending, filtering) {
   let storedSettings = valueStorage.getItem(lsSettingsKey);
   if (sortingType) {
@@ -136,6 +147,7 @@ async function renderTasks(sortingType, ascending, filtering) {
     addTaskToDOM(sortedTaskArray[i]);
   }
   renderFilterSortButtons(sortingType, ascending, filtering);
+  checkEmptyList(sortedTaskArray, filtering);
 }
 
 /* function convertDateToMS(date) {
