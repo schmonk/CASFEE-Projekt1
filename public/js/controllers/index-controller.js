@@ -1,6 +1,7 @@
 // import tm from "./task-manager.js";
 import { taskService } from "../services/task-service.js";
 import { clamp } from "../services/utils.js";
+import { valueStorage } from "./storage-manager.js";
 
 // import { sortTasks } from "../services/utils.js";
 
@@ -15,6 +16,7 @@ const filterCompletedButton = document.querySelector(".filter-button");
 const filterSortContainer = document.querySelector(".filterSort-container");
 const placeholderTaskTitle = "My task";
 const placeholderTaskDescription = "Task description";
+const lsSettingsKey = "Settings";
 
 function generateStars(amount) {
   let stars = "";
@@ -60,7 +62,61 @@ function addTaskToDOM(task) {
   taskList.insertAdjacentHTML("beforeend", createTaskHTML(task));
 }
 
-async function renderTasks(sortingType = "importance", ascending = true, filtering = false) {
+function initlializeSettingsStorage() {
+  const settings = {
+    type: "creationDate",
+    ascending: true,
+    filtering: false,
+  };
+  valueStorage.setItem(lsSettingsKey, settings);
+  return settings;
+}
+
+async function renderTasks(sortingType, ascending, filtering) {
+  let storedSettings = valueStorage.getItem(lsSettingsKey);
+  // console.log(storedSettings);
+  if (sortingType) {
+    // console.log("type defined as: ", sortingType);
+    storedSettings.type = sortingType;
+    valueStorage.setItem(lsSettingsKey, storedSettings);
+  } else {
+    if (storedSettings) {
+      // console.log("undefined type, set to this from storage: ", storedSettings.type);
+      sortingType = storedSettings.type;
+    } else {
+      let settings = initlializeSettingsStorage();
+      sortingType = settings.type;
+    }
+  }
+  if (ascending === undefined) {
+    // console.log("ascending is: undefined ");
+    if (storedSettings) {
+      // console.log("undefined type, set to this from storage: ", storedSettings.ascending);
+      ascending = storedSettings.ascending;
+    } else {
+      let settings = initlializeSettingsStorage();
+      ascending = settings.ascending;
+    }
+  } else {
+    // console.log("ascending is:", ascending);
+    storedSettings.ascending = ascending;
+    valueStorage.setItem(lsSettingsKey, storedSettings);
+  }
+  if (filtering === undefined) {
+    console.log("filtering is: undefined ");
+    if (storedSettings) {
+      // console.log("undefined type, set to this from storage: ", storedSettings.ascending);
+      filtering = storedSettings.filtering;
+    } else {
+      let settings = initlializeSettingsStorage();
+      filtering = settings.filtering;
+    }
+  } else {
+    console.log("filtering is:", filtering);
+    storedSettings.filtering = filtering;
+    valueStorage.setItem(lsSettingsKey, storedSettings);
+  }
+
   const sortedTaskArray = await taskService.getAllTasks(sortingType, ascending, filtering);
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
