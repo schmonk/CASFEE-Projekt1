@@ -1,9 +1,9 @@
-import Datastore from "nedb-promises";
-import Task from "./task.js";
+import Datastore from 'nedb-promises';
+import Task from './task.js';
 export class TaskStore {
   constructor(db) {
     const options =
-      process.env.DB_TYPE === "FILE" ? { filename: "./data/tasks.db", autoload: true } : {};
+      process.env.DB_TYPE === 'FILE' ? { filename: './data/tasks.db', autoload: true } : {};
     this.db = db || new Datastore(options);
   }
 
@@ -13,7 +13,7 @@ export class TaskStore {
   }
 
   async delete(id) {
-    await this.db.update({ _id: id }, { $set: { state: "DELETED" } });
+    await this.db.update({ _id: id }, { $set: { state: 'DELETED' } });
     return this.get(id);
   }
 
@@ -26,12 +26,12 @@ export class TaskStore {
       await this.db.update(
         { _id: id },
         {
-          "title": title,
-          "description": description,
-          "dueDate": dueDate,
-          "creationDate": creationDate,
-          "completion": completion,
-          "importance": importance,
+          'title': title,
+          'description': description,
+          'dueDate': dueDate,
+          'creationDate': creationDate,
+          'completion': completion,
+          'importance': importance,
         }
       );
     } catch (error) {
@@ -41,18 +41,18 @@ export class TaskStore {
   }
 
   async all(sortingType, ascending, filtering) {
-    let sortingDirection = ascending === "true" ? -1 : 1;
+    let sortingDirection = ascending === 'true' ? -1 : 1;
     let sorting = {};
     sorting[sortingType] = sortingDirection;
 
     let completed = {};
-    if (filtering === "true") {
-      completed = { "completion": { $ne: true } };
+    if (filtering === 'true') {
+      completed = { 'completion': { $ne: true } };
     }
 
     return this.db
       .find({
-        $and: [{ "state": { $ne: "DELETED" } }, completed],
+        $and: [{ 'state': { $ne: 'DELETED' } }, completed],
       })
       .sort(sorting)
       .exec();
