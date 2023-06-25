@@ -1,4 +1,4 @@
-import { taskService } from '../services/task-service.js'
+/* import { taskService } from '../services/task-service.js'
 
 const orderContainer = document.querySelector("#orderContainer");
 const orderRenderer = Handlebars.compile(document.querySelector("#order-template").innerHTML);
@@ -14,4 +14,4 @@ orderContainer.addEventListener("click", async event => {
     }
 });
 
-renderTask();
+renderTask(); */

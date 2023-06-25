@@ -307,7 +307,6 @@ filterSortContainer.addEventListener("click", (event) => {
   let targetDataSet = event.target.dataset;
   switch (targetDataSet.id) {
     case "filterCompleted":
-      console.log("data-filtering is", event.target.dataset.filtering);
       event.target.dataset.filtering = event.target.dataset.filtering === "true" ? "false" : "true";
       let filtering = event.target.dataset.filtering === "true" ? true : false;
       renderTasks(undefined, undefined, filtering);
@@ -321,21 +320,18 @@ filterSortContainer.addEventListener("click", (event) => {
     case "sortDueDate": {
       event.target.dataset.ascending = event.target.dataset.ascending === "true" ? "false" : "true";
       let ascending = event.target.dataset.ascending === "true" ? true : false;
-      console.log("sortDueDate");
       renderTasks("dueDate", ascending, undefined);
       break;
     }
     case "sortCreationDate": {
       event.target.dataset.ascending = event.target.dataset.ascending === "true" ? "false" : "true";
       let ascending = event.target.dataset.ascending === "true" ? true : false;
-      console.log("sortCreationDate");
       renderTasks("creationDate", ascending, undefined);
       break;
     }
     case "sortImportance": {
       event.target.dataset.ascending = event.target.dataset.ascending === "true" ? "false" : "true";
       let ascending = event.target.dataset.ascending === "true" ? true : false;
-      console.log("sortImportance");
       renderTasks("importance", ascending, undefined);
       break;
     }
