@@ -27,6 +27,29 @@ function generateStars(amount) {
   return stars;
 }
 
+function relativeDueTime(dueDate) {
+  const relTimeFormat = new Intl.RelativeTimeFormat("en", { style: "long" });
+  const oneDayInMS = 86_400_000;
+  let dueDateConverted = new Date(dueDate).getTime();
+  let nowConverted = new Date().getTime();
+  let diff = Math.abs(nowConverted - dueDateConverted);
+  const sign = Math.sign(dueDateConverted - nowConverted);
+  // console.log("difference: ", sign * diff, "now", nowConverted, "due", dueDateConverted);
+  if (diff < oneDayInMS) {
+    if (sign === 1) {
+      // console.log("yesterday");
+      return "yesterday";
+    } else if (sign === -1) {
+      // console.log("today");
+      return "today";
+    }
+  } else {
+    let diffInDays = Math.floor(diff / oneDayInMS);
+    // console.log(relTimeFormat.format(sign * diffInDays, "day"));
+    return relTimeFormat.format(sign * diffInDays, "day");
+  }
+}
+
 function createTaskHTML(task) {
   let convertedDueDate = convertMSToDateString(task.dueDate);
   let convertedCreationDate = convertMSToDateString(task.creationDate);
@@ -45,7 +68,7 @@ function createTaskHTML(task) {
     <h3 class="task-title">${task.title}</h3>
     <p class="task-description">${task.description}</p>
     </div>
-    <p class="task-due-date">Due ${convertedDueDate}</p>
+    <p class="task-due-date">Due ${relativeDueTime(convertedDueDate)}</p>
     <p class="task-created-date" >Created ${convertedCreationDate}</p>
     <p ><span class="task-importance">${generateStars(task.importance)}</span></p>
     <div class="buttongroup">
@@ -94,12 +117,10 @@ function renderFilterSortButtons(sortingType, ascending, filtering) {
 }
 
 function checkEmptyList(taskArray, filtering) {
-  if (taskArray.length === 0) {
-    if (filtering) {
-      taskList.innerText = "There are no open tasks. Well done!";
-    } else {
-      taskList.innerText = "There are no tasks. Click on 'Create task' to add one.";
-    }
+  if (filtering && taskArray.length === 0) {
+    taskList.innerText = "There are no open tasks. Well done!";
+  } else if (taskArray.length === 0) {
+    taskList.innerText = "There are no tasks. Click on 'Create task' to add one.";
   }
 }
 
@@ -158,7 +179,7 @@ async function renderTasks(sortingType, ascending, filtering) {
 
 function convertMSToDate(valueInMS) {
   let convertedValue = new Date(valueInMS);
-  console.log("convert ms to this datestring: ", convertedValue);
+  // console.log("convert ms to this datestring: ", convertedValue);
   return convertedValue;
 }
 
@@ -200,7 +221,6 @@ function createTask(e) {
     importance: taskImportance.value ? clamp(taskImportance.value, 1, 5) : "3",
     completion: taskCompletion.checked,
   };
-  console.log(taskDueDate.value, "asfasdfafsd");
   return newTask;
 }
 
@@ -214,20 +234,20 @@ async function updateTask(event) {
     title: taskTitle.value,
     description: taskDescription.value,
     dueDate: taskDueDate.value,
-    creationDate: existingTask.creationDate, // does not work yet
+    creationDate: existingTask.creationDate,
     completion: taskCompletion.checked,
     importance: taskImportance.value,
   };
   return task;
 }
 
-function updateToggleView(taskContainer) {
+function toggleVisualCompletion(taskContainer) {
   taskContainer.classList.toggle("completed");
 }
 
 async function toggleCOmpletionControl(event) {
   const taskContainer = event.target.parentElement;
-  updateToggleView(taskContainer);
+  toggleVisualCompletion(taskContainer);
   const currentId = taskContainer.dataset.id.toString();
   const existingTask = await taskService.getTask(currentId);
   taskCompletion.checked = existingTask.completion;
@@ -282,31 +302,7 @@ async function openEditDialog(event) {
   taskDialog.showModal();
 }
 
-/* function toggleSortingButtons(keepOnClass) {
-  const sortingButtons = document.querySelectorAll(".sort-button");
-  let sortingDirection = 0;
-  for (let i = 0; i < sortingButtons.length; i += 1) {
-    if (!sortingButtons[i].classList.contains(keepOnClass)) {
-      sortingButtons[i].classList.remove("sorting-active");
-      sortingButtons[i].classList.remove("ascending");
-      sortingButtons[i].classList.remove("descending");
-    } else {
-      sortingButtons[i].classList.add("sorting-active");
-      if (sortingButtons[i].classList.contains("ascending")) {
-        sortingButtons[i].classList.remove("ascending");
-        sortingButtons[i].classList.add("descending");
-        sortingDirection = 1;
-      } else {
-        sortingButtons[i].classList.remove("descending");
-        sortingButtons[i].classList.add("ascending");
-        sortingDirection = 0;
-      }
-    }
-  }
-  return sortingDirection;
-} */
-
-function toggleSortingDirection(keepOnClass, ascendingState) {
+/* function toggleSortingDirection(keepOnClass, ascendingState) {
   const sortingButtons = document.querySelectorAll(".sort-button");
   for (let i = 0; i < sortingButtons.length; i += 1) {
     if (sortingButtons[i].classList.contains("sorting-active") && ascendingState) {
@@ -317,7 +313,7 @@ function toggleSortingDirection(keepOnClass, ascendingState) {
       sortingButtons[i].classList.add("ascending");
     }
   }
-}
+} */
 
 document.addEventListener("click", async (event) => {
   const myCL = event.target.classList;
@@ -412,6 +408,6 @@ filterSortContainer.addEventListener("click", (event) => {
   }
 });
 
-document.addEventListener("DOMContentLoaded", async (event) => {
+document.addEventListener("DOMContentLoaded", async () => {
   renderTasks();
 });
