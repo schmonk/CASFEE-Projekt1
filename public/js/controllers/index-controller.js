@@ -61,7 +61,6 @@ function addTaskToDOM(task) {
 }
 
 async function renderTasks(sortingType = "importance", ascending = true, filtering = false) {
-  // console.log(`renderTasks: type: ${sortingType}, ASC: ${ascending}, FILTER: ${filtering}`);
   const sortedTaskArray = await taskService.getAllTasks(sortingType, ascending, filtering);
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
@@ -79,7 +78,7 @@ function convertDateToMS(date) {
 
 function convertMSToDate(valueInMS) {
   let convertedValue = new Date(valueInMS);
-  // console.log("convert ms to this datestring: ", convertedValue);
+  console.log("convert ms to this datestring: ", convertedValue);
   return convertedValue;
 }
 
@@ -129,6 +128,7 @@ function createTask(e) {
     importance: taskImportance.value ? clamp(taskImportance.value, 1, 5) : "3",
     completion: taskCompletion.checked,
   };
+  console.log(taskDueDate.value, "asfasdfafsd");
   return newTask;
 }
 async function updateTask(event) {
@@ -307,8 +307,10 @@ filterSortContainer.addEventListener("click", (event) => {
   let targetDataSet = event.target.dataset;
   switch (targetDataSet.id) {
     case "filterCompleted":
-      console.log("filterCompleted");
-      renderTasks(undefined, undefined, true);
+      console.log("data-filtering is", event.target.dataset.filtering);
+      event.target.dataset.filtering = event.target.dataset.filtering === "true" ? "false" : "true";
+      let filtering = event.target.dataset.filtering === "true" ? true : false;
+      renderTasks(undefined, undefined, filtering);
       break;
     case "sortName": {
       event.target.dataset.ascending = event.target.dataset.ascending === "true" ? "false" : "true";
