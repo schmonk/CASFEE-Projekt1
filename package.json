@@ -8,7 +8,7 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "stylelint": "stylelint \"**/*.css\"",
-    "w3c": "html-validator --file ./source/client/index.html  --verbose",
+    "w3c": "html-validator --file ./public/html/index.html  --verbose",
     "eslint": "eslint \"**/*.js\"",
     "stylelint-check": "stylelint-config-prettier-check",
     "all": "npm run stylelint && npm run w3c  && npm run eslint  && npm run stylelint-check && node -e \"console.log('npm run all completed')\""
