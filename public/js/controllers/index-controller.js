@@ -71,7 +71,6 @@ function initlializeSettingsStorage() {
 function renderFilterSortButtons(sortingType, ascending, filtering) {
   for (const child of filterSortContainer.children) {
     if (sortingType === child.dataset.filterSort) {
-      // console.log("style this:", child.dataset.filterSort);
       child.classList.add("sorting-active");
       if (ascending === true) {
         child.classList.add("ascending");
@@ -91,7 +90,6 @@ function renderFilterSortButtons(sortingType, ascending, filtering) {
       child.classList.remove("sorting-active");
     }
   }
-  // console.log("Style type:", sortingType, "ascending:", ascending, "filtering", filtering);
 }
 
 async function renderTasks(sortingType, ascending, filtering) {
@@ -140,11 +138,11 @@ async function renderTasks(sortingType, ascending, filtering) {
   renderFilterSortButtons(sortingType, ascending, filtering);
 }
 
-function convertDateToMS(date) {
+/* function convertDateToMS(date) {
   let convertedDate = new Date(date).getTime();
   console.log("convert to MS: ", convertedDate);
   return convertedDate;
-}
+} */
 
 function convertMSToDate(valueInMS) {
   let convertedValue = new Date(valueInMS);
@@ -158,13 +156,13 @@ function convertMSToDateString(valueInMS) {
   return convertedValue;
 }
 
-function convertMSForDatePicker(valueInMS) {
+/* function convertMSForDatePicker(valueInMS) {
   const options = { year: "numeric", month: "numeric", day: "numeric" };
   let outPut = convertMSToDate(valueInMS).toLocaleDateString(undefined, options);
   // console.log("output for Date Picker: ", outPut, typeof outPut);
   // console.log(event.toLocaleDateString(undefined, options));
   return outPut;
-}
+} */
 
 function creationDate() {
   const today = new Date();
@@ -193,12 +191,12 @@ function createTask(e) {
   console.log(taskDueDate.value, "asfasdfafsd");
   return newTask;
 }
+
 async function updateTask(event) {
   event.preventDefault();
   taskDialog.querySelector("#saveDialogButton").classList.remove("task-update");
   const currentId = taskDialog.dataset.id.toString();
   const existingTask = await taskService.getTask(currentId);
-  // console.log("existing task creation date:", existingTask.creationDate);
   const task = {
     id: taskDialog.dataset.id,
     title: taskTitle.value,
@@ -272,7 +270,7 @@ async function openEditDialog(event) {
   taskDialog.showModal();
 }
 
-function toggleSortingButtons(keepOnClass) {
+/* function toggleSortingButtons(keepOnClass) {
   const sortingButtons = document.querySelectorAll(".sort-button");
   let sortingDirection = 0;
   for (let i = 0; i < sortingButtons.length; i += 1) {
@@ -294,7 +292,7 @@ function toggleSortingButtons(keepOnClass) {
     }
   }
   return sortingDirection;
-}
+} */
 
 function toggleSortingDirection(keepOnClass, ascendingState) {
   const sortingButtons = document.querySelectorAll(".sort-button");
