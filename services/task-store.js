@@ -14,7 +14,6 @@ export class TaskStore {
 
   async delete(id) {
     await this.db.update({ _id: id }, { $set: { state: "DELETED" } });
-    // await this.db.remove({ _id: id });
     return this.get(id);
   }
 
@@ -51,20 +50,12 @@ export class TaskStore {
       completed = { "completion": { $ne: true } };
     }
 
-    // console.log("filtering is :", filtering, " type:", typeof filtering);
-    // console.log("completed is :", completed, " type:", typeof completed);
-    // console.log("filter: ", filter);
-    return (
-      this.db
-        .find({
-          $and: [{ "state": { $ne: "DELETED" } }, completed],
-        })
-        /*         .find({
-          $and: [{ "state": { $ne: "DELETED" } }, { "completion": { $ne: completed } }],
-        }) */
-        .sort(sorting)
-        .exec()
-    );
+    return this.db
+      .find({
+        $and: [{ "state": { $ne: "DELETED" } }, completed],
+      })
+      .sort(sorting)
+      .exec();
   }
 }
 
