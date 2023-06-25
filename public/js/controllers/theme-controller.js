@@ -1,25 +1,28 @@
 const themeButton = document.getElementById("themeButton");
-const localStorageThemeKey = "myTheme";
+const lsThemeKey = "Theme";
 import { valueStorage } from "./storage-manager.js";
 
 function toggleTheme() {
   document.body.classList.toggle("dark-theme");
   if (themeButton.innerText === "☽") {
     themeButton.innerText = "☼";
-    valueStorage.setItem(localStorageThemeKey, "dark");
+    valueStorage.setItem(lsThemeKey, "dark");
   } else {
     themeButton.innerText = "☽";
-    valueStorage.setItem(localStorageThemeKey, "light");
+    valueStorage.setItem(lsThemeKey, "light");
   }
 }
 themeButton.addEventListener("click", () => {
   toggleTheme();
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  if (valueStorage.getItem(localStorageThemeKey)) {
-    if (valueStorage.getItem(localStorageThemeKey) === "dark") {
+export function initializeTheme() {
+  if (valueStorage.getItem(lsThemeKey)) {
+    if (valueStorage.getItem(lsThemeKey) === "dark") {
       toggleTheme();
     }
   }
+}
+document.addEventListener("DOMContentLoaded", () => {
+  initializeTheme();
 });
