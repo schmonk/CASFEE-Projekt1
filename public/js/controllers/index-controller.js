@@ -1,60 +1,65 @@
-import { taskService } from "../services/task-service.js";
-import { clamp, toggleValue } from "../services/utils.js";
-import { valueStorage } from "./storage-manager.js";
+/* eslint-disable no-case-declarations */
+/* eslint-disable no-param-reassign */
+import { taskService } from '../services/task-service.js';
+import { clamp, toggleValue } from '../services/utils.js';
+import { valueStorage } from './storage-manager.js';
 
-const taskDialog = document.querySelector(".taskDialog");
-const taskList = document.querySelector(".task-list");
-const taskTitle = document.querySelector("#taskTitle");
-const taskImportance = document.querySelector("#taskImportance");
-const taskDueDate = document.querySelector("#taskDueDate");
-const taskDescription = document.querySelector("#taskDescription");
-const taskCompletion = document.querySelector("#taskCompletion");
-const filterCompletedButton = document.querySelector(".filter-button");
-const filterSortContainer = document.querySelector(".filterSort-container");
-const placeholderTaskTitle = "My task";
-const placeholderTaskDescription = "Task description";
-const lsSettingsKey = "Settings";
+const taskDialog = document.querySelector('.taskDialog');
+const taskList = document.querySelector('.task-list');
+const taskTitle = document.querySelector('#taskTitle');
+const taskImportance = document.querySelector('#taskImportance');
+const taskDueDate = document.querySelector('#taskDueDate');
+const taskDescription = document.querySelector('#taskDescription');
+const taskCompletion = document.querySelector('#taskCompletion');
+const filterCompletedButton = document.querySelector('.filter-button');
+const filterSortContainer = document.querySelector('.filterSort-container');
+const placeholderTaskTitle = 'My task';
+const placeholderTaskDescription = 'Task description';
+const lsSettingsKey = 'Settings';
 
 function generateStars(amount) {
-  let stars = "";
+  let stars = '';
   for (let i = 0; i < amount; i += 1) {
-    stars += "&#9733";
+    stars += '&#9733';
   }
   return stars;
 }
 
 function relativeDueTime(dueDate) {
-  const relTimeFormat = new Intl.RelativeTimeFormat("en", { style: "long" });
-  const oneDayInMS = 86_400_000;
-  let dueDateConverted = new Date(dueDate).getTime();
-  let nowConverted = new Date().getTime();
-  let diff = Math.abs(nowConverted - dueDateConverted);
+  const relTimeFormat = new Intl.RelativeTimeFormat('en', { style: 'long' });
+  const oneDayInMS = 86400000;
+  const dueDateConverted = new Date(dueDate).getTime();
+  const nowConverted = new Date().getTime();
+  const diff = Math.abs(nowConverted - dueDateConverted);
   const sign = Math.sign(dueDateConverted - nowConverted);
+  let returnStatement = 'today';
   if (diff < oneDayInMS) {
     if (sign === -1) {
-      return "today";
-    } else if (sign === 1) {
-      return "tomorrow";
+      returnStatement = 'today';
+    }
+    if (sign === 1) {
+      returnStatement = 'tomorrow';
     }
   } else {
-    let diffInDays = Math.floor(diff / oneDayInMS);
-    return relTimeFormat.format(sign * diffInDays, "day");
+    const diffInDays = Math.floor(diff / oneDayInMS);
+    returnStatement = relTimeFormat.format(sign * diffInDays, 'day');
   }
+  return returnStatement;
 }
 
 function createTaskHTML(task) {
-  let convertedDueDate = convertMSToDateString(task.dueDate);
-  let convertedCreationDate = convertMSToDateString(task.creationDate);
+  const convertedDueDate = convertMSToDateString(task.dueDate);
+  const convertedCreationDate = convertMSToDateString(task.creationDate);
 
-  let hiddenString = "completed";
-  if (filterCompletedButton.classList.contains("filtering-active")) {
-    hiddenString = "completed hidden";
+  let hiddenString = 'completed';
+  if (filterCompletedButton.classList.contains('filtering-active')) {
+    hiddenString = 'completed hidden';
   }
   return `<article data-id="${task._id}" class="task-container ${
-    task.completion ? hiddenString : ""
+    task.completion ? hiddenString : ''
   }">
   <input type="checkbox" name="completion" class="task-completion" ${
-    task.completion ? "checked" : ""
+    task.completion ? 'checked' : ''
   }/>
     <div class="task-content">
     <h3 class="task-title">${task.title}</h3>
@@ -71,12 +76,12 @@ function createTaskHTML(task) {
 }
 
 function addTaskToDOM(task) {
-  taskList.insertAdjacentHTML("beforeend", createTaskHTML(task));
+  taskList.insertAdjacentHTML('beforeend', createTaskHTML(task));
 }
 
 function initlializeSettingsStorage() {
   const settings = {
-    type: "creationDate",
+    type: 'creationDate',
     ascending: true,
     filtering: false,
   };
@@ -87,53 +92,51 @@ function initlializeSettingsStorage() {
 function renderFilterSortButtons(sortingType, ascending, filtering) {
   for (const child of filterSortContainer.children) {
     if (sortingType === child.dataset.filterSort) {
-      child.classList.add("sorting-active");
+      child.classList.add('sorting-active');
       if (ascending === true) {
-        child.classList.add("ascending");
-        child.classList.remove("descending");
+        child.classList.add('ascending');
+        child.classList.remove('descending');
       } else if (ascending === false) {
-        child.classList.add("descending");
-        child.classList.remove("ascending");
+        child.classList.add('descending');
+        child.classList.remove('ascending');
       }
     } else {
-      child.classList.remove("sorting-active");
-      child.classList.remove("ascending");
-      child.classList.remove("descending");
+      child.classList.remove('sorting-active');
+      child.classList.remove('ascending');
+      child.classList.remove('descending');
     }
-    if (child.dataset.filterSort === "filter" && filtering === true) {
-      child.classList.add("sorting-active");
-    } else if (child.dataset.filterSort === "filter" && filtering === false) {
-      child.classList.remove("sorting-active");
+    if (child.dataset.filterSort === 'filter' && filtering === true) {
+      child.classList.add('sorting-active');
+    } else if (child.dataset.filterSort === 'filter' && filtering === false) {
+      child.classList.remove('sorting-active');
     }
   }
 }
 
 function checkEmptyList(taskArray, filtering) {
   if (filtering && taskArray.length === 0) {
-    taskList.innerText = "There are no open tasks. Well done!";
+    taskList.innerText = 'There are no open tasks. Well done!';
   } else if (taskArray.length === 0) {
     taskList.innerText = "There are no tasks. Click on 'Create task' to add one.";
   }
 }
 
 async function renderTasks(sortingType, ascending, filtering) {
-  let storedSettings = valueStorage.getItem(lsSettingsKey);
+  const storedSettings = valueStorage.getItem(lsSettingsKey);
   if (sortingType) {
     storedSettings.type = sortingType;
     valueStorage.setItem(lsSettingsKey, storedSettings);
+  } else if (storedSettings) {
+    sortingType = storedSettings.type;
   } else {
-    if (storedSettings) {
-      sortingType = storedSettings.type;
-    } else {
-      let settings = initlializeSettingsStorage();
-      sortingType = settings.type;
-    }
+    const settings = initlializeSettingsStorage();
+    sortingType = settings.type;
   }
   if (ascending === undefined) {
     if (storedSettings) {
       ascending = storedSettings.ascending;
     } else {
-      let settings = initlializeSettingsStorage();
+      const settings = initlializeSettingsStorage();
       ascending = settings.ascending;
     }
   } else {
@@ -144,7 +147,7 @@ async function renderTasks(sortingType, ascending, filtering) {
     if (storedSettings) {
       filtering = storedSettings.filtering;
     } else {
-      let settings = initlializeSettingsStorage();
+      const settings = initlializeSettingsStorage();
       filtering = settings.filtering;
     }
   } else {
@@ -164,12 +167,12 @@ async function renderTasks(sortingType, ascending, filtering) {
 }
 
 function convertMSToDate(valueInMS) {
-  let convertedValue = new Date(valueInMS);
+  const convertedValue = new Date(valueInMS);
   return convertedValue;
 }
 
 function convertMSToDateString(valueInMS) {
-  let convertedValue = new Date(valueInMS).toDateString();
+  const convertedValue = new Date(valueInMS).toDateString();
   return convertedValue;
 }
 
@@ -193,7 +196,7 @@ function createTask(e) {
     dueDate: taskDueDate.value ? taskDueDate.value : createDefaultDueDate(),
     creationDate: creationDate(),
     description: taskDescription.value ? taskDescription.value : placeholderTaskDescription,
-    importance: taskImportance.value ? clamp(taskImportance.value, 1, 5) : "3",
+    importance: taskImportance.value ? clamp(taskImportance.value, 1, 5) : '3',
     completion: taskCompletion.checked,
   };
   return newTask;
@@ -201,7 +204,7 @@ function createTask(e) {
 
 async function updateTask(event) {
   event.preventDefault();
-  taskDialog.querySelector("#saveDialogButton").classList.remove("task-update");
+  taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
   const currentId = taskDialog.dataset.id.toString();
   const existingTask = await taskService.getTask(currentId);
   const task = {
@@ -217,7 +220,7 @@ async function updateTask(event) {
 }
 
 function toggleVisualCompletion(taskContainer) {
-  taskContainer.classList.toggle("completed");
+  taskContainer.classList.toggle('completed');
 }
 
 async function toggleCompletionControl(event) {
@@ -234,34 +237,34 @@ async function toggleCompletionControl(event) {
     existingTask.dueDate,
     existingTask.creationDate,
     (existingTask.completion = !existingTask.completion),
-    existingTask.importance
+    existingTask.importance,
   );
 
   await renderTasks();
 }
 
 function clearDialog() {
-  taskTitle.value = "";
-  taskDueDate.value = "";
-  taskDescription.value = "";
-  taskImportance.value = "";
+  taskTitle.value = '';
+  taskDueDate.value = '';
+  taskDescription.value = '';
+  taskImportance.value = '';
   taskCompletion.checked = false;
 }
 
 function setupEditDialog(title) {
-  taskDialog.querySelector("h2").textContent = `Edit "${title}"`;
-  taskDialog.querySelector("#saveDialogButton").textContent = "Update";
-  taskDialog.querySelector("#saveDialogButton").classList.add("task-update");
-  taskDialog.querySelector("#saveDialogButton").classList.remove("task-create");
+  taskDialog.querySelector('h2').textContent = `Edit "${title}"`;
+  taskDialog.querySelector('#saveDialogButton').textContent = 'Update';
+  taskDialog.querySelector('#saveDialogButton').classList.add('task-update');
+  taskDialog.querySelector('#saveDialogButton').classList.remove('task-create');
 }
 
 function setupCreationDialog() {
-  taskDialog.querySelector("h2").textContent = "Create a task";
-  taskDialog.querySelector("#saveDialogButton").textContent = "Create";
-  taskDialog.querySelector("#taskImportance").value = 3;
-  taskDialog.querySelector("#taskDueDate").valueAsDate = new Date();
-  taskDialog.querySelector("#saveDialogButton").classList.add("task-create");
-  taskDialog.querySelector("#saveDialogButton").classList.remove("task-update");
+  taskDialog.querySelector('h2').textContent = 'Create a task';
+  taskDialog.querySelector('#saveDialogButton').textContent = 'Create';
+  taskDialog.querySelector('#taskImportance').value = 3;
+  taskDialog.querySelector('#taskDueDate').valueAsDate = new Date();
+  taskDialog.querySelector('#saveDialogButton').classList.add('task-create');
+  taskDialog.querySelector('#saveDialogButton').classList.remove('task-update');
 }
 
 async function openEditDialog(event) {
@@ -278,23 +281,23 @@ async function openEditDialog(event) {
   taskDialog.showModal();
 }
 
-document.addEventListener("click", async (event) => {
+document.addEventListener('click', async (event) => {
   const myCL = event.target.classList;
   const taskContainer = event.target.parentElement.parentElement;
   switch (true) {
-    case myCL.contains("task-add"):
+    case myCL.contains('task-add'):
       setupCreationDialog();
       taskDialog.showModal();
       break;
-    case myCL.contains("task-delete"):
+    case myCL.contains('task-delete'):
       await taskService.deleteTask(taskContainer.dataset.id);
       renderTasks();
       break;
-    case myCL.contains("cancel"):
+    case myCL.contains('cancel'):
       taskDialog.close();
       clearDialog();
       break;
-    case myCL.contains("task-update"):
+    case myCL.contains('task-update'):
       const taskToUpdate = await updateTask(event);
       await taskService.updateTask(
         taskDialog.dataset.id,
@@ -303,22 +306,22 @@ document.addEventListener("click", async (event) => {
         taskToUpdate.dueDate,
         taskToUpdate.creationDate,
         taskToUpdate.completion,
-        taskToUpdate.importance
+        taskToUpdate.importance,
       );
       renderTasks();
       taskDialog.close();
       clearDialog();
       break;
-    case myCL.contains("task-edit"):
+    case myCL.contains('task-edit'):
       openEditDialog(event);
       break;
-    case myCL.contains("task-completion"):
+    case myCL.contains('task-completion'):
       toggleCompletionControl(event);
       renderTasks();
       break;
-    case myCL.contains("task-create"):
+    case myCL.contains('task-create'):
       if (taskTitle.value.length < 1) {
-        taskTitle.setCustomValidity("Please enter a title");
+        taskTitle.setCustomValidity('Please enter a title');
       } else {
         const taskToCreate = createTask(event);
         await taskService.addTask(taskToCreate);
@@ -332,42 +335,42 @@ document.addEventListener("click", async (event) => {
   }
 });
 
-taskImportance.addEventListener("blur", (event) => {
-  console.log("blur task importance");
+taskImportance.addEventListener('blur', () => {
+  console.log('blur task importance');
   taskImportance.value = clamp(taskImportance.value, 1, 5);
 });
 
-filterSortContainer.addEventListener("click", (event) => {
+filterSortContainer.addEventListener('click', (event) => {
   event.preventDefault();
-  let targetDataSet = event.target.dataset;
+  const targetDataSet = event.target.dataset;
   switch (targetDataSet.filterSort) {
-    case "filter":
-      event.target.dataset.filtering = toggleValue(event.target.dataset.filtering, "true", "false");
-      let filtering = event.target.dataset.filtering === "true" ? true : false;
+    case 'filter':
+      event.target.dataset.filtering = toggleValue(event.target.dataset.filtering, 'true', 'false');
+      const filtering = event.target.dataset.filtering === 'true';
       renderTasks(undefined, undefined, filtering);
       break;
-    case "title": {
-      event.target.dataset.ascending = toggleValue(event.target.dataset.ascending, "true", "false");
-      let ascending = event.target.dataset.ascending === "true" ? true : false;
-      renderTasks("title", ascending, undefined);
+    case 'title': {
+      event.target.dataset.ascending = toggleValue(event.target.dataset.ascending, 'true', 'false');
+      const ascending = event.target.dataset.ascending === 'true';
+      renderTasks('title', ascending, undefined);
       break;
     }
-    case "dueDate": {
-      event.target.dataset.ascending = toggleValue(event.target.dataset.ascending, "true", "false");
-      let ascending = event.target.dataset.ascending === "true" ? true : false;
-      renderTasks("dueDate", ascending, undefined);
+    case 'dueDate': {
+      event.target.dataset.ascending = toggleValue(event.target.dataset.ascending, 'true', 'false');
+      const ascending = event.target.dataset.ascending === 'true';
+      renderTasks('dueDate', ascending, undefined);
       break;
     }
-    case "creationDate": {
-      event.target.dataset.ascending = toggleValue(event.target.dataset.ascending, "true", "false");
-      let ascending = event.target.dataset.ascending === "true" ? true : false;
-      renderTasks("creationDate", ascending, undefined);
+    case 'creationDate': {
+      event.target.dataset.ascending = toggleValue(event.target.dataset.ascending, 'true', 'false');
+      const ascending = event.target.dataset.ascending === 'true';
+      renderTasks('creationDate', ascending, undefined);
       break;
     }
-    case "importance": {
-      event.target.dataset.ascending = toggleValue(event.target.dataset.ascending, "true", "false");
-      let ascending = event.target.dataset.ascending === "true" ? true : false;
-      renderTasks("importance", ascending, undefined);
+    case 'importance': {
+      event.target.dataset.ascending = toggleValue(event.target.dataset.ascending, 'true', 'false');
+      const ascending = event.target.dataset.ascending === 'true';
+      renderTasks('importance', ascending, undefined);
       break;
     }
     default:
@@ -375,6 +378,6 @@ filterSortContainer.addEventListener("click", (event) => {
   }
 });
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener('DOMContentLoaded', async () => {
   renderTasks();
 });
