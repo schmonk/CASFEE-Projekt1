@@ -1,6 +1,6 @@
-export function sortTasks(property = "creationDate", ascendingState = true) {
-  const sortedArray = tm.tasksSorted(`${property}`, ascendingState);
-  renderTasks(sortedArray);
+export function toggleValue(targetValue, value1, value2) {
+  targetValue = targetValue === value1 ? value2 : value1;
+  return targetValue;
 }
 
 export function clamp(value, lower, upper) {
@@ -13,4 +13,4 @@ export function clamp(value, lower, upper) {
   return myValue;
 }
 
-export default { sortTasks, clamp };
+export default { toggleValue, clamp };
