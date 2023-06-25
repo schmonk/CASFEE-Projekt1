@@ -1,5 +1,5 @@
 import { taskService } from "../services/task-service.js";
-import { clamp } from "../services/utils.js";
+import { clamp, toggleValue } from "../services/utils.js";
 import { valueStorage } from "./storage-manager.js";
 
 const taskDialog = document.querySelector(".taskDialog");
@@ -343,30 +343,30 @@ filterSortContainer.addEventListener("click", (event) => {
   let targetDataSet = event.target.dataset;
   switch (targetDataSet.filterSort) {
     case "filter":
-      event.target.dataset.filtering = event.target.dataset.filtering === "true" ? "false" : "true";
+      event.target.dataset.filtering = toggleValue(event.target.dataset.filtering, "true", "false");
       let filtering = event.target.dataset.filtering === "true" ? true : false;
       renderTasks(undefined, undefined, filtering);
       break;
     case "title": {
-      event.target.dataset.ascending = event.target.dataset.ascending === "true" ? "false" : "true";
+      event.target.dataset.ascending = toggleValue(event.target.dataset.ascending, "true", "false");
       let ascending = event.target.dataset.ascending === "true" ? true : false;
       renderTasks("title", ascending, undefined);
       break;
     }
     case "dueDate": {
-      event.target.dataset.ascending = event.target.dataset.ascending === "true" ? "false" : "true";
+      event.target.dataset.ascending = toggleValue(event.target.dataset.ascending, "true", "false");
       let ascending = event.target.dataset.ascending === "true" ? true : false;
       renderTasks("dueDate", ascending, undefined);
       break;
     }
     case "creationDate": {
-      event.target.dataset.ascending = event.target.dataset.ascending === "true" ? "false" : "true";
+      event.target.dataset.ascending = toggleValue(event.target.dataset.ascending, "true", "false");
       let ascending = event.target.dataset.ascending === "true" ? true : false;
       renderTasks("creationDate", ascending, undefined);
       break;
     }
     case "importance": {
-      event.target.dataset.ascending = event.target.dataset.ascending === "true" ? "false" : "true";
+      event.target.dataset.ascending = toggleValue(event.target.dataset.ascending, "true", "false");
       let ascending = event.target.dataset.ascending === "true" ? true : false;
       renderTasks("importance", ascending, undefined);
       break;
