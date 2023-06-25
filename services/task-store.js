@@ -46,19 +46,22 @@ export class TaskStore {
     let sorting = {};
     sorting[sortingType] = sortingDirection;
 
-    let completed = filtering === "false" ? true : false;
+    let completed = {};
+    if (filtering === "false") {
+      completed = { "completion": { $ne: true } };
+    }
 
-    console.log("filtering is :", filtering, " type:", typeof filtering);
+    // console.log("filtering is :", filtering, " type:", typeof filtering);
     // console.log("completed is :", completed, " type:", typeof completed);
     // console.log("filter: ", filter);
     return (
       this.db
-        // .find(filter)
-        // .find({ $and: [{ "state": { $ne: "DELETED" } }, { "completion": { $ne: completed } }] })
         .find({
-          $and: [{ "state": { $ne: "DELETED" } }, { "completion": { $ne: completed } }],
+          $and: [{ "state": { $ne: "DELETED" } }, completed],
         })
-        // .find({ $not: filter })
+        /*         .find({
+          $and: [{ "state": { $ne: "DELETED" } }, { "completion": { $ne: completed } }],
+        }) */
         .sort(sorting)
         .exec()
     );
