@@ -47,7 +47,7 @@ export class TaskStore {
     sorting[sortingType] = sortingDirection;
 
     let completed = {};
-    if (filtering === "false") {
+    if (filtering === "true") {
       completed = { "completion": { $ne: true } };
     }
 
