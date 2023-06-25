@@ -14,6 +14,7 @@ export class TaskStore {
 
   async delete(id) {
     await this.db.update({ _id: id }, { $set: { state: "DELETED" } });
+    // await this.db.remove({ _id: id });
     return this.get(id);
   }
 
@@ -41,14 +42,28 @@ export class TaskStore {
   }
 
   async all(sortingType, ascending, filtering) {
-    // let completed = filtering === "true" ? true : false;
     let sortingDirection = ascending === "true" ? -1 : 1;
     let sorting = {};
     sorting[sortingType] = sortingDirection;
-    return this.db
-      .find({ state: { $ne: "DELETED" }, completion: { $ne: filtering } })
-      .sort(sorting)
-      .exec();
+
+    let completed = filtering === "true" ? true : false;
+    let filter = {};
+    filter["completion"] = completed;
+
+    console.log("filtering is :", filtering, " type:", typeof filtering);
+    // console.log("completed is :", completed, " type:", typeof completed);
+    // console.log("filter: ", filter);
+    return (
+      this.db
+        // .find(filter)
+        // .find({ $and: [{ "state": { $ne: "DELETED" } }, { "completion": { $ne: completed } }] })
+        .find({
+          $and: [{ "state": { $ne: "DELETED" } }, { "completion": { $ne: completed } }],
+        })
+        // .find({ $not: filter })
+        .sort(sorting)
+        .exec()
+    );
   }
 }
 
