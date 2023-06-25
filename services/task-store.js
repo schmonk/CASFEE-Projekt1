@@ -46,9 +46,7 @@ export class TaskStore {
     let sorting = {};
     sorting[sortingType] = sortingDirection;
 
-    let completed = filtering === "true" ? true : false;
-    let filter = {};
-    filter["completion"] = completed;
+    let completed = filtering === "false" ? true : false;
 
     console.log("filtering is :", filtering, " type:", typeof filtering);
     // console.log("completed is :", completed, " type:", typeof completed);
