@@ -1,9 +1,6 @@
-// import tm from "./task-manager.js";
 import { taskService } from "../services/task-service.js";
 import { clamp } from "../services/utils.js";
 import { valueStorage } from "./storage-manager.js";
-
-// import { sortTasks } from "../services/utils.js";
 
 const taskDialog = document.querySelector(".taskDialog");
 const taskList = document.querySelector(".task-list");
@@ -224,7 +221,7 @@ function toggleVisualCompletion(taskContainer) {
   taskContainer.classList.toggle("completed");
 }
 
-async function toggleCOmpletionControl(event) {
+async function toggleCompletionControl(event) {
   const taskContainer = event.target.parentElement;
   toggleVisualCompletion(taskContainer);
   const currentId = taskContainer.dataset.id.toString();
@@ -251,6 +248,7 @@ function clearDialog() {
   taskImportance.value = "";
   taskCompletion.checked = false;
 }
+
 function setupEditDialog(title) {
   taskDialog.querySelector("h2").textContent = `Edit "${title}"`;
   taskDialog.querySelector("#saveDialogButton").textContent = "Update";
@@ -316,7 +314,7 @@ document.addEventListener("click", async (event) => {
       openEditDialog(event);
       break;
     case myCL.contains("task-completion"):
-      toggleCOmpletionControl(event);
+      toggleCompletionControl(event);
       renderTasks();
       break;
     case myCL.contains("task-create"):
