@@ -1,3 +1,6 @@
+/* eslint-disable indent */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-case-declarations */
 /* eslint-disable no-param-reassign */
 import { taskService } from '../services/task-service.js';
@@ -23,6 +26,11 @@ function generateStars(amount) {
     stars += '&#9733';
   }
   return stars;
+}
+
+function convertMSToDateString(valueInMS) {
+  const convertedValue = new Date(valueInMS).toDateString();
+  return convertedValue;
 }
 
 function relativeDueTime(dueDate) {
@@ -60,6 +68,7 @@ function createTaskHTML(task) {
   }">
   <input type="checkbox" name="completion" class="task-completion" ${
     task.completion ? 'checked' : ''
+    // eslint-disable-next-line indent
   }/>
     <div class="task-content">
     <h3 class="task-title">${task.title}</h3>
@@ -168,11 +177,6 @@ async function renderTasks(sortingType, ascending, filtering) {
 
 function convertMSToDate(valueInMS) {
   const convertedValue = new Date(valueInMS);
-  return convertedValue;
-}
-
-function convertMSToDateString(valueInMS) {
-  const convertedValue = new Date(valueInMS).toDateString();
   return convertedValue;
 }
 

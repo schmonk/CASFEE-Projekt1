@@ -1,7 +1,10 @@
 import Datastore from 'nedb-promises';
+
 import Task from './task.js';
+
 export class TaskStore {
   constructor(db) {
+    // eslint-disable-next-line operator-linebreak
     const options =
       process.env.DB_TYPE === 'FILE' ? { filename: './data/tasks.db', autoload: true } : {};
     this.db = db || new Datastore(options);
@@ -26,13 +29,13 @@ export class TaskStore {
       await this.db.update(
         { _id: id },
         {
-          'title': title,
-          'description': description,
-          'dueDate': dueDate,
-          'creationDate': creationDate,
-          'completion': completion,
-          'importance': importance,
-        }
+          title,
+          description,
+          dueDate,
+          creationDate,
+          completion,
+          importance,
+        },
       );
     } catch (error) {
       console.log(`error is: ${error}`);
@@ -41,18 +44,18 @@ export class TaskStore {
   }
 
   async all(sortingType, ascending, filtering) {
-    let sortingDirection = ascending === 'true' ? -1 : 1;
-    let sorting = {};
+    const sortingDirection = ascending === 'true' ? -1 : 1;
+    const sorting = {};
     sorting[sortingType] = sortingDirection;
 
     let completed = {};
     if (filtering === 'true') {
-      completed = { 'completion': { $ne: true } };
+      completed = { completion: { $ne: true } };
     }
 
     return this.db
       .find({
-        $and: [{ 'state': { $ne: 'DELETED' } }, completed],
+        $and: [{ state: { $ne: 'DELETED' } }, completed],
       })
       .sort(sorting)
       .exec();

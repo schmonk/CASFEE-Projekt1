@@ -1,4 +1,5 @@
 export function toggleValue(targetValue, value1, value2) {
+  // eslint-disable-next-line no-param-reassign
   targetValue = targetValue === value1 ? value2 : value1;
   return targetValue;
 }

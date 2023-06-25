@@ -9,7 +9,6 @@
     "no-console": 0,
     "allowTemplateLiterals": 0,
     "import/extensions": 0,
-    "comments": 1,
     "quote-props": ["error", "as-needed"]
   }
 }
