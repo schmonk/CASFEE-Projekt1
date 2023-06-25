@@ -311,6 +311,14 @@ async function openEditDialog(event) {
   }
 } */
 
+function checkValidity(event) {
+  if (taskTitle.validity.tooShort) {
+    taskTitle.setCustomValidity("Please enter a title");
+  } else {
+    taskTitle.setCustomValidity("");
+  }
+}
+
 document.addEventListener("click", async (event) => {
   const myCL = event.target.classList;
   const taskContainer = event.target.parentElement.parentElement;
@@ -350,11 +358,15 @@ document.addEventListener("click", async (event) => {
       renderTasks();
       break;
     case myCL.contains("task-create"):
-      const taskToCreate = createTask(event);
-      await taskService.addTask(taskToCreate);
-      taskDialog.close();
-      clearDialog();
-      renderTasks();
+      if (taskTitle.value.length < 1) {
+        taskTitle.setCustomValidity("Please enter a title");
+      } else {
+        const taskToCreate = createTask(event);
+        await taskService.addTask(taskToCreate);
+        taskDialog.close();
+        clearDialog();
+        renderTasks();
+      }
       break;
     default:
       break;
