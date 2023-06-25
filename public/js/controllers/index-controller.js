@@ -4,7 +4,6 @@ import { valueStorage } from "./storage-manager.js";
 
 const taskDialog = document.querySelector(".taskDialog");
 const taskList = document.querySelector(".task-list");
-const emptyStatement = document.querySelector('[data-id="emptyStatement"]');
 const taskTitle = document.querySelector("#taskTitle");
 const taskImportance = document.querySelector("#taskImportance");
 const taskDueDate = document.querySelector("#taskDueDate");
