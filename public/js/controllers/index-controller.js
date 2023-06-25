@@ -27,12 +27,8 @@ function generateStars(amount) {
 }
 
 function createTaskHTML(task) {
-  /*   console.log("duedate: ", task.dueDate);
-  console.log("creationdate: ", task.creationDate); */
   let convertedDueDate = convertMSToDateString(task.dueDate);
   let convertedCreationDate = convertMSToDateString(task.creationDate);
-  /*   console.log(task.title, "duedate: ", convertedDueDate);
-  console.log("creationdate: ", convertedCreationDate); */
 
   let hiddenString = "completed";
   if (filterCompletedButton.classList.contains("filtering-active")) {
@@ -74,14 +70,11 @@ function initlializeSettingsStorage() {
 
 async function renderTasks(sortingType, ascending, filtering) {
   let storedSettings = valueStorage.getItem(lsSettingsKey);
-  // console.log(storedSettings);
   if (sortingType) {
-    // console.log("type defined as: ", sortingType);
     storedSettings.type = sortingType;
     valueStorage.setItem(lsSettingsKey, storedSettings);
   } else {
     if (storedSettings) {
-      // console.log("undefined type, set to this from storage: ", storedSettings.type);
       sortingType = storedSettings.type;
     } else {
       let settings = initlializeSettingsStorage();
@@ -89,23 +82,19 @@ async function renderTasks(sortingType, ascending, filtering) {
     }
   }
   if (ascending === undefined) {
-    // console.log("ascending is: undefined ");
     if (storedSettings) {
-      // console.log("undefined type, set to this from storage: ", storedSettings.ascending);
       ascending = storedSettings.ascending;
     } else {
       let settings = initlializeSettingsStorage();
       ascending = settings.ascending;
     }
   } else {
-    // console.log("ascending is:", ascending);
     storedSettings.ascending = ascending;
     valueStorage.setItem(lsSettingsKey, storedSettings);
   }
   if (filtering === undefined) {
     console.log("filtering is: undefined ");
     if (storedSettings) {
-      // console.log("undefined type, set to this from storage: ", storedSettings.ascending);
       filtering = storedSettings.filtering;
     } else {
       let settings = initlializeSettingsStorage();
@@ -151,14 +140,6 @@ function convertMSForDatePicker(valueInMS) {
   // console.log(event.toLocaleDateString(undefined, options));
   return outPut;
 }
-
-/* function formatDate(date, isForDisplay) {
-  const dateFormatOptions = { day: "numeric", month: "numeric", year: "numeric" };
-  const dateDisplayFormat = new Intl.DateTimeFormat("de-CH", dateFormatOptions);
-  const datePickerFormat = new Intl.DateTimeFormat("en-US", dateFormatOptions);
-  const dateFormat = isForDisplay ? dateDisplayFormat : datePickerFormat;
-  return dateFormat.format(date);
-} */
 
 function creationDate() {
   const today = new Date();
