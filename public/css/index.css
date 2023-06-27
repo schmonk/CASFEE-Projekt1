@@ -1,6 +1,6 @@
-@import url("reset.css");
+@import url('reset.css');
 @font-face {
-  font-family: "Metropolis";
+  font-family: 'Metropolis';
   src: url(../fonts/Metropolis-Font/Metropolis-Regular.otf);
 }
 
@@ -41,7 +41,7 @@
 }
 
 body {
-  font-family: "Metropolis", sans-serif;
+  font-family: 'Metropolis', sans-serif;
   transition: all var(--transition-duration) var(--transition-function);
   background-color: var(--bg-color);
   color: var(--primary-text-color);
@@ -49,7 +49,8 @@ body {
 
 button,
 select,
-input {
+input,
+textarea {
   transition: background-color var(--transition-duration) var(--transition-function),
     color var(--transition-duration) var(--transition-function);
   padding: 0.4rem 1rem;
@@ -62,13 +63,15 @@ input {
 
 button:hover,
 select:hover,
-input:hover {
+input:hover,
+textarea:hover {
   background-color: var(--on-bg-hover);
 }
 
 button:active,
 select:active,
-input:active {
+input:active,
+textarea:active {
   background-color: var(--on-bg-active);
 }
 
@@ -105,11 +108,11 @@ input:active {
 }
 
 .ascending::after {
-  content: "↑";
+  content: '↑';
 }
 
 .descending::after {
-  content: "↓";
+  content: '↓';
 }
 
 .header {
@@ -195,7 +198,7 @@ input:active {
   margin-top: 0.4rem;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   width: 2rem;
 }
 
