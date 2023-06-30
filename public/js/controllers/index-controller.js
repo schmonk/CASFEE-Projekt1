@@ -76,7 +76,9 @@ function createTaskHTML(task) {
     </div>
     <p class="task-due-date">Due ${relativeDueTime(convertedDueDate)}</p>
     <p class="task-created-date" >Created ${convertedCreationDate}</p>
-    <p ><span class="task-importance">${generateStars(task.importance)}</span></p>
+    <p ><span class="task-importance">${generateStars(
+      task.importance
+    )}</span></p>
     <div class="buttongroup">
     <button class="btn task-delete">Delete</button>
     <button class="btn task-edit">Edit</button>
@@ -126,7 +128,8 @@ function checkEmptyList(taskArray, filtering) {
   if (filtering && taskArray.length === 0) {
     taskList.innerText = 'There are no open tasks. Well done!';
   } else if (taskArray.length === 0) {
-    taskList.innerText = "There are no tasks. Click on 'Create task' to add one.";
+    taskList.innerText =
+      "There are no tasks. Click on 'Create task' to add one.";
   }
 }
 
@@ -164,7 +167,11 @@ async function renderTasks(sortingType, ascending, filtering) {
     valueStorage.setItem(lsSettingsKey, storedSettings);
   }
 
-  const sortedTaskArray = await taskService.getAllTasks(sortingType, ascending, filtering);
+  const sortedTaskArray = await taskService.getAllTasks(
+    sortingType,
+    ascending,
+    filtering
+  );
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
   }
@@ -199,7 +206,9 @@ function createTask(e) {
     title: taskTitle.value ? taskTitle.value : placeholderTaskTitle,
     dueDate: taskDueDate.value ? taskDueDate.value : createDefaultDueDate(),
     creationDate: creationDate(),
-    description: taskDescription.value ? taskDescription.value : placeholderTaskDescription,
+    description: taskDescription.value
+      ? taskDescription.value
+      : placeholderTaskDescription,
     importance: taskImportance.value ? clamp(taskImportance.value, 1, 5) : '3',
     completion: taskCompletion.checked,
   };
@@ -241,7 +250,7 @@ async function toggleCompletionControl(event) {
     existingTask.dueDate,
     existingTask.creationDate,
     (existingTask.completion = !existingTask.completion),
-    existingTask.importance,
+    existingTask.importance
   );
 
   await renderTasks();
@@ -310,7 +319,7 @@ document.addEventListener('click', async (event) => {
         taskToUpdate.dueDate,
         taskToUpdate.creationDate,
         taskToUpdate.completion,
-        taskToUpdate.importance,
+        taskToUpdate.importance
       );
       renderTasks();
       taskDialog.close();
@@ -349,30 +358,50 @@ filterSortContainer.addEventListener('click', (event) => {
   const targetDataSet = event.target.dataset;
   switch (targetDataSet.filterSort) {
     case 'filter':
-      event.target.dataset.filtering = toggleValue(event.target.dataset.filtering, 'true', 'false');
+      event.target.dataset.filtering = toggleValue(
+        event.target.dataset.filtering,
+        'true',
+        'false'
+      );
       const filtering = event.target.dataset.filtering === 'true';
       renderTasks(undefined, undefined, filtering);
       break;
     case 'title': {
-      event.target.dataset.ascending = toggleValue(event.target.dataset.ascending, 'true', 'false');
+      event.target.dataset.ascending = toggleValue(
+        event.target.dataset.ascending,
+        'true',
+        'false'
+      );
       const ascending = event.target.dataset.ascending === 'true';
       renderTasks('title', ascending, undefined);
       break;
     }
     case 'dueDate': {
-      event.target.dataset.ascending = toggleValue(event.target.dataset.ascending, 'true', 'false');
+      event.target.dataset.ascending = toggleValue(
+        event.target.dataset.ascending,
+        'true',
+        'false'
+      );
       const ascending = event.target.dataset.ascending === 'true';
       renderTasks('dueDate', ascending, undefined);
       break;
     }
     case 'creationDate': {
-      event.target.dataset.ascending = toggleValue(event.target.dataset.ascending, 'true', 'false');
+      event.target.dataset.ascending = toggleValue(
+        event.target.dataset.ascending,
+        'true',
+        'false'
+      );
       const ascending = event.target.dataset.ascending === 'true';
       renderTasks('creationDate', ascending, undefined);
       break;
     }
     case 'importance': {
-      event.target.dataset.ascending = toggleValue(event.target.dataset.ascending, 'true', 'false');
+      event.target.dataset.ascending = toggleValue(
+        event.target.dataset.ascending,
+        'true',
+        'false'
+      );
       const ascending = event.target.dataset.ascending === 'true';
       renderTasks('importance', ascending, undefined);
       break;
