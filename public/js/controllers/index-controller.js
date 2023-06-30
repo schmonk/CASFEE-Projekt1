@@ -349,7 +349,6 @@ document.addEventListener('click', async (event) => {
 });
 
 taskImportance.addEventListener('blur', () => {
-  console.log('blur task importance');
   taskImportance.value = clamp(taskImportance.value, 1, 5);
 });
 
